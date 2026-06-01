@@ -75,6 +75,7 @@ Dokumentasi instalasi lengkap tersedia di `docs/installation.md`.
 
 ## Struktur Dokumentasi
 
+```text
 README.md
 CHANGELOG.md
 
@@ -84,6 +85,7 @@ docs/
 ├── dependency.md
 ├── refactoring.md
 └── github-actions.md
+```
 
 ## Screenshot Proyek
 
