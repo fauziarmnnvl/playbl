@@ -57,28 +57,33 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
 
 ## Instalasi Singkat
 
+```bash
 git clone https://github.com/fauziarmnnvl/playbl.git
 cd playbl
 composer install
 npm install
 cp .env.example .env
 php artisan key:generate
-php artisan migrate
+php artisan migrate --seed
 npm run build
 php artisan serve
+```
 
-Dokumentasi instalasi lengkap tersedia di docs/installation.md.
+**Catatan Windows PowerShell:** jika `npm` atau `npx` diblokir karena execution policy, gunakan `npm.cmd` dan `npx.cmd`.
 
-## Documentation
+Dokumentasi instalasi lengkap tersedia di `docs/installation.md`.
 
-| Dokumen | Deskripsi |
-|---|---|
-| docs/installation.md | Panduan instalasi lokal, setup database, dan troubleshooting |
-| docs/features.md | Dokumentasi Use Case dan alur kerja fitur aplikasi |
-| docs/dependency.md | Dokumentasi package Laravel pihak ketiga beserta analisa risikonya |
-| docs/refactoring.md | Catatan refactoring dan perbaikan struktur kode |
-| docs/github-actions.md | Rencana workflow CI/CD untuk repositori |
-| CHANGELOG.md | Riwayat perubahan proyek dan evolusi sistem dari seluruh tim |
+## Struktur Dokumentasi
+
+README.md
+CHANGELOG.md
+
+docs/
+├── installation.md
+├── features.md
+├── dependency.md
+├── refactoring.md
+└── github-actions.md
 
 ## Screenshot Proyek
 
@@ -91,6 +96,17 @@ Rencana screenshot minimal:
 - Halaman login admin.
 - Dashboard admin untuk monitoring status Playbox secara real-time.
 - Halaman laporan pendapatan dan statistik penggunaan.
+
+## Documentation
+
+| Dokumen | Deskripsi |
+|---|---|
+| docs/installation.md | Panduan instalasi lokal, setup database, dan troubleshooting |
+| docs/features.md | Dokumentasi Use Case dan alur kerja fitur aplikasi |
+| docs/dependency.md | Dokumentasi package Laravel pihak ketiga beserta analisa risikonya |
+| docs/refactoring.md | Catatan refactoring dan perbaikan struktur kode |
+| docs/github-actions.md | Rencana workflow CI/CD untuk repositori |
+| CHANGELOG.md | Riwayat perubahan proyek dan evolusi sistem dari seluruh tim |
 
 ## Tim Pengembang (Kelompok 2)
 | Nama | NIM | Peran Proyek |
