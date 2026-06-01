@@ -1,84 +1,276 @@
-# Panduan Instalasi Lokal (BoxPlay.id)
+# Installation Documentation
 
-Dokumentasi ini berisi langkah-langkah untuk menginstal dan menjalankan Sistem Informasi Layanan dan Pemesanan Playbox secara lokal di komputer masing-masing pengembang.
+Dokumen ini menjelaskan langkah instalasi proyek **Sistem Informasi Layanan dan Pemesanan Playbox Berbasis Web (BoxPlay.id)** pada lingkungan lokal.
 
-## Persyaratan Sistem (Prerequisites)
-Sebelum memulai instalasi, pastikan laptop/komputer kamu sudah terinstal perangkat lunak berikut:
-- **PHP** (Minimal versi 8.2 atau lebih baru)
-- **Composer** (Package manager untuk PHP)
-- **Node.js & NPM** (Untuk kompilasi asset Front-End)
-- **MySQL / MariaDB** (Bisa menggunakan XAMPP, Laragon, atau native)
-- **Git** (Untuk version control)
+## Persyaratan Sistem
+
+* PHP 8.2 atau lebih baru
+* Composer
+* Node.js dan NPM
+* MySQL atau MariaDB
+* Git
+* Web browser modern
+* Terminal atau PowerShell
+
+## Clone Repository
+
+```bash
+git clone <url-repository>
+cd playbl
+```
+
+Ganti `<url-repository>` dengan URL repository GitHub proyek Kelompok 2.
+
+## Install Dependency Backend
+
+```bash
+composer install
+```
+
+Perintah ini membaca file `composer.json` dan memasang seluruh dependency PHP yang dibutuhkan aplikasi.
+
+## Install Dependency Frontend
+
+```bash
+npm install
+```
+
+Perintah ini membaca file `package.json` dan memasang seluruh dependency frontend yang dibutuhkan aplikasi.
+
+## Setup Environment
+
+Salin file environment contoh:
+
+```bash
+cp .env.example .env
+```
+
+Pada Windows PowerShell, jika perintah `cp` tidak tersedia, gunakan:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Generate application key:
+
+```bash
+php artisan key:generate
+```
+
+## Setup Database
+
+Buat database MySQL atau MariaDB melalui phpMyAdmin atau terminal.
+
+Contoh nama database:
+
+```text
+db_playbl
+```
+
+Sesuaikan konfigurasi database pada file `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=db_playbl
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Jalankan migration dan seeder untuk membuat struktur tabel serta data awal:
+
+```bash
+php artisan migrate --seed
+```
+
+## Build Asset Frontend
+
+### Production Build
+
+```bash
+npm run build
+```
+
+### Development Mode
+
+```bash
+npm run dev
+```
+
+> **Catatan Windows PowerShell:** Jika `npm` diblokir karena execution policy, gunakan `npm.cmd`.
+
+```bash
+npm.cmd run build
+npm.cmd run dev
+```
+
+## Menjalankan Aplikasi
+
+```bash
+php artisan serve
+```
+
+Aplikasi akan berjalan pada alamat:
+
+```text
+http://127.0.0.1:8000
+```
+
+## Menjalankan Test
+
+```bash
+php artisan test
+```
+
+Proyek menggunakan **Pest PHP** sebagai framework testing. Pest berjalan di atas PHPUnit dan tetap menggunakan ekosistem testing Laravel untuk menguji keandalan sistem BoxPlay.id.
+
+## Kredensial dan Akses Default
+
+Sistem BoxPlay.id memisahkan antarmuka pengguna biasa dan manajemen pengelola. Saat perintah `migrate --seed` dijalankan, sistem akan membuat akun dummy untuk memudahkan proses pengujian selama tahap pengembangan.
+
+### Struktur Akses
+
+#### Pelanggan
+
+* Mengakses halaman utama (Front-end)
+* Melakukan pemesanan (Self-service)
+* Melihat riwayat bermain
+
+#### Admin
+
+* Mengelola operasional sistem
+* Memantau ketersediaan Playbox
+* Mengelola data master
+* Mengelola transaksi dan laporan sistem
+
+> **Catatan untuk Developer:** Silakan periksa file `DatabaseSeeder.php` untuk melihat email dan password default yang dapat digunakan saat pengujian login.
+
+## Troubleshooting
+
+### APP_KEY Belum Dibuat
+
+**Gejala**
+
+```text
+No application encryption key has been specified.
+```
+
+**Solusi**
+
+```bash
+php artisan key:generate
+```
 
 ---
 
-## Langkah Instalasi
+### Database Belum Tersedia
 
-**1. Clone Repositori**
-Buka terminal (atau Git Bash) dan jalankan perintah berikut untuk mengunduh kode dari GitHub:
-`git clone https://github.com/fauziarmnnvl/playbl.git`
-`cd playbl`
-*(Catatan untuk tim: Pastikan kalian berada di branch yang tepat, misal development, menggunakan perintah: `git checkout development`)*
+**Gejala**
 
-**2. Instal Dependensi Back-End (PHP)**
-Unduh semua library pihak ketiga (termasuk Filament, Livewire, dll) dengan Composer:
-`composer install`
+```text
+SQLSTATE[HY000] [1049] Unknown database
+```
 
-**3. Instal Dependensi Front-End (JavaScript & CSS)**
-Unduh package bawaan untuk UI (seperti Tailwind CSS dan Bootstrap):
-`npm install`
+**Solusi**
 
-**4. Siapkan File Konfigurasi Environment**
-Gandakan file `.env.example` menjadi `.env` agar aplikasi memiliki pengaturan lokal:
-`cp .env.example .env`
-*(Pengguna Windows CMD bisa menggunakan perintah: `copy .env.example .env`)*
+* Buat database sesuai nilai `DB_DATABASE`
+* Periksa `DB_USERNAME` dan `DB_PASSWORD` pada file `.env`
+* Jalankan ulang migration
 
-**5. Konfigurasi Database**
-- Buka aplikasi XAMPP / Laragon dan jalankan **MySQL**.
-- Buat database baru bernama `playbl` (atau nama lain sesuai kesepakatan) melalui phpMyAdmin atau terminal MySQL.
-- Buka file `.env` di text editor (VS Code), lalu sesuaikan bagian ini:
-  `DB_CONNECTION=mysql`
-  `DB_HOST=127.0.0.1`
-  `DB_PORT=3306`
-  `DB_DATABASE=playbl`
-  `DB_USERNAME=root`
-  `DB_PASSWORD=`
-*(Kosongkan DB_PASSWORD jika menggunakan XAMPP default, atau sesuaikan dengan password database-mu).*
-
-**6. Generate Application Key**
-Buat kunci enkripsi unik untuk keamanan aplikasi Laravel:
-`php artisan key:generate`
-
-**7. Jalankan Migrasi Database**
-Buat struktur tabel ke dalam database MySQL yang sudah disiapkan:
-`php artisan migrate`
-
-**8. Buat Akun Admin (Filament)**
-Karena sistem admin menggunakan Filament, buat satu akun utama untuk bisa login ke dashboard back-office:
-`php artisan make:filament-user`
-*(Terminal akan meminta kamu memasukkan Nama, Email, dan Password untuk akun admin).*
-
-**9. Build Asset Front-End**
-Proses file CSS dan JavaScript agar tampilan website tidak berantakan. 
-- Untuk tahap pengembangan (development), gunakan: `npm run dev`
-- Untuk produksi (final), gunakan: `npm run build`
-
-**10. Jalankan Server Lokal**
-Buka terminal baru (biarkan terminal npm run dev tetap berjalan), lalu ketik:
-`php artisan serve`
-
-Aplikasi sekarang bisa diakses melalui browser di alamat:
-- **Halaman Pelanggan:** http://localhost:8000
-- **Halaman Admin:** http://localhost:8000/admin (Gunakan akun admin yang dibuat pada langkah 8).
+```bash
+php artisan migrate --seed
+```
 
 ---
 
-## Troubleshooting (Solusi Masalah Umum)
+### NPM Diblokir PowerShell
 
-| Masalah | Penyebab & Solusi |
-| :--- | :--- |
-| **Error 500 / No Application Encryption Key** | Lupa menjalankan perintah `php artisan key:generate`. Jalankan perintah tersebut lalu refresh browser. |
-| **SQLSTATE[HY000] [1049] Unknown database** | Nama database di file `.env` tidak sama dengan yang ada di phpMyAdmin, atau kamu belum membuat databasenya. |
-| **Tampilan Website Hancur / Berantakan** | File CSS belum dikompilasi. Pastikan kamu sudah menjalankan `npm install` dan membiarkan `npm run dev` berjalan di terminal. |
-| **Target class [Controller] does not exist** | Periksa file `routes/web.php`. Pastikan namespace dan import Controller sudah ditulis dengan benar di Laravel 11. |
-| **Gagal menjalankan composer install** | Versi PHP di laptopmu terlalu rendah (dibawah 8.2). Silakan update XAMPP/Laragon atau instal versi PHP yang sesuai. |
+**Gejala**
+
+```text
+npm.ps1 cannot be loaded because running scripts is disabled on this system
+```
+
+**Solusi**
+
+```bash
+npm.cmd install
+npm.cmd run build
+```
+
+---
+
+### Asset Masih Mengarah ke Vite Development Server
+
+**Gejala**
+
+```text
+http://[::1]:5173
+```
+
+* File CSS tidak termuat
+* File JavaScript tidak termuat
+* Tampilan website tidak sesuai pada mode production
+
+**Solusi**
+
+* Hentikan Vite Development Server jika tidak digunakan
+* Hapus file `public/hot` jika masih ada
+* Jalankan build ulang
+
+```bash
+npm run build
+```
+
+---
+
+### Cache Konfigurasi Bermasalah
+
+**Solusi**
+
+```bash
+php artisan optimize:clear
+```
+
+---
+
+### Permission Storage Bermasalah (Linux/macOS)
+
+**Solusi**
+
+```bash
+chmod -R 775 storage bootstrap/cache
+```
+
+Pada Windows, pastikan folder `storage` dan `bootstrap/cache` memiliki izin tulis untuk aplikasi.
+
+## Verifikasi Instalasi
+
+Instalasi dianggap berhasil apabila:
+
+* Halaman utama (Self-service) BoxPlay.id dapat diakses
+* Halaman registrasi dan login pelanggan berfungsi dengan baik
+* Dashboard administrasi dapat diakses sesuai hak akses pengguna
+* Migration dan Seeder berhasil dijalankan
+* Seluruh test berjalan tanpa kegagalan
+* Asset frontend berhasil dibangun menggunakan Vite
+
+## Ringkasan Instalasi Cepat
+
+```bash
+git clone <url-repository>
+cd playbl
+
+composer install
+npm install
+
+cp .env.example .env
+php artisan key:generate
+
+php artisan migrate --seed
+
+npm run build
+
+php artisan serve
+```
