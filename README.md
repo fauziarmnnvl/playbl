@@ -116,8 +116,8 @@ Rencana screenshot minimal:
 | Chayo Qalbi Yuhak | 2411082033 | Project Manager |
 | Maharani Saputri | 2411081034 | System Analyst |
 | Fauzi Arman Nauval | 2411082038 | Lead Programmer |
-| Patra | 2411083022 | AI Specialist |
-| Syoffi Irzayuni | 2411081040 | Quality Assurance |
+| Syoffi Irzayuni | 2411081040 | Co-Lead Programmer |
+| Patra | 2411083022 | Quality Assurance |
 
 ## Repository
 Repositori ini digunakan sebagai pusat manajemen versi (version control), kolaborasi penulisan kode, penyimpanan dokumentasi teknis, serta pencatatan riwayat evolusi perangkat lunak (changelog) dari awal pengembangan hingga rilis final.

@@ -19,15 +19,18 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 * Dependency Frontend
 * Dependency Rencana Pengembangan
 
-## Dependency Backend
+---
 
-| Package             | Fungsi                       | Alasan                                                                            | Versi   | Risiko                                                             |
-| ------------------- | ---------------------------- | --------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------ |
-| `laravel/framework` | Framework utama aplikasi     | Menyediakan routing, MVC, ORM, migration, middleware, dan fitur inti Laravel      | `^11.0` | Perubahan major version dapat memerlukan penyesuaian kode          |
-| `filament/filament` | Admin Panel dan Autentikasi  | Mempercepat pembuatan dashboard admin, CRUD master data, dan pembatasan hak akses | `^3.2`  | Kustomisasi di luar standar Filament membutuhkan override komponen |
-| `livewire/livewire` | Komponen interaktif realtime | Membantu monitoring status Playbox secara realtime tanpa refresh halaman          | `^3.0`  | Membutuhkan pemahaman lifecycle state management PHP               |
+# Dependency Backend
 
-## Dependency Development dan Testing
+| Package                      | Fungsi                       | Alasan                                                                            | Versi   | Risiko                                                                    |
+| ---------------------------- | ---------------------------- | --------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------- |
+| `laravel/framework`          | Framework utama aplikasi     | Menyediakan routing, MVC, ORM, migration, middleware, dan fitur inti Laravel      | `^11.0` | Perubahan major version dapat memerlukan penyesuaian kode                 |
+| `filament/filament`          | Admin Panel dan Autentikasi  | Mempercepat pembuatan dashboard admin, CRUD master data, dan pembatasan hak akses | `^3.2`  | Kustomisasi di luar standar Filament membutuhkan override komponen        |
+| `livewire/livewire`          | Komponen interaktif realtime | Membantu monitoring status Playbox secara realtime tanpa refresh halaman          | `^3.0`  | Membutuhkan pemahaman lifecycle state management PHP                      |
+| `spatie/laravel-activitylog` | Pencatatan Log Aktivitas     | Melacak dan merekam setiap perubahan data penting untuk kebutuhan audit trail     | `^4.0`  | Ukuran database dapat meningkat jika log tidak dibersihkan secara berkala |
+
+# Dependency Development dan Testing
 
 | Package                     | Fungsi                               | Alasan                                                                            | Versi   | Risiko                                             |
 | --------------------------- | ------------------------------------ | --------------------------------------------------------------------------------- | ------- | -------------------------------------------------- |
@@ -36,7 +39,7 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | `fakerphp/faker`            | Data Dummy untuk Factory dan Testing | Membantu pembuatan data pelanggan palsu untuk pengujian                           | `^1.23` | Data dummy tidak boleh dianggap sebagai data nyata |
 | `laravel/tinker`            | REPL Laravel                         | Membantu debugging dan eksplorasi model saat development                          | `^2.9`  | Tidak digunakan pada workflow pengguna production  |
 
-## Dependency Frontend
+# Dependency Frontend
 
 | Package               | Fungsi                         | Alasan                                                      | Versi   | Risiko                                                              |
 | --------------------- | ------------------------------ | ----------------------------------------------------------- | ------- | ------------------------------------------------------------------- |
@@ -46,7 +49,7 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | `bootstrap`           | Framework UI                   | Dipertimbangkan untuk desain halaman self-service pelanggan | `^5.3`  | Dapat menimbulkan konflik styling jika dicampur dengan Tailwind CSS |
 | `alpinejs`            | Interaktivitas Ringan Frontend | Mendukung komponen UI sederhana yang interaktif             | `^3.13` | Tidak cocok untuk state management yang kompleks                    |
 
-## Dependency Rencana Pengembangan
+# Dependency Rencana Pengembangan
 
 | Package                   | Fungsi                      | Modul Rencana                     | Alasan                                         |
 | ------------------------- | --------------------------- | --------------------------------- | ---------------------------------------------- |
@@ -54,9 +57,11 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | `barryvdh/laravel-dompdf` | Generate PDF dari Blade     | Cetak struk transaksi dan laporan | Dokumen mudah dicetak dan diarsipkan           |
 | `consoletvs/charts`       | Visualisasi Grafik          | Dashboard laporan admin           | Membantu visualisasi tren penggunaan Playbox   |
 
-## Analisis 5W+1H Dependency Utama
+---
 
-### 1. Filament (Admin Panel dan Autentikasi)
+# Analisis 5W+1H Dependency Utama
+
+## 1. Filament (Admin Panel dan Autentikasi)
 
 | 5W+1H | Penjelasan                                                                                                   |
 | ----- | ------------------------------------------------------------------------------------------------------------ |
@@ -72,7 +77,7 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 * https://filamentphp.com/docs
 * https://github.com/filamentphp/filament
 
-### 2. Laravel Livewire
+## 2. Laravel Livewire
 
 | 5W+1H | Penjelasan                                                                                     |
 | ----- | ---------------------------------------------------------------------------------------------- |
@@ -88,7 +93,23 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 * https://livewire.laravel.com/docs
 * https://github.com/livewire/livewire
 
-### 3. Laravel Excel
+## 3. Spatie Activitylog
+
+| 5W+1H | Penjelasan                                                                                                |
+| ----- | --------------------------------------------------------------------------------------------------------- |
+| What  | Package Laravel untuk mencatat aktivitas pengguna dan perubahan data pada model.                          |
+| Why   | Penting untuk audit trail, keamanan, dan pelacakan perubahan data penting dalam sistem.                   |
+| Who   | Sistem (otomatis) serta Admin dan Mitra sebagai pihak yang dapat melihat log aktivitas.                   |
+| When  | Saat terjadi operasi Create, Update, Delete, atau aktivitas penting lainnya pada sistem.                  |
+| Where | Modul audit trail, monitoring sistem, dan laporan aktivitas.                                              |
+| How   | Menggunakan trait `LogsActivity` pada model Laravel untuk mencatat perubahan ke database secara otomatis. |
+
+**Referensi:**
+
+* https://spatie.be/docs/laravel-activitylog
+* https://github.com/spatie/laravel-activitylog
+
+## 4. Laravel Excel
 
 | 5W+1H | Penjelasan                                                            |
 | ----- | --------------------------------------------------------------------- |
@@ -104,7 +125,7 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 * https://docs.laravel-excel.com
 * https://github.com/SpartnerNL/Laravel-Excel
 
-### 4. Laravel DOMPDF
+## 5. Laravel DOMPDF
 
 | 5W+1H | Penjelasan                                                       |
 | ----- | ---------------------------------------------------------------- |
@@ -119,7 +140,7 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 
 * https://github.com/barryvdh/laravel-dompdf
 
-### 5. Laravel Charts
+## 6. Laravel Charts
 
 | 5W+1H | Penjelasan                                                          |
 | ----- | ------------------------------------------------------------------- |
@@ -134,7 +155,7 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 
 * https://charts.erik.cat/
 
-### 6. Laravel Debugbar
+## 7. Laravel Debugbar
 
 | 5W+1H | Penjelasan                                                         |
 | ----- | ------------------------------------------------------------------ |
@@ -149,57 +170,62 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 
 * https://github.com/barryvdh/laravel-debugbar
 
-## Cara Install Dependency
+---
 
-### Install Dependency Composer
+# Cara Install Dependency
+
+## Install Dependency Composer
 
 ```bash
 composer require vendor/package
 ```
 
-### Contoh Install Filament
+## Contoh Install Backend
 
 ```bash
 composer require filament/filament:"^3.2" -W
+composer require spatie/laravel-activitylog:"^4.0"
 ```
 
-### Install Dependency Development
+## Install Dependency Development
 
 ```bash
 composer require vendor/package --dev
 ```
 
-### Install Dependency Frontend
+## Install Dependency Frontend
 
 ```bash
 npm install package-name
 ```
 
-### Build Asset Frontend
+## Build Asset Frontend
 
 ```bash
 npm run build
 ```
 
-## Analisis Perubahan File Dependency
+---
 
-### composer.json
+# Analisis Perubahan File Dependency
+
+## composer.json
 
 Mencatat package utama yang dipasang secara langsung oleh developer. File ini menjelaskan dependency yang dibutuhkan aplikasi agar dapat berjalan dengan baik.
 
-### composer.lock
+## composer.lock
 
 Mencatat versi pasti package utama dan dependency turunannya sehingga seluruh anggota tim memperoleh versi yang sama saat menjalankan `composer install`.
 
-### package.json
+## package.json
 
 Mencatat package frontend yang dipasang secara langsung, seperti Vite, Tailwind CSS, Bootstrap, dan Alpine.js.
 
-### package-lock.json
+## package-lock.json
 
 Mencatat versi pasti dependency frontend beserta dependency turunannya agar hasil instalasi dan build tetap konsisten.
 
-## Dampak Dependency pada Proyek
+# Dampak Dependency pada Proyek
 
 * Mempercepat pengembangan fitur karena tidak perlu membangun semuanya dari nol.
 * Meningkatkan kualitas dan keamanan aplikasi melalui package yang telah teruji.
@@ -207,15 +233,15 @@ Mencatat versi pasti dependency frontend beserta dependency turunannya agar hasi
 * Mengurangi waktu pengembangan sehingga target proyek lebih mudah dicapai.
 * Memerlukan dokumentasi dan pemeliharaan versi secara berkala.
 
-## Risiko Umum Dependency
+# Risiko Umum Dependency
 
 * Ketidakcocokan dengan versi Laravel atau PHP terbaru.
 * Package tidak lagi dipelihara sehingga berpotensi menimbulkan celah keamanan.
 * Kesalahan konfigurasi dapat menyebabkan kebocoran data atau akses yang tidak semestinya.
 * Terlalu banyak dependency dapat meningkatkan kompleksitas dan memperlambat aplikasi.
 
-## Evaluasi Dependency
+# Evaluasi Dependency
 
-Dependency sangat membantu proses pengembangan karena menyediakan berbagai fitur yang siap digunakan. Package yang telah digunakan saat ini membantu mempercepat pengembangan fitur inti aplikasi. Sementara itu, package yang masih direncanakan seperti Filament, Livewire, Laravel Excel, dan DOMPDF dipertimbangkan untuk mendukung pengembangan fitur dashboard, autentikasi, monitoring realtime, serta pembuatan laporan pada tahap implementasi berikutnya.
+Dependency sangat membantu proses pengembangan karena menyediakan berbagai fitur yang siap digunakan. Sementara itu, package yang masih direncanakan seperti Filament, Livewire, Spatie Activitylog, Laravel Excel, dan DOMPDF dipertimbangkan untuk mendukung pengembangan fitur dashboard, autentikasi, audit trail, monitoring realtime, serta pembuatan laporan pada tahap implementasi berikutnya.
 
 Namun, setiap dependency harus dievaluasi secara berkala untuk memastikan kompatibilitas, keamanan, dan keberlanjutan penggunaannya. Sebelum diterapkan pada repositori utama, seluruh package wajib diuji terlebih dahulu pada environment lokal untuk meminimalkan risiko saat deployment.
