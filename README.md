@@ -41,9 +41,10 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
 - Melihat Laporan & Statistik: 
   - Laporan Pendapatan 
   - Statistik Penggunaan 
+- Audit Trail / Log Aktivitas: Mencatat riwayat perubahan data (CRUD) yang dilakukan oleh pengguna sistem untuk keamanan dan pemantauan.
 
 ## Tech Stack
-- Framework & Language: Laravel 11 / PHP 8.2+
+- Framework & Language: Laravel 12 / PHP 8.2+
 - Database: MySQL / MariaDB
 - Frontend: Bootstrap, Tailwind CSS, Blade Templates, Alpine.js
 - Build Tool: Vite, Node.js & NPM
@@ -51,6 +52,7 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
   - Filament (Admin Panel, CRUD Builder & Autentikasi)
   - Laravel Livewire (Monitoring Timer Real-time)
   - Laravel Excel (Export laporan format .xlsx)
+  - Spatie Activitylog (Pencatatan riwayat aktivitas pengguna/audit trail otomatis)
   - Laravel DOMPDF (Export laporan transaksi format .pdf)
   - Laravel Charts (Visualisasi statistik dasbor)
   - Laravel Debugbar (Pemantauan dan debugging sistem)
