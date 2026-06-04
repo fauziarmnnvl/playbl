@@ -26,7 +26,7 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | Package                      | Fungsi                       | Alasan                                                                            | Versi   | Risiko                                                                    |
 | ---------------------------- | ---------------------------- | --------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------- |
 | `laravel/framework`          | Framework utama aplikasi     | Menyediakan routing, MVC, ORM, migration, middleware, dan fitur inti Laravel      | `^11.0` | Perubahan major version dapat memerlukan penyesuaian kode                 |
-| `filament/filament`          | Admin Panel dan Autentikasi  | Mempercepat pembuatan dashboard admin, CRUD master data, dan pembatasan hak akses | `^3.2`  | Kustomisasi di luar standar Filament membutuhkan override komponen        |
+| `laravel/breeze`             | Starter kit autentikasi      | Memberikan fondasi login yang ringan dan kendali penuh untuk custom Admin Panel   | `^2.0`  | Memerlukan pembuatan antarmuka UI/UX back-office secara manual            |
 | `livewire/livewire`          | Komponen interaktif realtime | Membantu monitoring status Playbox secara realtime tanpa refresh halaman          | `^3.0`  | Membutuhkan pemahaman lifecycle state management PHP                      |
 | `spatie/laravel-activitylog` | Pencatatan Log Aktivitas     | Melacak dan merekam setiap perubahan data penting untuk kebutuhan audit trail     | `^4.0`  | Ukuran database dapat meningkat jika log tidak dibersihkan secara berkala |
 
@@ -61,23 +61,7 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 
 # Analisis 5W+1H Dependency Utama
 
-## 1. Filament (Admin Panel dan Autentikasi)
-
-| 5W+1H | Penjelasan                                                                                                   |
-| ----- | ------------------------------------------------------------------------------------------------------------ |
-| What  | Filament adalah framework admin panel Laravel yang menyediakan autentikasi, form builder, dan table builder. |
-| Why   | Digunakan untuk membangun dashboard admin, autentikasi, dan CRUD tanpa membuat antarmuka dari nol.           |
-| Who   | Admin dan Mitra/Owner BoxPlay.id.                                                                            |
-| When  | Saat admin login dan mengelola data cabang, playbox, game, promo, serta transaksi.                           |
-| Where | Modul back-office dan dashboard admin.                                                                       |
-| How   | Diinstal melalui Composer dan menghasilkan Resource yang terhubung langsung dengan model Laravel.            |
-
-**Referensi:**
-
-* https://filamentphp.com/docs
-* https://github.com/filamentphp/filament
-
-## 2. Laravel Livewire
+## 1. Laravel Livewire
 
 | 5W+1H | Penjelasan                                                                                     |
 | ----- | ---------------------------------------------------------------------------------------------- |
@@ -89,9 +73,22 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | How   | Komponen Livewire mengelola state di server dan memperbarui tampilan browser secara otomatis.  |
 
 **Referensi:**
-
 * https://livewire.laravel.com/docs
 * https://github.com/livewire/livewire
+
+## 2. Laravel Breeze
+
+| 5W+1H | Penjelasan                                                                                             |
+| ----- | ------------------------------------------------------------------------------------------------------ |
+| What  | Starter kit autentikasi bawaan Laravel yang minimalis dan ringan.                                      |
+| Why   | Memberikan fondasi keamanan (login/logout) sekaligus kebebasan penuh dalam membangun Custom Admin Panel. |
+| Who   | Admin dan Mitra/Owner.                                                                                 |
+| When  | Saat pengguna melakukan proses autentikasi ke dalam sistem back-office.                                |
+| Where | Modul autentikasi dan kerangka dasar antarmuka pengguna (UI).                                          |
+| How   | Menyediakan controller, route, dan view Blade dasar yang siap dikustomisasi secara manual.             |
+
+**Referensi:**
+* https://laravel.com/docs/starter-kits#laravel-breeze
 
 ## 3. Spatie Activitylog
 
@@ -105,7 +102,6 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | How   | Menggunakan trait `LogsActivity` pada model Laravel untuk mencatat perubahan ke database secara otomatis. |
 
 **Referensi:**
-
 * https://spatie.be/docs/laravel-activitylog
 * https://github.com/spatie/laravel-activitylog
 
@@ -121,7 +117,6 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | How   | Data query dikonversi menjadi file Excel yang dapat diunduh pengguna. |
 
 **Referensi:**
-
 * https://docs.laravel-excel.com
 * https://github.com/SpartnerNL/Laravel-Excel
 
@@ -137,7 +132,6 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | How   | View Blade dirender menjadi PDF yang dapat diunduh atau dicetak. |
 
 **Referensi:**
-
 * https://github.com/barryvdh/laravel-dompdf
 
 ## 6. Laravel Charts
@@ -152,7 +146,6 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | How   | Data agregasi dari database dirender menjadi grafik interaktif.     |
 
 **Referensi:**
-
 * https://charts.erik.cat/
 
 ## 7. Laravel Debugbar
@@ -167,7 +160,6 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | How   | Menampilkan informasi debugging melalui panel Debugbar di browser. |
 
 **Referensi:**
-
 * https://github.com/barryvdh/laravel-debugbar
 
 ---
@@ -183,7 +175,6 @@ composer require vendor/package
 ## Contoh Install Backend
 
 ```bash
-composer require filament/filament:"^3.2" -W
 composer require spatie/laravel-activitylog:"^4.0"
 ```
 
@@ -242,6 +233,6 @@ Mencatat versi pasti dependency frontend beserta dependency turunannya agar hasi
 
 # Evaluasi Dependency
 
-Dependency sangat membantu proses pengembangan karena menyediakan berbagai fitur yang siap digunakan. Sementara itu, package yang masih direncanakan seperti Filament, Livewire, Spatie Activitylog, Laravel Excel, dan DOMPDF dipertimbangkan untuk mendukung pengembangan fitur dashboard, autentikasi, audit trail, monitoring realtime, serta pembuatan laporan pada tahap implementasi berikutnya.
+Dependency sangat membantu proses pengembangan karena menyediakan berbagai fitur yang siap digunakan. Package utama seperti Laravel Breeze telah ditetapkan sebagai fondasi keamanan dan UI, sementara package lain yang direncanakan seperti Livewire, Spatie Activitylog, Laravel Excel, dan DOMPDF dipertimbangkan untuk mendukung pengembangan fitur dashboard, audit trail, monitoring realtime, serta pembuatan laporan pada tahap implementasi berikutnya.
 
 Namun, setiap dependency harus dievaluasi secara berkala untuk memastikan kompatibilitas, keamanan, dan keberlanjutan penggunaannya. Sebelum diterapkan pada repositori utama, seluruh package wajib diuji terlebih dahulu pada environment lokal untuk meminimalkan risiko saat deployment.
