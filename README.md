@@ -49,7 +49,7 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
 - Frontend: Bootstrap, Tailwind CSS, Blade Templates, Alpine.js
 - Build Tool: Vite, Node.js & NPM
 - Dependency / Packages:
-  - Filament (Admin Panel, CRUD Builder & Autentikasi)
+  - Laravel Breeze (Starter kit autentikasi & fondasi Custom Admin Panel)
   - Laravel Livewire (Monitoring Timer Real-time)
   - Laravel Excel (Export laporan format .xlsx)
   - Spatie Activitylog (Pencatatan riwayat aktivitas pengguna/audit trail otomatis)
