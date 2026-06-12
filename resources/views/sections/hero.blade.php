@@ -1,22 +1,17 @@
 <section class="relative h-screen overflow-hidden">
 
-    {{-- Background Cafe --}}
     <img
         src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2070&auto=format&fit=crop"
         alt="Cafe"
         class="absolute inset-0 w-full h-full object-cover opacity-30"
     >
 
-    {{-- Overlay Gelap --}}
     <div class="absolute inset-0 bg-[#081326]/85"></div>
 
-    {{-- Glow Biru --}}
     <div class="absolute left-[-200px] top-20 w-[900px] h-[900px] bg-blue-500/20 blur-[180px] rounded-full"></div>
 
-    {{-- Glow Ungu --}}
     <div class="absolute right-[-150px] top-10 w-[800px] h-[800px] bg-purple-500/20 blur-[180px] rounded-full"></div>
 
-    {{-- Content --}}
     <div class="relative z-10 flex items-center justify-center h-full">
 
         <div class="text-center max-w-3xl">
