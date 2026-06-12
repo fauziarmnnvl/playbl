@@ -44,10 +44,13 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
 - Audit Trail / Log Aktivitas: Mencatat riwayat perubahan data (CRUD) yang dilakukan oleh pengguna sistem untuk keamanan dan pemantauan.
 
 ## Tech Stack
+## Tech Stack
 - Framework & Language: Laravel 12 / PHP 8.2+
 - Database: MySQL / MariaDB
 - Frontend: Bootstrap, Tailwind CSS, Blade Templates, Alpine.js
 - Build Tool: Vite, Node.js & NPM
+- UI Library:
+  - Swiper.js (Interactive carousel & slider)
 - Dependency / Packages:
   - Laravel Breeze (Starter kit autentikasi & fondasi Custom Admin Panel)
   - Laravel Livewire (Monitoring Timer Real-time)
@@ -56,6 +59,7 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
   - Laravel DOMPDF (Export laporan transaksi format .pdf)
   - Laravel Charts (Visualisasi statistik dasbor)
   - Laravel Debugbar (Pemantauan dan debugging sistem)
+  - Swiper.js (Game showcase carousel pada Landing Page)
 
 ## Instalasi Singkat
 
@@ -91,10 +95,10 @@ docs/
 
 ## Screenshot Proyek
 
-Screenshot aplikasi akan ditambahkan setelah halaman siap digunakan dan telah diverifikasi.
+Screenshot aplikasi akan diperbarui secara bertahap sesuai perkembangan implementasi.
 
-Rencana screenshot minimal:
-- Halaman utama (informasi layanan, cabang, dan promo).
+Screenshot yang direncanakan:
+- Halaman utama atau Landing Page(informasi layanan, cabang, Games, event dan promo).
 - Halaman pemesanan Playbox dan katalog game.
 - Halaman konfirmasi pembayaran QRIS.
 - Halaman login admin.
