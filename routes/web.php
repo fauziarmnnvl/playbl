@@ -14,8 +14,13 @@ use App\Http\Controllers\AktivitasController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+
     return redirect('/login');
 });
+   
+Route::get('/branch', function () {
+    return view('branches');
+})->name('branch');
 
 // Admin route group
 Route::middleware('auth')->prefix('admin')->group(function () {

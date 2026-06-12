@@ -19,10 +19,21 @@
 
                 </div>
 
-                <ul class="hidden md:flex gap-10 text-sm">
+                <ul class="flex items-center gap-10">
 
-                    <li><a href="#" class="hover:text-purple-400">Home</a></li>
-                    <li><a href="#" class="hover:text-purple-400">Branch</a></li>
+                    <li>
+                        <a href="{{ route('home') }}"
+                        class="{{ request()->routeIs('home') ? 'text-[#7C3AED]' : 'text-white hover:text-[#7C3AED]' }} transition duration-300">
+                        Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('branch') }}"
+                        class="{{ request()->routeIs('branch') ? 'text-[#7C3AED]' : 'text-white hover:text-[#7C3AED]' }} transition duration-300">
+                        Branch</a>
+                    </li>
+                    
                     <li><a href="#" class="hover:text-purple-400">Event / Promo</a></li>
                     <li><a href="#" class="hover:text-purple-400">Games</a></li>
 
