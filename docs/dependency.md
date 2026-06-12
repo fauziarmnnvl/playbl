@@ -41,13 +41,13 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 
 # Dependency Frontend
 
-| Package               | Fungsi                         | Alasan                                                      | Versi   | Risiko                                                              |
-| --------------------- | ------------------------------ | ----------------------------------------------------------- | ------- | ------------------------------------------------------------------- |
-| `vite`                | Build Tool Frontend            | Mengelola proses build asset CSS dan JavaScript Laravel     | `^5.0`  | Membutuhkan versi Node.js yang kompatibel                           |
-| `laravel-vite-plugin` | Integrasi Laravel dengan Vite  | Menghubungkan Blade dengan hasil build Vite                 | `^1.0`  | Asset gagal dimuat jika build atau manifest bermasalah              |
-| `tailwindcss`         | Utility CSS Framework          | Membantu pembuatan antarmuka yang responsif dan konsisten   | `^3.4`  | Class dinamis perlu dipastikan ikut ter-build                       |
-| `bootstrap`           | Framework UI                   | Dipertimbangkan untuk desain halaman self-service pelanggan | `^5.3`  | Dapat menimbulkan konflik styling jika dicampur dengan Tailwind CSS |
-| `alpinejs`            | Interaktivitas Ringan Frontend | Mendukung komponen UI sederhana yang interaktif             | `^3.13` | Tidak cocok untuk state management yang kompleks                    |
+| Package | Fungsi | Alasan | Versi | Risiko |
+|----------|----------|----------|----------|----------|
+| `vite` | Build Tool Frontend | Mengelola proses build asset CSS dan JavaScript Laravel | `^7.0` | Membutuhkan versi Node.js yang kompatibel |
+| `laravel-vite-plugin` | Integrasi Laravel dengan Vite | Menghubungkan Blade dengan hasil build Vite | `^2.0` | Asset gagal dimuat jika build atau manifest bermasalah |
+| `tailwindcss` | Utility CSS Framework | Membantu pembuatan antarmuka yang responsif dan konsisten | `^3.4` | Class dinamis perlu dipastikan ikut ter-build |
+| `alpinejs` | Interaktivitas Ringan Frontend | Mendukung komponen UI sederhana yang interaktif | `^3.x` | Tidak cocok untuk state management yang kompleks |
+| `swiper` | Interactive Carousel & Slider | Digunakan untuk menampilkan Game Showcase Carousel pada Landing Page | `^12.2.0` | Perubahan API pada versi mayor dapat memerlukan penyesuaian konfigurasi slider |
 
 # Dependency Rencana Pengembangan
 
@@ -162,6 +162,22 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 **Referensi:**
 * https://github.com/barryvdh/laravel-debugbar
 
+## 8. Swiper.js
+
+| 5W+1H | Penjelasan |
+|--------|--------|
+| What | Library JavaScript modern untuk membuat slider dan carousel interaktif. |
+| Why | Digunakan untuk menampilkan koleksi game secara menarik pada Landing Page BoxPlay.id. |
+| Who | Pelanggan yang mengakses website. |
+| When | Saat pengguna membuka halaman utama website. |
+| Where | Section Game Showcase pada Landing Page. |
+| How | Swiper diintegrasikan melalui NPM dan diinisialisasi menggunakan JavaScript untuk menghasilkan carousel otomatis dan responsif. |
+
+### Referensi
+
+- https://swiperjs.com/
+- https://github.com/nolimits4web/swiper
+
 ---
 
 # Cara Install Dependency
@@ -197,6 +213,25 @@ npm run build
 ```
 
 ---
+
+# Perubahan Dependency Terbaru
+
+## Swiper.js
+
+### Versi
+12.2.0
+
+### Tanggal Penambahan
+12 Juni 2026
+
+### Tujuan
+Menampilkan katalog game dalam bentuk carousel interaktif pada Landing Page.
+
+### Instalasi
+
+```bash
+npm install swiper
+```
 
 # Analisis Perubahan File Dependency
 
