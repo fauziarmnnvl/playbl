@@ -15,7 +15,19 @@ class Cabang extends Model
     protected $primaryKey = 'id_cabang';
     public $timestamps = false;
 
-    protected $fillable = ['nama_cabang', 'alamat_cabang', 'kontak_cabang', 'jam_operasional'];
+    protected $fillable = [
+        'nama_cabang',
+        'alamat_cabang',
+        'kontak_cabang',
+        'jam_operasional',
+        'foto_cabang',
+        'link_maps',
+        'status_buka',
+    ];
+
+    protected $casts = [
+        'status_buka' => 'boolean',
+    ];
 
     public function playbox()
     {
