@@ -13,54 +13,87 @@ use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\AktivitasController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+/*
+|--------------------------------------------------------------------------
+| Landing Page (Public)
+|--------------------------------------------------------------------------
+*/
 
-    return redirect('/login');
-});
-   
-Route::get('/branch', function () {
-    return view('branches');
-})->name('branch');
+Route::view('/', 'welcome')->name('home');
 
-// Admin route group
+Route::view('/branch', 'branches')->name('branch');
+
+/*
+|--------------------------------------------------------------------------
+| Admin Area
+|--------------------------------------------------------------------------
+*/
+
 Route::middleware('auth')->prefix('admin')->group(function () {
+
     // Dashboard
-    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/', [DashboardController::class, 'index'])
+        ->name('admin.dashboard');
 
     // Monitoring Playbox
-    Route::get('/monitoring', [MonitoringController::class, 'index'])->name('admin.monitoring');
+    Route::get('/monitoring', [MonitoringController::class, 'index'])
+        ->name('admin.monitoring');
 
-    // Manajemen Playbox (CRUD)
-    Route::resource('/playbox', PlayboxController::class)->names('admin.playbox');
+    // Playbox
+    Route::resource('/playbox', PlayboxController::class)
+        ->names('admin.playbox');
 
-    // Manajemen Game (CRUD)
-    Route::resource('/game', GameController::class)->names('admin.game');
+    // Game
+    Route::resource('/game', GameController::class)
+        ->names('admin.game');
 
-    // Manajemen Cabang (CRUD)
-    Route::resource('/cabang', CabangController::class)->names('admin.cabang');
+    // Cabang
+    Route::resource('/cabang', CabangController::class)
+        ->names('admin.cabang');
 
-    // Event & Promo (CRUD)
-    Route::resource('/promo', EventPromoController::class)->names('admin.promo');
+    // Promo
+    Route::resource('/promo', EventPromoController::class)
+        ->names('admin.promo');
 
-    // Data Pelanggan (Read-only)
-    Route::get('/pelanggan', [PelangganController::class, 'index'])->name('admin.pelanggan');
+    // Pelanggan
+    Route::get('/pelanggan', [PelangganController::class, 'index'])
+        ->name('admin.pelanggan');
 
-    // Riwayat Bermain (Read-only)
-    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('admin.riwayat');
+    // Riwayat
+    Route::get('/riwayat', [RiwayatController::class, 'index'])
+        ->name('admin.riwayat');
 
-    // Laporan & Statistik
-    Route::get('/statistik', [StatistikController::class, 'index'])->name('admin.statistik');
-    Route::get('/statistik/export-pdf', [StatistikController::class, 'exportPdf'])->name('admin.statistik.export-pdf');
-    Route::get('/statistik/export-excel', [StatistikController::class, 'exportExcel'])->name('admin.statistik.export-excel');
+    // Statistik
+    Route::get('/statistik', [StatistikController::class, 'index'])
+        ->name('admin.statistik');
 
-    // Riwayat Aktivitas (Audit Trail)
-    Route::get('/aktivitas', [AktivitasController::class, 'index'])->name('admin.aktivitas');
+    Route::get('/statistik/export-pdf', [StatistikController::class, 'exportPdf'])
+        ->name('admin.statistik.export-pdf');
+
+    Route::get('/statistik/export-excel', [StatistikController::class, 'exportExcel'])
+        ->name('admin.statistik.export-excel');
+
+    // Aktivitas
+    Route::get('/aktivitas', [AktivitasController::class, 'index'])
+        ->name('admin.aktivitas');
 });
 
+/*
+|--------------------------------------------------------------------------
+| User Profile
+|--------------------------------------------------------------------------
+*/
+
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
