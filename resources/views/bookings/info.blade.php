@@ -2,6 +2,6 @@
 
 @section('content')
 
-    @include('sections.booking')
+    @include('sections.bookingInfo')
 
 @endsection

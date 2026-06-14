@@ -115,10 +115,10 @@
 
             <div class="border-t border-slate-800 pt-8 flex justify-end">
 
-                <button type="submit"
+                <a href="{{ route('booking.cabang') }}"
                     class="px-10 py-4 rounded-full text-white font-semibold bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105 transition-all duration-300 shadow-lg">
                     Lanjut →
-                </button>
+                </a>
 
             </div>
 

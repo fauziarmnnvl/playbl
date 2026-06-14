@@ -30,7 +30,19 @@ Route::view('/event-promo', 'events-promos')->name('event-promo');
 
 Route::view('/game', 'games')->name('game');
 
-Route::view('/booking', 'bookings')->name('booking');
+Route::view('/booking', 'bookings.info')->name('booking.info');
+
+Route::view('/booking/cabang', 'bookings.cabang')->name('booking.cabang');
+
+Route::view('/booking/playbox', 'bookings.playbox')->name('booking.playbox');
+
+Route::view('/booking/durasi', 'bookings.durasi')->name('booking.durasi');
+
+Route::view('/booking/review', 'bookings.review')->name('booking.review');
+
+Route::view('/booking/pembayaran', 'bookings.pembayaran')->name('booking.pembayaran');
+
+Route::view('/booking/success', 'bookings.success')->name('booking.success');
 
 
 /*
