@@ -32,6 +32,7 @@
                 <div class="sidebar-group">
                     <span class="sidebar-group-label">Menu Utama</span>
 
+                    @if (auth()->user()->role === 'admin')
                     <a href="{{ route('admin.dashboard') }}"
                        class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -43,9 +44,19 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                         <span>Monitoring Playbox</span>
                     </a>
+                    @endif
+
+                    @if (auth()->user()->role === 'operator')
+                    <a href="{{ route('operator.monitoring') }}"
+                       class="sidebar-link {{ request()->routeIs('operator.monitoring') ? 'active' : '' }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        <span>Monitoring Playbox</span>
+                    </a>
+                    @endif
                 </div>
 
-                {{-- DATA (MASTER) --}}
+                {{-- DATA (MASTER) — Admin Only --}}
+                @if (auth()->user()->role === 'admin')
                 <div class="sidebar-group">
                     <span class="sidebar-group-label">Data Master</span>
 
@@ -67,6 +78,12 @@
                         <span>Manajemen Cabang</span>
                     </a>
 
+                    <a href="{{ route('admin.operator.index') }}"
+                       class="sidebar-link {{ request()->routeIs('admin.operator.*') ? 'active' : '' }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <span>Manajemen Operator</span>
+                    </a>
+
                     <a href="{{ route('admin.promo.index') }}"
                        class="sidebar-link {{ request()->routeIs('admin.promo.*') ? 'active' : '' }}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
@@ -78,12 +95,15 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                         <span>Data Pelanggan</span>
                     </a>
+
                 </div>
+                @endif
 
                 {{-- LAPORAN --}}
                 <div class="sidebar-group">
                     <span class="sidebar-group-label">Laporan</span>
 
+                    @if (auth()->user()->role === 'admin')
                     <a href="{{ route('admin.riwayat') }}"
                        class="sidebar-link {{ request()->routeIs('admin.riwayat') ? 'active' : '' }}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -95,9 +115,19 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
                         <span>Laporan & Statistik</span>
                     </a>
+                    @endif
+
+                    @if (auth()->user()->role === 'operator')
+                    <a href="{{ route('operator.riwayat') }}"
+                       class="sidebar-link {{ request()->routeIs('operator.riwayat') ? 'active' : '' }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <span>Riwayat Bermain</span>
+                    </a>
+                    @endif
                 </div>
 
-                {{-- PENGATURAN --}}
+                {{-- PENGATURAN — Admin Only --}}
+                @if (auth()->user()->role === 'admin')
                 <div class="sidebar-group">
                     <span class="sidebar-group-label">Pengaturan</span>
 
@@ -107,6 +137,7 @@
                         <span>Riwayat Aktivitas</span>
                     </a>
                 </div>
+                @endif
             </nav>
 
             {{-- LOGOUT --}}
@@ -150,7 +181,8 @@
                             {{ strtoupper(substr(Auth::user()->nama ?? 'A',0,1)) }}
                         </div>
                         <div class="user-meta">
-                            <strong>{{ Auth::user()->nama ?? 'Admin' }}</strong>
+                            <strong>{{ Auth::user()->nama ?? 'User' }}</strong>
+                            <small style="color:#64748b; text-transform:capitalize;">{{ Auth::user()->role ?? 'admin' }}</small>
                         </div>
                     </div>
                 </div>

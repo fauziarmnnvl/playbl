@@ -11,6 +11,9 @@ use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\AktivitasController;
+use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\Operator\OperatorMonitoringController;
+use App\Http\Controllers\Operator\OperatorRiwayatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,17 +35,17 @@ Route::view('/booking', 'bookings')->name('booking');
 
 /*
 |--------------------------------------------------------------------------
-| Admin Area
+| Admin Area (role: admin only)
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth')->prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])
         ->name('admin.dashboard');
 
-    // Monitoring Playbox
+    // Monitoring Playbox (Admin — semua cabang)
     Route::get('/monitoring', [MonitoringController::class, 'index'])
         ->name('admin.monitoring');
 
@@ -61,6 +64,10 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     // Promo
     Route::resource('/promo', EventPromoController::class)
         ->names('admin.promo');
+
+    // Operator
+    Route::resource('/operator', OperatorController::class)
+        ->names('admin.operator');
 
     // Pelanggan
     Route::get('/pelanggan', [PelangganController::class, 'index'])
@@ -84,6 +91,25 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/aktivitas', [AktivitasController::class, 'index'])
         ->name('admin.aktivitas');
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| Operator Area (role: operator only)
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'role:operator'])->prefix('operator')->group(function () {
+
+    // Monitoring Playbox (filtered by cabang_id)
+    Route::get('/monitoring', [OperatorMonitoringController::class, 'index'])
+        ->name('operator.monitoring');
+
+    // Riwayat Bermain (filtered by cabang_id)
+    Route::get('/riwayat', [OperatorRiwayatController::class, 'index'])
+        ->name('operator.riwayat');
+});
+
 
 /*
 |--------------------------------------------------------------------------
