@@ -8,6 +8,14 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ### Added
 
+* Belum ada perubahan.
+
+---
+
+## [0.2.0] - 14 Juni 2026
+
+### Added
+
 * Struktur Landing Page menggunakan komponen Blade Laravel.
 * Halaman Hero sebagai tampilan utama BoxPlay.id.
 * Section Call To Action (CTA).
@@ -26,6 +34,17 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Section modular untuk Games, Event & Promo, dan Booking.
 * Asset gambar pendukung untuk halaman Games dan Event & Promo.
 * Routing publik untuk halaman Games, Event & Promo, Branch, dan Booking.
+* Modul Manajemen Playbox.
+* Fitur CRUD Playbox (Tambah, Lihat, Ubah, Hapus).
+* Modul Manajemen Game.
+* Fitur CRUD Game (Tambah, Lihat, Ubah, Hapus).
+* Modul Manajemen Event & Promo.
+* Fitur CRUD Event & Promo (Tambah, Lihat, Ubah, Hapus).
+* Halaman Edit untuk Playbox, Game, dan Event & Promo.
+* Modul Manajemen Operator.
+* Fitur pencarian Data Pelanggan berdasarkan nama dan nomor HP.
+* Seeder pengguna untuk kebutuhan pengujian dan inisialisasi data.
+* Migration pendukung untuk pengelolaan Operator dan User.
 
 ### Changed
 
@@ -43,6 +62,14 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menambahkan status aktif (active state) pada menu navigasi berdasarkan halaman yang sedang dibuka.
 * Memperbarui Footer agar konsisten dengan pengembangan halaman frontend terbaru.
 * Memulihkan akses publik pada Landing Page dan halaman Branch tanpa memerlukan autentikasi.
+* Menyesuaikan struktur autentikasi aplikasi dari model Admin ke model User.
+* Memperbarui konfigurasi autentikasi dan manajemen pengguna.
+* Menyesuaikan status mesin pada modul Playbox.
+* Menyempurnakan tampilan halaman Manajemen Playbox.
+* Menyempurnakan tampilan halaman Manajemen Game.
+* Menyempurnakan tampilan halaman Manajemen Event & Promo.
+* Menyempurnakan tampilan halaman Data Pelanggan.
+* Menyeragamkan desain toolbar, tombol aksi, dan komponen pencarian pada panel admin.
 
 ### Dependencies
 
@@ -56,6 +83,8 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbarui dokumentasi proyek pada README.md.
 * Memperbarui dokumentasi fitur Login, Dashboard, dan Manajemen Cabang.
 * Memperbarui dokumentasi fitur Games, Event & Promo, dan Booking.
+* Memperbarui dokumentasi fitur Playbox, Game, dan Event & Promo.
+* Memperbarui dokumentasi fitur Operator dan manajemen pengguna.
 * Memperbarui CHANGELOG sesuai perkembangan fitur terbaru.
 
 ---
