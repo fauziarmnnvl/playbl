@@ -23,6 +23,13 @@ Route::view('/', 'welcome')->name('home');
 
 Route::view('/branch', 'branches')->name('branch');
 
+Route::view('/event-promo', 'events-promos')->name('event-promo');
+
+Route::view('/game', 'games')->name('game');
+
+Route::view('/booking', 'bookings')->name('booking');
+
+
 /*
 |--------------------------------------------------------------------------
 | Admin Area

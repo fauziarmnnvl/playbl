@@ -95,7 +95,7 @@
 
                     <i class="bi bi-telephone-fill text-blue-400"></i>
 
-                    <span>+62 812 3456 7890</span>
+                    <span>+62 852-6293-9746</span>
 
                 </div>
 
@@ -103,7 +103,7 @@
 
                     <i class="bi bi-envelope-fill text-blue-400"></i>
 
-                    <span>hello@boxplay.id</span>
+                    <span>@boxplayid@gmail.com</span>
 
                 </div>
 

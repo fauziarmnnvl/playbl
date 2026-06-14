@@ -34,14 +34,24 @@
                         Branch</a>
                     </li>
                     
-                    <li><a href="#" class="hover:text-purple-400">Event / Promo</a></li>
-                    <li><a href="#" class="hover:text-purple-400">Games</a></li>
+                    <li>
+                        <a href="{{ route('event-promo') }}"
+                        class="{{ request()->routeIs('event-promo') ? 'text-[#7C3AED]' : 'text-white hover:text-[#7C3AED]' }} transition duration-300">
+                        Event & Promo</a></li>
+                    
+                    <li>
+                        <a href="{{ route('game') }}"
+                        class="{{ request()->routeIs('game') ? 'text-[#7C3AED]' : 'text-white hover:text-[#7C3AED]' }} transition duration-300">
+                        Games</a></li>
 
                 </ul>
 
-                <button class="px-7 py-2.5 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 font-medium">
+                <a
+                    href="{{ route('booking') }}"
+                    class="px-7 py-2.5 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 font-medium text-white
+                    {{ request()->routeIs('booking') ? 'ring-2 ring-purple-400 shadow-[0_0_15px_rgba(139,92,246,0.5)]' : 'hover:scale-105 transition' }}">
                     Book Now
-                </button>
+                </a>
 
             </div>
 
