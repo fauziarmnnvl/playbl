@@ -1,26 +1,27 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Game — BoxPlay.id')
-@section('page_title', 'Tambah Game')
-@section('page_description', 'Tambah game baru ke katalog')
-@section('breadcrumb', 'Data Master / Game / Tambah')
+@section('title', 'Edit Game — BoxPlay.id')
+@section('page_title', 'Edit Game')
+@section('page_description', 'Perbarui data game')
+@section('breadcrumb', 'Data Master / Game / Edit')
 
 @section('content')
     <div class="page-header">
         <div>
-            <h1>Tambah Game Baru</h1>
-            <p>Isi data game untuk menambahkan ke katalog</p>
+            <h1>Edit Game</h1>
+            <p>Perbarui data {{ $game->judul_game }}</p>
         </div>
     </div>
 
     <div class="form-card">
-        <form method="POST" action="{{ route('admin.game.store') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.game.update', $game->id_game) }}" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
 
             <div class="form-group">
                 <label for="judul_game" class="form-label">Judul Game <span style="color:var(--error)">*</span></label>
                 <input type="text" name="judul_game" id="judul_game" class="form-input"
-                       value="{{ old('judul_game') }}" placeholder="Contoh: FIFA 24" required>
+                       value="{{ old('judul_game', $game->judul_game) }}" required>
                 @error('judul_game')
                     <div class="form-error">{{ $message }}</div>
                 @enderror
@@ -29,7 +30,7 @@
             <div class="form-group">
                 <label for="kategori" class="form-label">Kategori / Mode</label>
                 <input type="text" name="kategori" id="kategori" class="form-input"
-                       value="{{ old('kategori') }}" placeholder="Contoh: Multiplayer, Racing, RPG">
+                       value="{{ old('kategori', $game->kategori) }}">
                 @error('kategori')
                     <div class="form-error">{{ $message }}</div>
                 @enderror
@@ -37,17 +38,24 @@
 
             <div class="form-group">
                 <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea name="deskripsi" id="deskripsi" class="form-textarea"
-                          placeholder="Deskripsi singkat game">{{ old('deskripsi') }}</textarea>
+                <textarea name="deskripsi" id="deskripsi" class="form-textarea">{{ old('deskripsi', $game->deskripsi) }}</textarea>
                 @error('deskripsi')
                     <div class="form-error">{{ $message }}</div>
                 @enderror
             </div>
 
+            @if ($game->cover_image)
+                <div class="form-group">
+                    <label class="form-label">Cover Saat Ini</label>
+                    <img src="{{ Storage::url($game->cover_image) }}"
+                         style="max-width:220px; height:140px; object-fit:cover; border-radius:12px; display:block;">
+                </div>
+            @endif
+
             <div class="form-group">
-                <label class="form-label">Cover Image</label>
+                <label class="form-label">{{ $game->cover_image ? 'Ganti Cover' : 'Cover Image' }}</label>
                 <input type="file" name="cover_image" id="coverInput" class="form-input" accept=".jpg,.jpeg,.png,.webp">
-                <small style="color:#64748b">JPG, PNG, WEBP maksimal 2 MB</small>
+                <small style="color:#64748b">Kosongkan jika tidak ingin mengganti</small>
                 @error('cover_image')
                     <div class="form-error">{{ $message }}</div>
                 @enderror
@@ -59,7 +67,7 @@
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                    Simpan
+                    Simpan Perubahan
                 </button>
                 <a href="{{ route('admin.game.index') }}" class="btn btn-secondary">Batal</a>
             </div>
