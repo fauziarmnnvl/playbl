@@ -1,0 +1,75 @@
+@extends('layouts.admin')
+
+@section('title', 'Tambah Operator — BoxPlay.id')
+@section('page_title', 'Tambah Operator')
+@section('page_description', 'Tambah akun operator baru')
+@section('breadcrumb', 'Data Master / Operator / Tambah')
+
+@section('content')
+    <div class="form-card">
+        <form method="POST" action="{{ route('admin.operator.store') }}">
+            @csrf
+
+            <div class="form-group">
+                <label for="nama" class="form-label">Nama Lengkap <span style="color:var(--error)">*</span></label>
+                <input type="text" name="nama" id="nama" class="form-input"
+                       value="{{ old('nama') }}" placeholder="Contoh: Budi Santoso" required>
+                @error('nama')
+                    <div class="form-error">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-row">
+                <div class="form-group form-half">
+                    <label for="username" class="form-label">Username <span style="color:var(--error)">*</span></label>
+                    <input type="text" name="username" id="username" class="form-input"
+                           value="{{ old('username') }}" placeholder="Contoh: budi_santoso" required>
+                    @error('username')
+                        <div class="form-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group form-half">
+                    <label for="email" class="form-label">Email <span style="color:var(--error)">*</span></label>
+                    <input type="email" name="email" id="email" class="form-input"
+                           value="{{ old('email') }}" placeholder="Contoh: budi@boxplay.id" required>
+                    @error('email')
+                        <div class="form-error">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password <span style="color:var(--error)">*</span></label>
+                <input type="password" name="password" id="password" class="form-input"
+                       placeholder="Minimal 8 karakter" required>
+                @error('password')
+                    <div class="form-error">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="id_cabang" class="form-label">Penempatan Cabang <span style="color:var(--error)">*</span></label>
+                <select name="id_cabang" id="id_cabang" class="form-select" required>
+                    <option value="">— Pilih Cabang —</option>
+                    @foreach ($cabangs as $cabang)
+                        <option value="{{ $cabang->id_cabang }}" {{ old('id_cabang') == $cabang->id_cabang ? 'selected' : '' }}>
+                            {{ $cabang->nama_cabang }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('id_cabang')
+                    <div class="form-error">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    Simpan
+                </button>
+                <a href="{{ route('admin.operator.index') }}" class="btn btn-secondary">Batal</a>
+            </div>
+        </form>
+    </div>
+@endsection
