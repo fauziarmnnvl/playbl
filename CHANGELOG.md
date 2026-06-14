@@ -45,6 +45,15 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Fitur pencarian Data Pelanggan berdasarkan nama dan nomor HP.
 * Seeder pengguna untuk kebutuhan pengujian dan inisialisasi data.
 * Migration pendukung untuk pengelolaan Operator dan User.
+* Implementasi alur Booking Playbox berbasis multi-step (wizard booking).
+* Halaman Booking Info untuk pengisian data pemain.
+* Halaman Booking Cabang untuk pemilihan cabang Playbox.
+* Halaman Booking Playbox untuk pemilihan unit Playbox yang tersedia.
+* Halaman Booking Durasi untuk pemilihan durasi bermain.
+* Halaman Booking Review untuk menampilkan ringkasan pemesanan sebelum pembayaran.
+* Halaman Booking Pembayaran untuk proses pembayaran pesanan.
+* Halaman Booking Success sebagai halaman konfirmasi pemesanan berhasil.
+* Struktur folder booking yang modular menggunakan Blade View terpisah untuk setiap langkah pemesanan.
 
 ### Changed
 
@@ -70,6 +79,11 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menyempurnakan tampilan halaman Manajemen Event & Promo.
 * Menyempurnakan tampilan halaman Data Pelanggan.
 * Menyeragamkan desain toolbar, tombol aksi, dan komponen pencarian pada panel admin.
+* Melakukan refactor halaman Booking dari satu halaman menjadi alur pemesanan bertahap (multi-step booking flow).
+* Memperbarui routing Booking agar mendukung navigasi antar langkah pemesanan.
+* Memperbarui Navbar untuk mendukung akses langsung ke fitur Booking.
+* Menyesuaikan struktur view Booking agar lebih mudah dikembangkan dan dipelihara.
+* Menyesuaikan tampilan halaman Booking dengan desain Figma terbaru.
 
 ### Dependencies
 
@@ -86,6 +100,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbarui dokumentasi fitur Playbox, Game, dan Event & Promo.
 * Memperbarui dokumentasi fitur Operator dan manajemen pengguna.
 * Memperbarui CHANGELOG sesuai perkembangan fitur terbaru.
+* Memperbarui CHANGELOG sesuai perkembangan implementasi fitur Booking terbaru.
 
 ---
 
