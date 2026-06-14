@@ -20,6 +20,12 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Modul Manajemen Cabang.
 * Fitur CRUD Cabang (Tambah, Lihat, Ubah, Hapus).
 * Routing admin untuk Dashboard, Cabang, Monitoring, dan modul terkait.
+* Halaman Games untuk menampilkan katalog game yang tersedia.
+* Halaman Event & Promo untuk menampilkan promo dan informasi event yang sedang berlangsung.
+* Halaman Booking sebagai antarmuka awal proses pemesanan Playbox.
+* Section modular untuk Games, Event & Promo, dan Booking.
+* Asset gambar pendukung untuk halaman Games dan Event & Promo.
+* Routing publik untuk halaman Games, Event & Promo, Branch, dan Booking.
 
 ### Changed
 
@@ -33,6 +39,10 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menyesuaikan topbar dan layout panel admin.
 * Mengganti beberapa ikon berbasis emoji menjadi SVG agar konsisten dengan desain aplikasi.
 * Menyempurnakan tampilan halaman Login Admin.
+* Memperbarui navigasi Navbar agar mendukung halaman Games, Event & Promo, dan Booking.
+* Menambahkan status aktif (active state) pada menu navigasi berdasarkan halaman yang sedang dibuka.
+* Memperbarui Footer agar konsisten dengan pengembangan halaman frontend terbaru.
+* Memulihkan akses publik pada Landing Page dan halaman Branch tanpa memerlukan autentikasi.
 
 ### Dependencies
 
@@ -45,6 +55,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbarui dokumentasi instalasi.
 * Memperbarui dokumentasi proyek pada README.md.
 * Memperbarui dokumentasi fitur Login, Dashboard, dan Manajemen Cabang.
+* Memperbarui dokumentasi fitur Games, Event & Promo, dan Booking.
 * Memperbarui CHANGELOG sesuai perkembangan fitur terbaru.
 
 ---

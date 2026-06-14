@@ -1,0 +1,254 @@
+<section class="bg-[#16233B] min-h-screen py-24">
+
+    <div class="max-w-7xl mx-auto px-8">
+
+        <!-- Title -->
+        <div class="text-center mt-24">
+
+            <h2 class="text-5xl md:text-6xl font-bold text-white">
+                Event &
+                <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+                    Promo
+                </span>
+            </h2>
+
+            <p class="text-gray-400 mt-5 max-w-3xl mx-auto">
+                Jangan lewatkan penawaran menarik dari kami. Gunakan promo di bawah ini untuk
+                pengalaman gaming yang lebih hemat.
+            </p>
+
+        </div>
+
+        <!-- Featured Promo -->
+        <div class="mt-16">
+
+            <div class="bg-gradient-to-r from-[#2B245E] to-[#243B7B]
+                        rounded-3xl overflow-hidden
+                        border border-purple-500/30
+                        shadow-xl">
+
+                <div class="grid md:grid-cols-[280px_1fr]">
+
+                    <!-- Image -->
+                    <div class="relative">
+
+                        <img
+                            src="{{ asset('images/event-promo/weekend.jpeg') }}"
+                            class="w-full h-full object-cover">
+
+                        <span class="absolute top-4 left-4
+                                     bg-gradient-to-r from-purple-500 to-blue-500
+                                     text-white text-sm
+                                     px-4 py-2 rounded-full font-medium">
+
+                            🏷 30% OFF
+
+                        </span>
+
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-10 flex flex-col justify-center">
+
+                        <h3 class="text-5xl font-bold text-white">
+                            Weekend Only!
+                        </h3>
+
+                        <p class="text-gray-300 text-xl mt-5 max-w-3xl">
+                            Diskon spesial untuk penyewaan minimal 3 jam di akhir pekan.
+                            Ajak teman-temanmu mabar sekarang!
+                        </p>
+
+                        <p class="text-gray-400 mt-8 text-sm">
+                            📅 Berlaku hingga: 31 Des 2026
+                        </p>
+
+                        <a href="#"
+                           class="mt-8 w-fit px-12 py-4 rounded-xl
+                                  bg-gradient-to-r from-purple-500 to-blue-500
+                                  text-white font-medium
+                                  hover:scale-105 transition
+                                  drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+
+                            Gunakan Promo →
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Promo Lainnya -->
+        <div class="mt-16">
+
+            <h3 class="text-4xl font-bold text-white mb-8">
+                Promo Lainnya
+            </h3>
+
+            <div class="grid md:grid-cols-2 gap-8">
+
+                <!-- Card 1 -->
+                <div class="bg-[#223251] rounded-3xl overflow-hidden shadow-xl">
+
+                    <div class="grid grid-cols-[220px_1fr]">
+
+                        <div class="relative">
+
+                            <img
+                                src="{{ asset('images/event-promo/midnight.jpeg') }}"
+                                class="w-full h-full object-cover">
+
+                            <span class="absolute top-3 left-3
+                                         bg-gradient-to-r from-purple-500 to-blue-500
+                                         text-white text-xs px-3 py-1 rounded-full">
+
+                                Buy 2 Get 1
+
+                            </span>
+
+                        </div>
+
+                        <div class="p-5">
+
+                            <h4 class="text-3xl font-bold text-white">
+                                Midnight Gaming
+                            </h4>
+
+                            <p class="text-gray-400 mt-3">
+                                Main 2 jam gratis 1 jam khusus untuk penyewaan di atas jam 12 malam.
+                            </p>
+
+                            <p class="text-gray-500 mt-5 text-sm">
+                                📅 Berlaku hingga: 30 Nov 2026
+                            </p>
+
+                            <a href="#"
+                               class="block text-center mt-6 py-3 rounded-xl
+                                      bg-gradient-to-r from-purple-500 to-blue-500
+                                      hover:scale-105 transition
+                                      text-white font-medium drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+
+                                Gunakan Promo →
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-[#223251] rounded-3xl overflow-hidden shadow-xl">
+
+                    <div class="grid grid-cols-[220px_1fr]">
+
+                        <div class="relative">
+
+                            <img
+                                src="{{ asset('images/event-promo/member.jpeg') }}"
+                                class="w-full h-full object-cover">
+
+                            <span class="absolute top-3 left-3
+                                         bg-gradient-to-r from-purple-500 to-blue-500
+                                         text-white text-xs px-3 py-1 rounded-full">
+
+                                50% OFF
+
+                            </span>
+
+                        </div>
+
+                        <div class="p-5">
+
+                            <h4 class="text-3xl font-bold text-white">
+                                New Member Bonus
+                            </h4>
+
+                            <p class="text-gray-400 mt-3">
+                                Diskon 50% untuk booking pertamamu di BOXPLAY.ID.
+                            </p>
+
+                            <p class="text-gray-500 mt-5 text-sm">
+                                📅 Berlaku hingga: 31 Des 2026
+                            </p>
+
+                            <a href="#"
+                               class="block text-center mt-6 py-3 rounded-xl
+                                      bg-gradient-to-r from-purple-500 to-blue-500
+                                      hover:scale-105 transition
+                                      text-white font-medium drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+
+                                Gunakan Promo →
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-[#223251] rounded-3xl overflow-hidden shadow-xl">
+
+                    <div class="grid grid-cols-[220px_1fr]">
+
+                        <div class="relative">
+
+                            <img
+                                src="{{ asset('images/event-promo/student.png') }}"
+                                class="w-full h-full object-cover">
+
+                            <span class="absolute top-3 left-3
+                                         bg-gradient-to-r from-purple-500 to-blue-500
+                                         text-white text-xs px-3 py-1 rounded-full">
+
+                                Rp 10.000
+
+                            </span>
+
+                        </div>
+
+                        <div class="p-5">
+
+                            <h4 class="text-3xl font-bold text-white">
+                                Student Privilege
+                            </h4>
+
+                            <p class="text-gray-400 mt-3">
+                                Potongan harga khusus pelajar dan mahasiswa.
+                                Tunjukkan kartu pelajarmu saat booking.
+                            </p>
+
+                            <p class="text-gray-500 mt-5 text-sm">
+                                📅 Berlaku: Selalu Ada
+                            </p>
+
+                            <a href="#"
+                               class="block text-center mt-6 py-3 rounded-xl
+                                      bg-gradient-to-r from-purple-500 to-blue-500
+                                      hover:scale-105 transition
+                                      text-white font-medium drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+
+                                Gunakan Promo →
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
