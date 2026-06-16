@@ -1,25 +1,22 @@
 <nav class="absolute top-0 left-0 w-full z-50">
-    <div class="max-w-6xl mx-auto px-6">
+    <div class="max-w-3xl mx-auto px-5">
 
-        <div class="mt-6 rounded-full backdrop-blur-md bg-white/5 border border-white/10">
+        <div class="mt-5 rounded-full backdrop-blur-md bg-white/5 border border-white/10">
 
-            <div class="flex justify-between items-center px-8 py-4">
+            <div class="flex justify-between items-center px-8 py-2">
 
                 <div class="flex items-center gap-3">
 
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
-
-                        🎮
-
+                    <div class="flex items-center pl-2">
+                        <img
+                            src="{{ asset('images/logo-boxplay.png') }}"
+                            alt="BOXPLAY.ID"
+                            class="h-8 w-auto object-contain">
                     </div>
-
-                    <span class="font-bold text-lg">
-                        BOXPLAY.ID
-                    </span>
 
                 </div>
 
-                <ul class="flex items-center gap-10">
+                <ul class="flex items-center gap-8">
 
                     <li>
                         <a href="{{ route('home') }}"

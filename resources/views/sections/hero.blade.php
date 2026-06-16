@@ -1,16 +1,31 @@
 <section class="relative h-screen overflow-hidden">
 
-    <img
-        src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2070&auto=format&fit=crop"
-        alt="Cafe"
-        class="absolute inset-0 w-full h-full object-cover opacity-30"
-    >
+    <div class="hero-slider absolute inset-0">
 
-    <div class="absolute inset-0 bg-[#081326]/85"></div>
+        <img src="/images/hero/hero1.png" class="hero-slide active">
+        <img src="/images/hero/hero2.jpeg" class="hero-slide">
+        <img src="/images/hero/hero3.png" class="hero-slide">
+        <img src="/images/hero/hero4.jpeg" class="hero-slide">
+        <img src="/images/hero/hero5.jpeg" class="hero-slide">
 
-    <div class="absolute left-[-200px] top-20 w-[900px] h-[900px] bg-blue-500/20 blur-[180px] rounded-full"></div>
+    </div>
 
-    <div class="absolute right-[-150px] top-10 w-[800px] h-[800px] bg-purple-500/20 blur-[180px] rounded-full"></div>
+    <div
+    class="absolute inset-0"
+    style="
+        background:
+        linear-gradient(
+            90deg,
+            rgba(8,19,38,.65) 0%,
+            rgba(8,19,38,.45) 50%,
+            rgba(8,19,38,.65) 100%
+        );
+    ">
+    </div>
+
+    <div class="absolute left-[-250px] top-20 w-[800px] h-[800px] bg-vyan-500/10 blur-[200px] rounded-full"></div>
+
+    <div class="absolute right-[-250px] top-10 w-[700px] h-[700px] bg-blue-500/8 blur-[200px] rounded-full"></div>
 
     <div class="relative z-10 flex items-center justify-center h-full">
 
@@ -35,12 +50,13 @@
                 Nongkrong lebih seru dengan PlayStation yang siap dimainkan kapan saja.
             </p>
 
-            <button
-                class="mt-10 px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105 duration-300">
+            <a
+                href="{{ route('booking.info') }}"
+                class="inline-block mt-10 px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105 duration-300 text-white font-semibold">
 
                 Mulai Booking →
 
-            </button>
+            </a>
 
         </div>
 
