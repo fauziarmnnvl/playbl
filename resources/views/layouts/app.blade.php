@@ -20,6 +20,20 @@
 
     <x-navbar />
 
+    <!-- Scroll Indicator -->
+    @if(request()->routeIs('home'))
+    <div id="scroll-indicator"
+        class="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-4">
+
+        <span class="dot active" data-target="0"></span>
+        <span class="dot" data-target="1"></span>
+        <span class="dot" data-target="2"></span>
+        <span class="dot" data-target="3"></span>
+        <span class="dot" data-target="4"></span>
+
+    </div>
+    @endif
+
     <main>
         @yield('content')
     </main>

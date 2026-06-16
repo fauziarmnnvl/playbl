@@ -65,23 +65,13 @@
 
                 </p>
 
-                <button
-                    class="
-                    mt-8
-                    px-8
-                    py-3.5
-                    rounded-full
-                    text-white
-                    font-medium
-                    bg-gradient-to-r
-                    from-purple-500
-                    to-blue-500
-                    hover:scale-105
-                    transition">
+                <a
+                    href="{{ route('booking.info') }}"
+                    class="inline-block mt-10 px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105 duration-300 text-white font-semibold">
 
                     Mulai Booking →
 
-                </button>
+                </a>
 
             </div>
 

@@ -45,15 +45,15 @@
             </div>
 
             <div class="swiper-slide">
-                <img src="{{ asset('images/games/IT-TAKES-TWO.jpeg') }}">
+                <img src="{{ asset('images/games/IT-TAKES-TWO.png') }}">
             </div>
 
             <div class="swiper-slide">
-                <img src="{{ asset('images/games/MOTO-GP.jpeg') }}">
+                <img src="{{ asset('images/games/MOTO-GP.png') }}">
             </div>
 
             <div class="swiper-slide">
-                <img src="{{ asset('images/games/NARUTO-CONNEC.jpeg') }}">
+                <img src="{{ asset('images/games/NARUTO-CONNEC.png') }}">
             </div>
 
             <div class="swiper-slide">
