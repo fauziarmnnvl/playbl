@@ -6,9 +6,24 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ## [Belum Dirilis]
 
-### Added
+### Planned - Version 0.3.0
 
-* Belum ada perubahan.
+#### Added
+
+* Integrasi status cabang dengan modul Booking Playbox.
+* Validasi ketersediaan cabang berdasarkan status operasional.
+
+#### Changed
+
+* Cabang berstatus Nonaktif tidak dapat dipilih saat proses booking.
+* Daftar cabang pada halaman booking hanya menampilkan cabang yang berstatus Aktif.
+
+#### Impacted Modules
+
+* Manajemen Cabang
+* Booking Playbox
+* Dokumentasi Sistem
+
 
 ---
 
