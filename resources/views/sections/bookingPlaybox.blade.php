@@ -92,142 +92,201 @@
             Pilih Playbox
         </h2>
 
-        <form>
+        <form method="GET"
+    action="{{ route('booking.durasi') }}"
+    x-data="{ playbox: '' }">
 
-            <div class="grid grid-cols-4 gap-4">
+    {{-- Simpan cabang dari step sebelumnya --}}
+    <input type="hidden"
+        name="branch"
+        value="{{ request('branch') }}">
 
-                {{-- PB1 --}}
-                <label class="cursor-pointer">
-                    <input type="radio" name="playbox" class="hidden">
+    <div class="grid grid-cols-4 gap-4">
 
-                    <div class="border border-slate-700 rounded-2xl h-32 flex flex-col items-center justify-center text-white hover:border-blue-500 transition">
+        {{-- PB1 --}}
+        <label
+            @click="playbox='PB1'"
+            class="cursor-pointer">
 
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-10 h-10 text-slate-400 mb-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
-                        </svg>
+            <input
+                type="radio"
+                name="playbox"
+                value="PB1"
+                x-model="playbox"
+                class="hidden">
 
-                        <span class="font-semibold">PB1</span>
-                    </div>
-                </label>
+            <div
+                :class="playbox === 'PB1'
+                    ? 'border-blue-500 bg-blue-900/30 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                    : 'border-slate-700'"
+                class="border rounded-2xl h-32 flex flex-col items-center justify-center text-white transition-all duration-300">
 
-                {{-- PB2 --}}
-                <label class="cursor-pointer">
-                    <input type="radio" name="playbox" class="hidden">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-10 h-10 text-slate-400 mb-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
+                </svg>
 
-                    <div class="border border-slate-700 rounded-2xl h-32 flex flex-col items-center justify-center text-white hover:border-blue-500 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-10 h-10 text-slate-400 mb-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
-                        </svg>
-                        <span class="font-semibold">PB2</span>
-                    </div>
-                </label>
+                <span class="font-semibold">PB1</span>
+            </div>
+        </label>
 
-                {{-- PB3 Used --}}
-                <div class="relative opacity-50">
+        {{-- PB2 --}}
+        <label
+            @click="playbox='PB2'"
+            class="cursor-pointer">
 
-                    <span class="absolute top-2 right-2 text-xs px-2 py-1 bg-red-900 text-red-300 rounded-full">
-                        Used
+            <input
+                type="radio"
+                name="playbox"
+                value="PB2"
+                x-model="playbox"
+                class="hidden">
+
+            <div
+                :class="playbox === 'PB2'
+                    ? 'border-blue-500 bg-blue-900/30 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                    : 'border-slate-700'"
+                class="border rounded-2xl h-32 flex flex-col items-center justify-center text-white transition-all duration-300">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-10 h-10 text-slate-400 mb-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
+                </svg>
+
+                <span class="font-semibold">PB2</span>
+            </div>
+        </label>
+
+        {{-- PB3 USED --}}
+        <div class="relative opacity-50">
+
+            <span class="absolute top-2 right-2 text-xs px-2 py-1 bg-red-900 text-red-300 rounded-full">
+                Used
+            </span>
+
+            <div class="border border-slate-700 rounded-2xl h-32 flex flex-col items-center justify-center text-white">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-10 h-10 text-slate-500 mb-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
+                </svg>
+
+                <span class="font-semibold">PB3</span>
+            </div>
+        </div>
+
+        {{-- PB4 --}}
+        <label
+            @click="playbox='PB4'"
+            class="cursor-pointer">
+
+            <input
+                type="radio"
+                name="playbox"
+                value="PB4"
+                x-model="playbox"
+                class="hidden">
+
+            <div
+                :class="playbox === 'PB4'
+                    ? 'border-blue-500 bg-blue-900/30 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                    : 'border-slate-700'"
+                class="border rounded-2xl h-32 flex flex-col items-center justify-center text-white transition-all duration-300">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-10 h-10 text-slate-400 mb-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
+                </svg>
+
+                <span class="font-semibold">PB4</span>
+            </div>
+        </label>
+
+        {{-- PB5 - PB8 --}}
+        @for ($i = 5; $i <= 8; $i++)
+            <label
+                @click="playbox='PB{{ $i }}'"
+                class="cursor-pointer">
+
+                <input
+                    type="radio"
+                    name="playbox"
+                    value="PB{{ $i }}"
+                    x-model="playbox"
+                    class="hidden">
+
+                <div
+                    :class="playbox === 'PB{{ $i }}'
+                        ? 'border-blue-500 bg-blue-900/30 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                        : 'border-slate-700'"
+                    class="border rounded-2xl h-32 flex flex-col items-center justify-center text-white transition-all duration-300">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="w-10 h-10 text-slate-400 mb-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
+                    </svg>
+
+                    <span class="font-semibold">
+                        PB{{ $i }}
                     </span>
 
-                    <div class="border border-slate-700 rounded-2xl h-32 flex flex-col items-center justify-center text-white">
-
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-10 h-10 text-slate-500 mb-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
-                        </svg>
-
-                        <span class="font-semibold">PB3</span>
-                    </div>
                 </div>
-
-                {{-- PB4 Active --}}
-                <label class="cursor-pointer">
-
-                    <input type="radio"
-                        name="playbox"
-                        checked
-                        class="hidden">
-
-                    <div class="border border-blue-500 bg-blue-900/30 shadow-[0_0_20px_rgba(59,130,246,0.4)] rounded-2xl h-32 flex flex-col items-center justify-center text-white">
-
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-10 h-10 text-blue-400 mb-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
-                        </svg>
-
-                        <span class="font-semibold">PB4</span>
-                    </div>
-                </label>
-
-                {{-- Baris 2 --}}
-                @for ($i = 5; $i <= 8; $i++)
-                    <label class="cursor-pointer">
-                        <input type="radio" name="playbox" class="hidden">
-
-                        <div class="border border-slate-700 rounded-2xl h-32 flex flex-col items-center justify-center text-white hover:border-blue-500 transition">
-
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="w-10 h-10 text-slate-400 mb-2"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
-                            </svg>
-
-                            <span class="font-semibold">PB{{ $i }}</span>
-
-                        </div>
-                    </label>
-                @endfor
-
-            </div>
-
-            {{-- Footer --}}
-            <div class="border-t border-slate-800 mt-8 pt-8 flex justify-between">
-
-                <a href="{{ route('booking.cabang') }}"
-                    class="px-6 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
-                    ← Kembali
-                </a>
-
-                <a href="{{ route('booking.durasi') }}"
-                    class="px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
-                    Lanjut →
-                </a>
-
-            </div>
-
-        </form>
+            </label>
+        @endfor
 
     </div>
+
+    {{-- Footer --}}
+    <div class="border-t border-slate-800 mt-8 pt-8 flex justify-between">
+
+        <a href="{{ route('booking.cabang') }}"
+            class="px-6 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
+            ← Kembali
+        </a>
+
+        <button
+            type="submit"
+            :disabled="!playbox"
+            :class="!playbox
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:scale-105'"
+            class="px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg transition-all duration-300">
+
+            Lanjut →
+        </button>
+
+    </div>
+
+    </form>
 
 </section>
