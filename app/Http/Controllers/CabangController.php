@@ -18,6 +18,13 @@ class CabangController extends Controller
         return view('admin.cabang.index', compact('cabangList'));
     }
 
+    public function publicBranch()
+    {
+        $cabangs = Cabang::withCount('playbox')->get();
+
+        return view('branches', compact('cabangs'));
+    }
+
     /**
      * Tampilkan form tambah cabang baru.
      */

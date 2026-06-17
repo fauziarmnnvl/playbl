@@ -39,7 +39,7 @@
                             </svg>
                         @endif
                         <div class="data-card-status {{ $cabang->status_buka ? 'open' : 'closed' }}">
-                            {{ $cabang->status_buka ? 'Buka' : 'Tutup' }}
+                            {{ $cabang->status_buka ? 'Aktif' : 'Nonaktif' }}
                         </div>
                     </div>
                     <div class="data-card-body">
