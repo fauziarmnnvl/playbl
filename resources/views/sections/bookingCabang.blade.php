@@ -82,81 +82,41 @@
             action="{{ route('booking.playbox') }}"
             x-data="{ branch: '' }">
 
-            <div class="space-y-5">
+        <div class="space-y-5">
+            @foreach($cabangs as $cabang)
+            <label
+                @if(!$cabang->status_buka)
+                    style="opacity:0.5; cursor:not-allowed;"
+                @endif
 
-                {{-- NUD HOUSE --}}
-                <label
-                    @click="branch='nud-house'"
-                    :class="branch === 'nud-house'
-                        ? 'border-blue-500 bg-blue-900/40 shadow-[0_0_20px_rgba(59,130,246,0.35)]'
-                        : 'border-slate-700'"
-                    class="block cursor-pointer rounded-2xl border p-8 text-white font-semibold text-xl transition-all duration-300">
+                @click="{{ $cabang->status_buka ? "branch='".$cabang->id_cabang."'" : '' }}"
 
-                    <input
-                        type="radio"
-                        name="branch"
-                        value="nud-house"
-                        x-model="branch"
-                        class="hidden">
+                :class="branch === '{{ $cabang->id_cabang }}'
+                    ? 'border-blue-500 bg-blue-900/40 shadow-[0_0_20px_rgba(59,130,246,0.35)]'
+                    : 'border-slate-700'"
 
-                    NUD HOUSE
-                </label>
+                class="block rounded-2xl border p-8 text-white font-semibold text-xl transition-all duration-300">
 
-                {{-- PALIOSPITI --}}
-                <label
-                    @click="branch='paliospiti'"
-                    :class="branch === 'paliospiti'
-                        ? 'border-blue-500 bg-blue-900/40 shadow-[0_0_20px_rgba(59,130,246,0.35)]'
-                        : 'border-slate-700'"
-                    class="block cursor-pointer rounded-2xl border p-8 text-white font-semibold text-xl transition-all duration-300">
+                <input
+                    type="radio"
+                    name="branch"
+                    value="{{ $cabang->id_cabang }}"
+                    x-model="branch"
+                    class="hidden"
+                    {{ !$cabang->status_buka ? 'disabled' : '' }}>
 
-                    <input
-                        type="radio"
-                        name="branch"
-                        value="paliospiti"
-                        x-model="branch"
-                        class="hidden">
+                <div class="flex justify-between items-center">
+                    <span>{{ $cabang->nama_cabang }}</span>
 
-                    Palióspíti Coffee & Roastery
-                </label>
-
-                {{-- PIRZY --}}
-                <label
-                    @click="branch='pirzy'"
-                    :class="branch === 'pirzy'
-                        ? 'border-blue-500 bg-blue-900/40 shadow-[0_0_20px_rgba(59,130,246,0.35)]'
-                        : 'border-slate-700'"
-                    class="block cursor-pointer rounded-2xl border p-8 text-white font-semibold text-xl transition-all duration-300">
-
-                    <input
-                        type="radio"
-                        name="branch"
-                        value="pirzy"
-                        x-model="branch"
-                        class="hidden">
-
-                    Pirzy Coffee
-                </label>
-
-                {{-- WAROENG RADEN --}}
-                <label
-                    @click="branch='waroeng-raden'"
-                    :class="branch === 'waroeng-raden'
-                        ? 'border-blue-500 bg-blue-900/40 shadow-[0_0_20px_rgba(59,130,246,0.35)]'
-                        : 'border-slate-700'"
-                    class="block cursor-pointer rounded-2xl border p-8 text-white font-semibold text-xl transition-all duration-300">
-
-                    <input
-                        type="radio"
-                        name="branch"
-                        value="waroeng-raden"
-                        x-model="branch"
-                        class="hidden">
-
-                    Waroeng Raden
-                </label>
-
-            </div>
+                    @if(!$cabang->status_buka)
+                        <span class="text-red-400 text-sm">
+                            Nonaktif
+                        </span>
+                    @endif
+                </div>
+            </label>
+            @endforeach
+        </div>
 
             {{-- Footer --}}
             <div class="border-t border-slate-800 mt-10 pt-8 flex justify-between">

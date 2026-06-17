@@ -63,8 +63,8 @@
             <div class="form-group">
                 <label class="form-label">Status Cabang</label>
                 <select name="status_buka" class="form-select">
-                    <option value="1" {{ $cabang->status_buka ? 'selected' : '' }}>Buka</option>
-                    <option value="0" {{ !$cabang->status_buka ? 'selected' : '' }}>Tutup</option>
+                    <option value="1" {{ $cabang->status_buka ? 'selected' : '' }}>Aktif</option>
+                    <option value="0" {{ !$cabang->status_buka ? 'selected' : '' }}>Nonaktif</option>
                 </select>
             </div>
 

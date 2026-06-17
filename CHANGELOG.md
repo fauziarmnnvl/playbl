@@ -8,9 +8,23 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ### Added
 
-* Belum ada perubahan.
+* Integrasi data cabang dengan halaman Booking Playbox.
+* Integrasi data cabang dengan halaman Branch pada sisi pelanggan.
+* BookingController untuk pengelolaan data cabang pada workflow booking.
+* Validasi ketersediaan cabang berdasarkan status operasional.
 
----
+### Changed
+
+* Daftar cabang pada halaman Booking kini menggunakan data dari database dan tidak lagi hardcoded.
+* Daftar cabang pada halaman Branch kini menggunakan data dari database dan tidak lagi hardcoded.
+* Cabang berstatus Nonaktif tidak dapat dipilih pada proses booking.
+* Status cabang pada sisi pelanggan kini mengikuti perubahan yang dilakukan admin pada Manajemen Cabang.
+* Terminologi status cabang disesuaikan menjadi Aktif dan Nonaktif.
+
+### Documentation
+
+* Memperbarui CHANGELOG sesuai implementasi fitur kontrol ketersediaan cabang.
+
 
 ## [0.2.0] - 14 Juni 2026
 
