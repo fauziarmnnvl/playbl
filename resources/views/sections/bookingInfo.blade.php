@@ -92,25 +92,25 @@
         <form>
 
             {{-- Nama --}}
-            <div class="mb-6">
-                <label class="block text-slate-300 mb-3">
-                    Nama Lengkap
-                </label>
-
+            <div class="mb-7">
+                Nama Lengkap
                 <input type="text"
                     placeholder="Masukkan nama kamu"
-                    class="w-full h-14 px-5 rounded-xl bg-slate-800/60 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+                    class="w-full h-14 px-5 rounded-xl bg-slate-800/60 border border-slate-700 text-white placeholder-slate-500
+                    hover:border-blue-400
+                    focus:outline-none
+                    focus:border-blue-500">
             </div>
 
             {{-- WhatsApp --}}
             <div class="mb-10">
-                <label class="block text-slate-300 mb-3">
-                    Nomor WhatsApp
-                </label>
-
+                Nomor WhatsApp
                 <input type="text"
                     placeholder="081234567890"
-                    class="w-full h-14 px-5 rounded-xl bg-slate-800/60 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+                    class="w-full h-14 px-5 rounded-xl bg-slate-800/60 border border-slate-700 text-white placeholder-slate-500
+                    hover:border-blue-400
+                    focus:outline-none
+                    focus:border-blue-500">
             </div>
 
             <div class="border-t border-slate-800 pt-8 flex justify-end">

@@ -41,9 +41,19 @@ Route::view('/booking/durasi', 'bookings.durasi')->name('booking.durasi');
 
 Route::view('/booking/review', 'bookings.review')->name('booking.review');
 
+Route::view('/booking/review-flexible', 'bookings.review-flexible')->name('booking.review.flexible');
+
+Route::view('/booking/session-flexible', 'bookings.session-flexible')->name('booking.session.flexible');
+
 Route::view('/booking/pembayaran', 'bookings.pembayaran')->name('booking.pembayaran');
 
+Route::view('/booking/pembayaran-flexible', 'bookings.pembayaran-flexible')->name('booking.pembayaran.flexible');
+
 Route::view('/booking/success', 'bookings.success')->name('booking.success');
+
+Route::view('/booking/success-flexible', 'bookings.success-flexible')->name('booking.success.flexible');
+
+Route::view('/faq', 'faq')->name('faq');
 
 
 /*
