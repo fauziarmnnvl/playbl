@@ -24,7 +24,7 @@
         <div class="bg-[#223251] rounded-3xl overflow-hidden shadow-xl">
             <img
                 src="{{ $cabang->foto_cabang
-                    ? asset('storage/'.$cabang->foto_cabang)
+                    ? asset($cabang->foto_cabang)
                     : asset('images/branch/default.jpg') }}"
                 class="w-full h-64 object-cover">
             <div class="p-6">
