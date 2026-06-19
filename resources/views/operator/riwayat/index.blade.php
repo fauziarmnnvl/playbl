@@ -16,8 +16,7 @@
                         <th>Pelanggan</th>
                         <th>Playbox</th>
                         <th>Durasi</th>
-                        <th>Total Biaya</th>
-                        <th>Status Bayar</th>
+                        <th>Total Harga</th>
                         <th>Status Sesi</th>
                         <th>Waktu</th>
                     </tr>
@@ -29,25 +28,15 @@
                             <td><code style="background:#f1f5f9; padding:2px 8px; border-radius:4px; font-size:0.8125rem;">{{ $trx->kode_transaksi }}</code></td>
                             <td class="td-bold">{{ $trx->pelanggan->nama_pelanggan ?? '—' }}</td>
                             <td>{{ $trx->playbox->nama_playbox ?? '—' }}</td>
-                            <td>{{ $trx->durasi_menit }} menit</td>
-                            <td>Rp {{ number_format($trx->total_biaya, 0, ',', '.') }}</td>
-                            <td>
-                                @php
-                                    $bayarMap = [
-                                        'Lunas'                 => 'badge-green',
-                                        'Menunggu Verifikasi'   => 'badge-amber',
-                                        'Dibatalkan'            => 'badge-red',
-                                    ];
-                                @endphp
-                                <span class="badge {{ $bayarMap[$trx->status_bayar] ?? 'badge-default' }}">{{ $trx->status_bayar }}</span>
-                            </td>
+                            <td>{{ $trx->durasi }} menit</td>
+                            <td>Rp {{ number_format($trx->total_harga, 0, ',', '.') }}</td>
                             <td>
                                 @if ($trx->sesiBermain)
                                     @php
                                         $sesiMap = [
+                                            'Belum Mulai' => 'badge-default',
                                             'Berjalan' => 'badge-blue',
                                             'Selesai'  => 'badge-green',
-                                            'Dibatalkan' => 'badge-red',
                                         ];
                                     @endphp
                                     <span class="badge {{ $sesiMap[$trx->sesiBermain->status_sesi] ?? 'badge-default' }}">{{ $trx->sesiBermain->status_sesi }}</span>
@@ -55,7 +44,7 @@
                                     <span class="badge badge-default">—</span>
                                 @endif
                             </td>
-                            <td style="white-space:nowrap">{{ $trx->waktu_transaksi ? $trx->waktu_transaksi->format('d/m/Y H:i') : '—' }}</td>
+                            <td style="white-space:nowrap">{{ $trx->tgl_transaksi ? $trx->tgl_transaksi->format('d/m/Y H:i') : '—' }}</td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -41,9 +41,9 @@
                                         'Maintenance' => 'badge-amber',
                                         'Rusak'       => 'badge-red',
                                     ];
-                                    $badgeClass = $statusMap[$playbox->status_mesin] ?? 'badge-default';
+                                    $badgeClass = $statusMap[$playbox->status_unit] ?? 'badge-default';
                                 @endphp
-                                <span class="badge {{ $badgeClass }}">{{ $playbox->status_mesin }}</span>
+                                <span class="badge {{ $badgeClass }}">{{ $playbox->status_unit }}</span>
                             </td>
                             <td>
                                 <div class="table-actions">

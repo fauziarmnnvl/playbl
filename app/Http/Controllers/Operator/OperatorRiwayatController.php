@@ -20,7 +20,7 @@ class OperatorRiwayatController extends Controller
             ->whereHas('playbox', function ($q) use ($cabangId) {
                 $q->where('id_cabang', $cabangId);
             })
-            ->orderByDesc('waktu_transaksi')
+            ->orderByDesc('tgl_transaksi')
             ->get();
 
         return view('operator.riwayat.index', compact('riwayat'));

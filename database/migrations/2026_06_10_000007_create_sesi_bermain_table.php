@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('id_transaksi')->constrained('transaksi', 'id_transaksi')->onDelete('cascade');
             $table->dateTime('waktu_mulai')->nullable();
             $table->dateTime('waktu_selesai')->nullable();
-            $table->integer('sisa_waktu_menit')->default(0);
+            $table->integer('sisa_waktu')->default(0);
             $table->enum('status_sesi', ['Belum Mulai', 'Berjalan', 'Selesai'])->default('Belum Mulai');
         });
     }

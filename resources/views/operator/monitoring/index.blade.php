@@ -22,7 +22,7 @@
             </div>
             <div class="kpi-info">
                 <h3>Tersedia</h3>
-                <span class="kpi-value">{{ $playboxList->where('status_mesin', 'Tersedia')->count() }}</span>
+                <span class="kpi-value">{{ $playboxList->where('status_unit', 'Tersedia')->count() }}</span>
             </div>
         </div>
         <div class="kpi-card">
@@ -31,7 +31,7 @@
             </div>
             <div class="kpi-info">
                 <h3>Maintenance / Rusak</h3>
-                <span class="kpi-value">{{ $playboxList->whereIn('status_mesin', ['Maintenance', 'Rusak'])->count() }}</span>
+                <span class="kpi-value">{{ $playboxList->whereIn('status_unit', ['Maintenance', 'Rusak'])->count() }}</span>
             </div>
         </div>
     </div>
@@ -60,9 +60,9 @@
                                         'Maintenance' => 'badge-amber',
                                         'Rusak'       => 'badge-red',
                                     ];
-                                    $badgeClass = $statusMap[$playbox->status_mesin] ?? 'badge-default';
+                                    $badgeClass = $statusMap[$playbox->status_unit] ?? 'badge-default';
                                 @endphp
-                                <span class="badge {{ $badgeClass }}">{{ $playbox->status_mesin }}</span>
+                                <span class="badge {{ $badgeClass }}">{{ $playbox->status_unit }}</span>
                             </td>
                         </tr>
                     @endforeach

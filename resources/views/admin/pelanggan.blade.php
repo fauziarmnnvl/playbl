@@ -61,8 +61,8 @@
                                 <span class="badge {{ $badgeClass }}">{{ $bookingCount }} Booking</span>
                             </td>
                             <td>
-                                @if($pelanggan->transaksi_max_waktu_transaksi)
-                                    {{ \Carbon\Carbon::parse($pelanggan->transaksi_max_waktu_transaksi)->locale('id')->translatedFormat('d M Y') }}
+                                @if($pelanggan->transaksi_max_tgl_transaksi)
+                                    {{ \Carbon\Carbon::parse($pelanggan->transaksi_max_tgl_transaksi)->locale('id')->translatedFormat('d M Y') }}
                                 @else
                                     —
                                 @endif

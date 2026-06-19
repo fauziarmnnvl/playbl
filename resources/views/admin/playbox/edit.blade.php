@@ -43,15 +43,15 @@
             </div>
 
             <div class="form-group">
-                <label for="status_mesin" class="form-label">Status Mesin <span style="color:var(--error)">*</span></label>
-                <select name="status_mesin" id="status_mesin" class="form-select" required>
+                <label for="status_unit" class="form-label">Status Unit <span style="color:var(--error)">*</span></label>
+                <select name="status_unit" id="status_unit" class="form-select" required>
                     @foreach (['Tersedia', 'Maintenance', 'Rusak'] as $status)
-                        <option value="{{ $status }}" {{ old('status_mesin', $playbox->status_mesin) == $status ? 'selected' : '' }}>
+                        <option value="{{ $status }}" {{ old('status_unit', $playbox->status_unit) == $status ? 'selected' : '' }}>
                             {{ $status }}
                         </option>
                     @endforeach
                 </select>
-                @error('status_mesin')
+                @error('status_unit')
                     <div class="form-error">{{ $message }}</div>
                 @enderror
             </div>

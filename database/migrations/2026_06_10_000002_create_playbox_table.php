@@ -15,7 +15,12 @@ return new class extends Migration
             $table->id('id_playbox');
             $table->foreignId('id_cabang')->constrained('cabang', 'id_cabang')->onDelete('cascade');
             $table->string('nama_playbox', 50);
-            $table->enum('status_mesin', ['Tersedia', 'Digunakan', 'Selesai', 'Maintenance'])->default('Tersedia');
+            $table->enum('status_unit', [
+                'Tersedia',
+                'Digunakan',
+                'Maintenance',
+                'Rusak'
+            ])->default('Tersedia');
         });
     }
 

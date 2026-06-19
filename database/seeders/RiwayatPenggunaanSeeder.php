@@ -19,12 +19,15 @@ class RiwayatPenggunaanSeeder extends Seeder
             ->get();
 
         foreach ($sesiSelesai as $sesi) {
+
             $transaksi = $sesi->transaksi;
 
             RiwayatPenggunaan::create([
                 'id_transaksi' => $transaksi->id_transaksi,
-                'tanggal_main' => Carbon::parse($transaksi->waktu_transaksi)->toDateString(),
-                'pendapatan' => $transaksi->total_biaya,
+                'tanggal_main' => Carbon::parse(
+                    $transaksi->tgl_transaksi
+                )->toDateString(),
+                'pendapatan' => $transaksi->total_harga,
                 'keterangan' => 'Sesi selesai - ' . $transaksi->kode_transaksi,
             ]);
         }

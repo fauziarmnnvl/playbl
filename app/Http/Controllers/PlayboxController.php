@@ -36,7 +36,7 @@ class PlayboxController extends Controller
         $validated = $request->validate([
             'id_cabang'     => 'required|exists:cabang,id_cabang',
             'nama_playbox'  => 'required|string|max:50',
-            'status_mesin'  => 'required|in:Tersedia,Maintenance,Rusak',
+            'status_unit'   => 'required|in:Tersedia,Maintenance,Rusak',
         ]);
 
         Playbox::create($validated);
@@ -67,7 +67,7 @@ class PlayboxController extends Controller
         $validated = $request->validate([
             'id_cabang'     => 'required|exists:cabang,id_cabang',
             'nama_playbox'  => 'required|string|max:50',
-            'status_mesin'  => 'required|in:Tersedia,Maintenance,Rusak',
+            'status_unit'   => 'required|in:Tersedia,Maintenance,Rusak',
         ]);
 
         $playbox->update($validated);
@@ -85,13 +85,10 @@ class PlayboxController extends Controller
     {
         $playbox = Playbox::findOrFail($id);
 
-        // Cek transaksi aktif (status_bayar Menunggu Verifikasi) atau sesi berjalan
+        // Cek apakah ada sesi bermain yang masih berjalan
         $hasActiveTransaction = $playbox->transaksi()
-            ->where(function ($q) {
-                $q->where('status_bayar', 'Menunggu Verifikasi')
-                  ->orWhereHas('sesiBermain', function ($sq) {
-                      $sq->where('status_sesi', 'Berjalan');
-                  });
+            ->whereHas('sesiBermain', function ($sq) {
+                $sq->where('status_sesi', 'Berjalan');
             })->exists();
 
         if ($hasActiveTransaction) {

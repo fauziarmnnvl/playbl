@@ -16,14 +16,24 @@ class Transaksi extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'kode_transaksi', 'id_pelanggan', 'id_playbox', 'id_promo',
-        'durasi_menit', 'total_biaya', 'metode_bayar', 'status_bayar', 'waktu_transaksi',
+        'kode_transaksi',
+        'id_pelanggan',
+        'id_cabang',
+        'id_playbox',
+        'id_promo',
+        'durasi',
+        'total_harga',
+        'tgl_transaksi',
+    ];
+    protected $casts = [
+        'total_harga' => 'decimal:2',
+        'tgl_transaksi' => 'datetime',
     ];
 
-    protected $casts = [
-        'total_biaya' => 'decimal:2',
-        'waktu_transaksi' => 'datetime',
-    ];
+    public function cabang()
+    {
+        return $this->belongsTo(Cabang::class, 'id_cabang', 'id_cabang');
+    }
 
     public function pelanggan()
     {
@@ -65,7 +75,7 @@ class Transaksi extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['kode_transaksi', 'status_bayar', 'total_biaya'])
+            ->logOnly(['kode_transaksi', 'total_harga'])
             ->logOnlyDirty();
     }
 }

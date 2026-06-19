@@ -14,7 +14,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $totalPlayboxTersedia = Playbox::where('status_mesin', 'Tersedia')->count();
+        $totalPlayboxTersedia = Playbox::where('status_unit', 'Tersedia')->count();
 
         $totalSesiAktif = SesiBermain::where('status_sesi', 'Berjalan')
             ->whereDate('waktu_mulai', today())->count();
@@ -25,7 +25,7 @@ class DashboardController extends Controller
         $totalPlaybox = Playbox::count();
 
         $totalPlayboxAktif =
-            Playbox::where('status_mesin', 'Aktif')
+            Playbox::where('status_unit', 'Digunakan')
             ->count();
 
         $pendingVerifikasi = 0;

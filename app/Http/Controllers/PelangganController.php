@@ -13,7 +13,7 @@ class PelangganController extends Controller
     public function index(Request $request)
     {
         $query = Pelanggan::withCount('transaksi')
-            ->withMax('transaksi', 'waktu_transaksi');
+            ->withMax('transaksi', 'tgl_transaksi');
 
         if ($request->search) {
             $query->where(function ($q) use ($request) {
