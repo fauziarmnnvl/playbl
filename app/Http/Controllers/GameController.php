@@ -53,7 +53,6 @@ class GameController extends Controller
         $validated = $request->validate([
             'judul_game'  => 'required|string|max:100',
             'kategori'    => 'nullable|string|max:50',
-            'deskripsi'   => 'nullable|string',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
@@ -90,7 +89,6 @@ class GameController extends Controller
         $validated = $request->validate([
             'judul_game'  => 'required|string|max:100',
             'kategori'    => 'nullable|string|max:50',
-            'deskripsi'   => 'nullable|string',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 

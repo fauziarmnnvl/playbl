@@ -6,13 +6,6 @@
 @section('breadcrumb', 'Data Master / Game / Edit')
 
 @section('content')
-    <div class="page-header">
-        <div>
-            <h1>Edit Game</h1>
-            <p>Perbarui data {{ $game->judul_game }}</p>
-        </div>
-    </div>
-
     <div class="form-card">
         <form method="POST" action="{{ route('admin.game.update', $game->id_game) }}" enctype="multipart/form-data">
             @csrf
@@ -32,14 +25,6 @@
                 <input type="text" name="kategori" id="kategori" class="form-input"
                        value="{{ old('kategori', $game->kategori) }}">
                 @error('kategori')
-                    <div class="form-error">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea name="deskripsi" id="deskripsi" class="form-textarea">{{ old('deskripsi', $game->deskripsi) }}</textarea>
-                @error('deskripsi')
                     <div class="form-error">{{ $message }}</div>
                 @enderror
             </div>
