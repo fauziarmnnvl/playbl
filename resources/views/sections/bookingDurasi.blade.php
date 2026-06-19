@@ -1,10 +1,10 @@
 <section class="min-h-screen flex flex-col items-center py-20 px-4">
 
     {{-- Title --}}
-    <div class="text-center mb-12">
+    <div class="text-center py-12">
         <h1 class="text-5xl font-bold text-white">
             Book
-            <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+            <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
                 Playbox
             </span>
         </h1>
@@ -60,15 +60,28 @@
             Pilih Durasi
         </h2>
 
-        <form>
+        <form x-data="{ session: '', duration: '' }">
 
             {{-- SESI WAKTU TETAP --}}
-            <div class="rounded-3xl border border-blue-500 bg-blue-900/20 p-6 shadow-[0_0_25px_rgba(59,130,246,0.35)] mb-5">
+            <div
+                @click="session='tetap'"
+                :class="session === 'tetap'
+                    ? 'border-blue-500 bg-blue-900/20 shadow-[0_0_25px_rgba(59,130,246,0.35)]'
+                    : 'border-slate-700 bg-slate-800/30'"
+                class="rounded-3xl border p-6 mb-5 cursor-pointer
+                transition-all duration-300
+
+                hover:border-blue-500
+                hover:bg-blue-900/10
+                hover:shadow-[0_0_25px_rgba(59,130,246,0.25)]
+                hover:-translate-y-1">
 
                 <div class="flex items-start gap-4">
 
                     <div class="w-12 h-12 rounded-xl bg-blue-500 flex items-center justify-center text-white">
-                        ⏰
+
+                        <i class="bi bi-clock-history text-2xl"></i>
+
                     </div>
 
                     <div class="flex-1">
@@ -90,20 +103,26 @@
                         <div class="grid grid-cols-2 gap-4">
 
                             {{-- 1 Jam --}}
-                            <label class="cursor-pointer">
-                                <input type="radio"
+                            <input
+                                    type="radio"
                                     name="duration"
                                     value="1-jam"
+                                    x-model="duration"
+                                    @click.stop
                                     class="hidden">
 
-                                <div class="border border-slate-700 rounded-2xl p-5 text-center hover:border-blue-500 transition">
+                                <div
+                                    :class="duration === '1-jam'
+                                        ? 'border-blue-500 bg-blue-900/30'
+                                        : 'border-slate-700'"
+                                    class="border rounded-2xl p-5 text-center hover:border-blue-500 transition">
 
                                     <h4 class="text-xl font-bold text-white">
                                         1 Jam
                                     </h4>
 
                                     <p class="text-slate-400 mt-2">
-                                        Rp 25.000
+                                        Rp 15.000
                                     </p>
 
                                 </div>
@@ -112,23 +131,26 @@
                             {{-- 2 Jam --}}
                             <label class="cursor-pointer relative">
 
-                                <span class="absolute -top-3 right-4 bg-yellow-500 text-black text-xs px-3 py-1 rounded-full font-semibold">
-                                    Populer
-                                </span>
-
-                                <input type="radio"
+                                <input
+                                    type="radio"
                                     name="duration"
                                     value="2-jam"
+                                    x-model="duration"
+                                    @click.stop
                                     class="hidden">
 
-                                <div class="border border-slate-700 rounded-2xl p-5 text-center hover:border-blue-500 transition">
+                                <div
+                                    :class="duration === '2-jam'
+                                        ? 'border-blue-500 bg-blue-900/30'
+                                        : 'border-slate-700'"
+                                    class="border rounded-2xl p-5 text-center hover:border-blue-500 transition">
 
                                     <h4 class="text-xl font-bold text-white">
                                         2 Jam
                                     </h4>
 
                                     <p class="text-slate-400 mt-2">
-                                        Rp 45.000
+                                        Rp 30.000
                                     </p>
 
                                 </div>
@@ -143,12 +165,26 @@
             </div>
 
             {{-- SESI FLEKSIBEL --}}
-            <div class="rounded-3xl border border-slate-700 bg-slate-800/30 p-6">
+            <div
+                @click="session='fleksibel'"
+                :class="session === 'fleksibel'
+                    ? 'border-purple-500 bg-purple-900/20 shadow-[0_0_25px_rgba(168,85,247,0.35)]'
+                    : 'border-slate-700 bg-slate-800/30'"
+                class="rounded-3xl border p-6 cursor-pointer
+
+                transition-all duration-300 ease-out
+
+                hover:border-purple-500
+                hover:bg-purple-900/10
+                hover:shadow-[0_0_25px_rgba(168,85,247,0.25)]
+                hover:-translate-y-1">
 
                 <div class="flex items-start gap-4">
 
-                    <div class="w-12 h-12 rounded-xl bg-slate-700 flex items-center justify-center text-white text-xl">
-                        ∞
+                    <div class="w-12 h-12 rounded-xl bg-purple-600 flex items-center justify-center text-white">
+
+                        <i class="bi bi-lightning-charge-fill text-2xl"></i>
+
                     </div>
 
                     <div class="flex-1">
@@ -159,7 +195,7 @@
                                 Sesi Fleksibel
                             </h3>
 
-                            <span class="px-3 py-1 text-xs rounded-full bg-purple-600 text-white">
+                            <span class="px-3 py-1 text-xs rounded-full bg-blue-600 text-white">
                                 Bayar di Akhir
                             </span>
 
@@ -198,10 +234,29 @@
                     ← Kembali
                 </a>
 
-                <a href="{{ route('booking.review') }}"
-                    class="px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
-                    Lanjut →
-                </a>
+            <button
+                type="button"
+
+                @click="
+                    if(session === 'tetap'){
+                        window.location='{{ route('booking.review') }}'
+                    }
+
+                    if(session === 'fleksibel'){
+                        window.location='{{ route('booking.review.flexible') }}'
+                    }
+                "
+
+                :disabled="!session"
+
+                :class="!session
+                    ? 'opacity-50 cursor-not-allowed'
+                    : 'hover:scale-105'"
+
+                class="px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg transition-all duration-300">
+
+                Lanjut →
+            </button>
 
             </div>
 

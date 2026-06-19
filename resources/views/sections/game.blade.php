@@ -22,32 +22,61 @@
         <!-- Search & Filter -->
         <div class="mt-12">
 
-            <div class="bg-[#1B2944] rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-center">
+            <div class="bg-[#1B2944] rounded-2xl p-4">
 
-                <input
-                    type="text"
-                    placeholder="Cari game..."
-                    class="w-full bg-[#111C32] border border-transparent rounded-xl px-5 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500">
+                <div class="flex flex-col md:flex-row gap-4">
 
-                <div class="flex flex-wrap gap-2">
+                <!-- Filter Kategori -->
+                <div class="flex flex-wrap gap-3">
 
-                    <button class="px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white text-sm">
-                        All
+                    <button class="px-5 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 text-white font-medium">
+                        Semua
                     </button>
 
-                    <button class="px-4 py-2 rounded-full bg-[#223251] text-gray-300 hover:bg-[#2B3D60] text-white text-sm">
+                    <button class="px-5 py-3 rounded-xl bg-[#111C32] border border-white/10 text-white hover:border-blue-500 transition">
                         Aksi & Petualangan
                     </button>
 
-                    <button class="px-4 py-2 rounded-full bg-[#223251] text-gray-300 hover:bg-[#2B3D60] text-white text-sm">
+                    <button class="px-5 py-3 rounded-xl bg-[#111C32] border border-white/10 text-white hover:border-blue-500 transition">
                         Olahraga
                     </button>
 
                 </div>
 
+            <!-- Search Box -->
+            <div class="relative flex-1">
+
+                <input
+                    type="text"
+                    placeholder="Cari game..."
+                    class="w-full bg-[#111C32] border border-transparent rounded-xl pl-5 pr-14 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 hover:border-blue-500 transition">
+
+                <!-- Search Icon -->
+                <button
+                    class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor">
+
+                        <path stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
+
+                    </svg>
+
+                </button>
+
             </div>
 
         </div>
+
+    </div>
+
+</div>
 
         <!-- Games Grid -->
         <div class="grid md:grid-cols-3 gap-8 mt-12">
@@ -134,7 +163,7 @@
 
             <div class="group">
                 <div class="overflow-hidden rounded-3xl">
-                    <img src="{{ asset('images/games/IT-TAKES-TWO.jpeg') }}"
+                    <img src="{{ asset('images/games/IT-TAKES-TWO.png') }}"
                         class="w-full h-[320px] object-cover group-hover:scale-105 transition duration-300">
                 </div>
 
@@ -152,7 +181,7 @@
 
             <div class="group">
                 <div class="overflow-hidden rounded-3xl">
-                    <img src="{{ asset('images/games/MOTO-GP.jpeg') }}"
+                    <img src="{{ asset('images/games/MOTO-GP.png') }}"
                         class="w-full h-[320px] object-cover group-hover:scale-105 transition duration-300">
                 </div>
 
@@ -170,7 +199,7 @@
 
             <div class="group">
                 <div class="overflow-hidden rounded-3xl">
-                    <img src="{{ asset('images/games/NARUTO-CONNEC.jpg') }}"
+                    <img src="{{ asset('images/games/NARUTO-CONNEC.png') }}"
                         class="w-full h-[320px] object-cover group-hover:scale-105 transition duration-300">
                 </div>
 

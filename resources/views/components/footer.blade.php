@@ -5,31 +5,36 @@
 
         <div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex items-center">
 
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
-                    🎮
-                </div>
-
-                <h3 class="font-bold text-lg">
-                    BOXPLAY.ID
-                </h3>
+                <img
+                    src="{{ asset('images/logo-boxplay.png') }}"
+                    alt="BOXPLAY.ID"
+                    class="h-11 w-auto object-contain">
 
             </div>
 
             <p class="text-gray-400 mt-4 text-sm leading-relaxed">
-                Platform rental PlayStation self-service pertama di Indonesia.
+                Platform rental PlayStation self-service terbaik.
                 Nikmati pengalaman bermain PlayStation dengan mudah,
                 cepat, dan nyaman di cafe favoritmu.
             </p>
 
             <div class="flex gap-4 mt-5 text-gray-400 text-lg">
 
-                <i class="bi bi-instagram hover:text-white cursor-pointer transition"></i>
+                <a href="https://www.instagram.com/boxplay.id_/"
+                target="_blank"
+                class="hover:text-pink-500 hover:scale-125 transition duration-300">
+                    <i class="bi bi-instagram"></i>
+                </a>
 
-                <i class="bi bi-twitter hover:text-white cursor-pointer transition"></i>
+                <a href="https://wa.me/6285262939746?text=Halo%20BoxPlay,%20saya%20ingin%20bertanya%20tentang%20booking%20Playbox"
+                target="_blank"
+                class="hover:text-green-500 hover:scale-125 transition duration-300">
 
-                <i class="bi bi-facebook hover:text-white cursor-pointer transition"></i>
+                    <i class="bi bi-whatsapp"></i>
+
+                </a>
 
             </div>
 
@@ -43,13 +48,11 @@
 
             <ul class="space-y-3 text-gray-400 text-sm">
 
-                <li><a href="#" class="hover:text-white">Home</a></li>
+                <li><a href="{{ route('home') }}" class="hover:text-white">Home</a></li>
 
-                <li><a href="#" class="hover:text-white">Branch Locations</a></li>
+                <li><a href="{{ route('branch') }}" class="hover:text-white">Branch Locations</a></li>
 
-                <li><a href="#" class="hover:text-white">Events & Promos</a></li>
-
-                <li><a href="#" class="hover:text-white">Book a Playbox</a></li>
+                <li><a href="{{ route('event-promo') }}" class="hover:text-white">Events & Promos</a></li>
 
             </ul>
 
@@ -63,13 +66,9 @@
 
             <ul class="space-y-3 text-gray-400 text-sm">
 
-                <li><a href="#" class="hover:text-white">FAQ</a></li>
+                <li><a href="{{ route('faq') }}" class="hover:text-white">FAQ</a></li>
 
-                <li><a href="#" class="hover:text-white">Terms of Services</a></li>
-
-                <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
-                
-                <li><a href="#" class="hover:text-white">Contact Us</a></li>
+                <li><a href="{{ route('booking.info') }}" class="hover:text-white">Cara Booking</a></li>
 
             </ul>
 

@@ -3,7 +3,7 @@
     {{-- Title --}}
     <div class="py-10">
         <h1 class="text-5xl font-bold text-white">
-            Book <span class="text-indigo-500">Playbox</span>
+            Book <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">Playbox</span>
         </h1>
     </div>
 
@@ -82,41 +82,53 @@
             action="{{ route('booking.playbox') }}"
             x-data="{ branch: '' }">
 
-        <div class="space-y-5">
-            @foreach($cabangs as $cabang)
-            <label
-                @if(!$cabang->status_buka)
-                    style="opacity:0.5; cursor:not-allowed;"
-                @endif
+            <div class="space-y-5">
 
-                @click="{{ $cabang->status_buka ? "branch='".$cabang->id_cabang."'" : '' }}"
+                @foreach($cabangs as $cabang)
 
-                :class="branch === '{{ $cabang->id_cabang }}'
-                    ? 'border-blue-500 bg-blue-900/40 shadow-[0_0_20px_rgba(59,130,246,0.35)]'
-                    : 'border-slate-700'"
-
-                class="block rounded-2xl border p-8 text-white font-semibold text-xl transition-all duration-300">
-
-                <input
-                    type="radio"
-                    name="branch"
-                    value="{{ $cabang->id_cabang }}"
-                    x-model="branch"
-                    class="hidden"
-                    {{ !$cabang->status_buka ? 'disabled' : '' }}>
-
-                <div class="flex justify-between items-center">
-                    <span>{{ $cabang->nama_cabang }}</span>
-
+                <label
                     @if(!$cabang->status_buka)
-                        <span class="text-red-400 text-sm">
-                            Nonaktif
-                        </span>
+                        style="opacity:0.5; cursor:not-allowed;"
                     @endif
-                </div>
-            </label>
-            @endforeach
-        </div>
+
+                    @click="{{ $cabang->status_buka ? "branch='".$cabang->id_cabang."'" : '' }}"
+
+                    :class="branch === '{{ $cabang->id_cabang }}'
+                        ? 'border-blue-500 bg-blue-900/40 shadow-[0_0_20px_rgba(59,130,246,0.35)]'
+                        : '{{ $cabang->status_buka
+                                ? 'border-slate-700 hover:border-blue-400 hover:bg-blue-900/20 hover:shadow-[0_0_12px_rgba(59,130,246,0.25)]'
+                                : 'border-slate-700'
+                            }}'"
+
+                    class="block rounded-2xl border p-8 text-white font-semibold text-xl transition-all duration-300 {{ $cabang->status_buka ? 'cursor-pointer' : '' }}">
+
+                    <input
+                        type="radio"
+                        name="branch"
+                        value="{{ $cabang->id_cabang }}"
+                        x-model="branch"
+                        class="hidden"
+                        {{ !$cabang->status_buka ? 'disabled' : '' }}>
+
+                    <div class="flex justify-between items-center">
+
+                        <span>
+                            {{ $cabang->nama_cabang }}
+                        </span>
+
+                        @if(!$cabang->status_buka)
+                            <span class="text-red-400 text-sm">
+                                Nonaktif
+                            </span>
+                        @endif
+
+                    </div>
+
+                </label>
+
+                @endforeach
+
+            </div>
 
             {{-- Footer --}}
             <div class="border-t border-slate-800 mt-10 pt-8 flex justify-between">

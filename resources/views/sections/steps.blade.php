@@ -24,16 +24,29 @@
 
                 <div class="text-center">
 
-                    <div class="w-16 h-16 mx-auto rounded-full bg-[#0B1831] flex items-center justify-center text-2xl">
-                        📱
-                    </div>
+                    <div class="w-16 h-16 mx-auto rounded-full bg-[#0B1831] flex items-center justify-center">
 
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-9 h-9 text-purple-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+
+                            <path stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+
+                        </svg>
+
+                    </div>
+                
                     <h3 class="text-2xl font-semibold mt-6">
-                        Scan & Booking
+                        Booking
                     </h3>
 
                     <p class="text-gray-400 mt-4">
-                        Scan QR di meja atau buka website, lalu pilih Playbox yang tersedia.
+                        Buka website kami kemudian lakukan proses booking sesuai dengan tahapannya.
                     </p>
 
                 </div>
@@ -48,8 +61,26 @@
 
                 <div class="text-center">
 
-                    <div class="w-16 h-16 mx-auto rounded-full bg-[#0B1831] flex items-center justify-center text-2xl">
-                        💳
+                    <div class="w-16 h-16 mx-auto rounded-full bg-[#0B1831] flex items-center justify-center">
+
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-8 h-8 text-purple-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+
+                        <rect x="2"
+                            y="5"
+                            width="20"
+                            height="14"
+                            rx="2"
+                            stroke-width="2"/>
+
+                        <path stroke-width="2"
+                            d="M2 10h20"/>
+
+                        </svg>
+
                     </div>
 
                     <h3 class="text-2xl font-semibold mt-6">
@@ -72,8 +103,32 @@
 
                 <div class="text-center">
 
-                    <div class="w-16 h-16 mx-auto rounded-full bg-[#0B1831] flex items-center justify-center text-2xl">
-                        🎮
+                   <div class="w-16 h-16 mx-auto rounded-full bg-[#0B1831] flex items-center justify-center">
+
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-12 h-12 text-purple-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.8"
+                                d="M7.5 9.5h9a3.5 3.5 0 013.4 4.3l-.6 2.3a2 2 0 01-3.1 1.1l-2.1-1.4H9.9l-2.1 1.4a2 2 0 01-3.1-1.1l-.6-2.3a3.5 3.5 0 013.4-4.3z"/>
+
+                            <!-- D-Pad -->
+                            <path
+                                stroke-linecap="round"
+                                stroke-width="1.8"
+                                d="M8 12h2M9 11v2"/>
+
+                            <!-- Buttons -->
+                            <circle cx="15.8" cy="11.8" r="0.6" fill="currentColor"/>
+                            <circle cx="17.4" cy="13.2" r="0.6" fill="currentColor"/>
+
+                        </svg>
+
                     </div>
 
                     <h3 class="text-2xl font-semibold mt-6">

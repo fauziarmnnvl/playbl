@@ -46,7 +46,7 @@
                 <a
                     href="{{ route('booking.info') }}"
                     class="px-7 py-2.5 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 font-medium text-white
-                    {{ request()->routeIs('booking.info') ? 'ring-2 ring-purple-400 shadow-[0_0_15px_rgba(139,92,246,0.5)]' : 'hover:scale-105 transition' }}">
+{{ request()->routeIs('booking.*') ? 'ring-2 ring-purple-400 shadow-[0_0_15px_rgba(139,92,246,0.5)]' : 'hover:scale-105 transition' }}">
                     Book Now
                 </a>
 

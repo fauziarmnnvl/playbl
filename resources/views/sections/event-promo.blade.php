@@ -68,7 +68,7 @@
                                   bg-gradient-to-r from-purple-500 to-blue-500
                                   text-white font-medium
                                   hover:scale-105 transition
-                                  drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+                                  ">
 
                             Gunakan Promo →
 
@@ -130,7 +130,7 @@
                                class="block text-center mt-6 py-3 rounded-xl
                                       bg-gradient-to-r from-purple-500 to-blue-500
                                       hover:scale-105 transition
-                                      text-white font-medium drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+                                      text-white font-medium">
 
                                 Gunakan Promo →
 
@@ -181,7 +181,7 @@
                                class="block text-center mt-6 py-3 rounded-xl
                                       bg-gradient-to-r from-purple-500 to-blue-500
                                       hover:scale-105 transition
-                                      text-white font-medium drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+                                      text-white font-medium">
 
                                 Gunakan Promo →
 
@@ -233,7 +233,7 @@
                                class="block text-center mt-6 py-3 rounded-xl
                                       bg-gradient-to-r from-purple-500 to-blue-500
                                       hover:scale-105 transition
-                                      text-white font-medium drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+                                      text-white font-medium">
 
                                 Gunakan Promo →
 

@@ -1,4 +1,4 @@
-<section class="min-h-screen flex items-center justify-center px-4 py-20">
+<section class="min-h-screen flex items-start justify-center px-4 pt-40 pb-20">
 
     <div class="w-full max-w-3xl bg-[#041233] rounded-3xl border border-slate-800 shadow-xl p-10">
 
@@ -38,7 +38,7 @@
             </h1>
 
             <p class="text-slate-400 text-lg max-w-md mx-auto">
-                Pembayaran telah diterima. Simpan bukti booking di bawah ini.
+                Pembayaran telah diterima.
             </p>
 
         </div>
@@ -49,12 +49,6 @@
             <div class="bg-gradient-to-r from-purple-900/40 to-blue-900/40 border border-blue-500/40 rounded-2xl p-5">
 
                 <div class="flex items-start gap-4">
-
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center text-white">
-
-                        🎮
-
-                    </div>
 
                     <div>
 
@@ -104,7 +98,7 @@
             <a href="{{ route('home') }}"
                 class="w-full max-w-md text-center py-4 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
 
-                Kembali ke Home
+                Kembali ke Beranda
 
             </a>
 

@@ -19,7 +19,6 @@
 
             @for($i = 1; $i <= 6; $i++)
                 <div class="relative z-10 flex flex-col items-center">
-
                     <div class="w-11 h-11 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white flex items-center justify-center font-semibold">
                         {{ $i }}
                     </div>
@@ -34,19 +33,17 @@
                             @case(6) Bayar @break
                         @endswitch
                     </span>
-
                 </div>
             @endfor
 
         </div>
     </div>
 
-    {{-- Payment Card --}}
+    {{-- Card --}}
     <div class="w-full max-w-3xl bg-[#041233] rounded-3xl border border-slate-800 p-8 shadow-xl">
 
         <div class="text-center">
 
-            {{-- Title --}}
             <h2 class="text-4xl font-bold text-white mb-3">
                 Pembayaran QRIS
             </h2>
@@ -55,23 +52,18 @@
                 Scan QR code di bawah menggunakan e-wallet pilihanmu.
             </p>
 
-            {{-- QR Code --}}
-            <div class="flex justify-center mb-8">
+            {{-- QRIS --}}
+            <div class="inline-block bg-white p-4 rounded-2xl border-4 border-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.3)]">
 
-                <div class="bg-white p-4 rounded-2xl border-4 border-blue-500 shadow-[0_0_25px_rgba(59,130,246,0.4)]">
-
-                    {{-- Ganti dengan QR Asli --}}
-                    <img src="{{ asset('images/qris-demo.png') }}"
-                        alt="QRIS"
-                        class="w-48 h-48 object-contain">
-
-                </div>
+                <img src="{{ asset('images/qris-demo.png') }}"
+                     alt="QRIS"
+                     class="w-48 h-48 object-cover">
 
             </div>
 
             {{-- Total --}}
-            <h3 class="text-5xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-10">
-                Rp 15.000
+            <h3 class="text-blue-400 text-4xl font-bold mt-8 mb-12">
+                Rp 23.700
             </h3>
 
         </div>
@@ -79,17 +71,17 @@
         {{-- Footer --}}
         <div class="border-t border-slate-800 pt-8 flex justify-between">
 
-            <a href="{{ route('booking.review') }}"
-                class="px-6 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
+            <a href="{{ route('booking.session.flexible') }}"
+               class="px-8 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
+
                 ← Kembali
+
             </a>
 
-            <a href="{{ route('booking.success') }}"
-                class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition flex items-center gap-2">
+            <a href="{{ route('booking.success.flexible') }}"
+               class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
 
-              
-
-                <span>Saya Sudah Bayar</span>
+            Saya Sudah Bayar
 
             </a>
 
