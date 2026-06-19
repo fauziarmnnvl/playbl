@@ -15,7 +15,7 @@ class SesiBermain extends Model
     protected $primaryKey = 'id_sesi';
     public $timestamps = false;
 
-    protected $fillable = ['id_transaksi', 'waktu_mulai', 'waktu_selesai', 'sisa_waktu_menit', 'status_sesi'];
+    protected $fillable = ['id_transaksi', 'waktu_mulai', 'waktu_selesai', 'sisa_waktu', 'status_sesi'];
 
     protected $casts = [
         'waktu_mulai' => 'datetime',
@@ -30,7 +30,7 @@ class SesiBermain extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['status_sesi', 'sisa_waktu_menit'])
+            ->logOnly(['status_sesi', 'sisa_waktu'])
             ->logOnlyDirty();
     }
 }

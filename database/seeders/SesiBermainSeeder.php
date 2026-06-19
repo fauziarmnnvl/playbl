@@ -14,48 +14,57 @@ class SesiBermainSeeder extends Seeder
      */
     public function run(): void
     {
-        $transaksis = Transaksi::where('status_bayar', 'Berhasil')->get();
+        $transaksis = Transaksi::orderBy('tgl_transaksi')->get();
 
         foreach ($transaksis as $index => $transaksi) {
-            $waktuTransaksi = Carbon::parse($transaksi->waktu_transaksi);
-            $durasiMenit = $transaksi->durasi_menit;
 
-            // Variasi status sesi
+            $waktuTransaksi = Carbon::parse($transaksi->tgl_transaksi);
+            $durasi = $transaksi->durasi;
+
             if ($index < 7) {
-                // 7 transaksi pertama: Selesai
+
+                // Sesi selesai
                 $waktuMulai = $waktuTransaksi->copy()->addMinutes(5);
-                $waktuSelesai = $durasiMenit > 0
-                    ? $waktuMulai->copy()->addMinutes($durasiMenit)
+
+                $waktuSelesai = $durasi > 0
+                    ? $waktuMulai->copy()->addMinutes($durasi)
                     : $waktuMulai->copy()->addHours(3);
 
                 SesiBermain::create([
                     'id_transaksi' => $transaksi->id_transaksi,
                     'waktu_mulai' => $waktuMulai,
                     'waktu_selesai' => $waktuSelesai,
-                    'sisa_waktu_menit' => 0,
+                    'sisa_waktu' => 0,
                     'status_sesi' => 'Selesai',
                 ]);
+
             } elseif ($index < 10) {
-                // 3 transaksi: Berjalan
+
+                // Sesi sedang berjalan
                 $waktuMulai = $waktuTransaksi->copy()->addMinutes(5);
-                $sisaWaktu = $durasiMenit > 0 ? intval($durasiMenit * 0.6) : 120;
+
+                $sisaWaktu = $durasi > 0
+                    ? intval($durasi * 0.6)
+                    : 120;
 
                 SesiBermain::create([
                     'id_transaksi' => $transaksi->id_transaksi,
                     'waktu_mulai' => $waktuMulai,
-                    'waktu_selesai' => $durasiMenit > 0
-                        ? $waktuMulai->copy()->addMinutes($durasiMenit)
+                    'waktu_selesai' => $durasi > 0
+                        ? $waktuMulai->copy()->addMinutes($durasi)
                         : null,
-                    'sisa_waktu_menit' => $sisaWaktu,
+                    'sisa_waktu' => $sisaWaktu,
                     'status_sesi' => 'Berjalan',
                 ]);
+
             } else {
-                // Sisanya: Belum Mulai
+
+                // Belum mulai
                 SesiBermain::create([
                     'id_transaksi' => $transaksi->id_transaksi,
                     'waktu_mulai' => null,
                     'waktu_selesai' => null,
-                    'sisa_waktu_menit' => $durasiMenit,
+                    'sisa_waktu' => $durasi,
                     'status_sesi' => 'Belum Mulai',
                 ]);
             }

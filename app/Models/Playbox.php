@@ -15,7 +15,7 @@ class Playbox extends Model
     protected $primaryKey = 'id_playbox';
     public $timestamps = false;
 
-    protected $fillable = ['id_cabang', 'nama_playbox', 'status_mesin'];
+    protected $fillable = ['id_cabang', 'nama_playbox', 'status_unit'];
 
     public function cabang()
     {
@@ -30,7 +30,7 @@ class Playbox extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['id_cabang', 'nama_playbox', 'status_mesin'])
+            ->logOnly(['id_cabang', 'nama_playbox', 'status_unit'])
             ->logOnlyDirty();
     }
 }
