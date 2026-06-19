@@ -36,15 +36,6 @@
             </div>
 
             <div class="form-group">
-                <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea name="deskripsi" id="deskripsi" class="form-textarea"
-                          placeholder="Deskripsi singkat game">{{ old('deskripsi') }}</textarea>
-                @error('deskripsi')
-                    <div class="form-error">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="form-group">
                 <label class="form-label">Cover Image</label>
                 <input type="file" name="cover_image" id="coverInput" class="form-input" accept=".jpg,.jpeg,.png,.webp">
                 <small style="color:#64748b">JPG, PNG, WEBP maksimal 2 MB</small>

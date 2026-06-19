@@ -26,10 +26,6 @@
                     </option>
                 @endforeach
             </select>
-
-            <button type="submit" class="btn btn-secondary">
-                Filter
-            </button>
         </form>
 
         <a href="{{ route('admin.game.create') }}" class="btn btn-primary">
@@ -63,13 +59,7 @@
                     <div class="data-card-body">
                         <h3 class="data-card-title">{{ $game->judul_game }}</h3>
 
-                        @if ($game->deskripsi)
-                            <p class="game-deskripsi">{{ Str::limit($game->deskripsi, 80) }}</p>
-                        @endif
-
                         <div class="data-card-footer">
-                            <span class="badge badge-green">Aktif</span>
-
                             <div class="data-card-actions">
                                 <a href="{{ route('admin.game.edit', $game->id_game) }}" class="btn btn-secondary btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="confirmDeleteGame({{ $game->id_game }}, '{{ addslashes($game->judul_game) }}')">Hapus</button>
