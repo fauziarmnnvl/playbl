@@ -30,6 +30,7 @@ return new class extends Migration
                 ->onDelete('set null');
             $table->integer('durasi')->default(60);
             $table->decimal('total_harga', 15, 2)->default(0.00);
+            $table->enum('jenis_sesi', ['Tetap', 'Fleksibel'])->default('Tetap');
             $table->dateTime('tgl_transaksi')->useCurrent();
         });
     }

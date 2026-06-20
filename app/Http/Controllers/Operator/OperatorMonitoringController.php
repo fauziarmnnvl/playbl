@@ -13,12 +13,6 @@ class OperatorMonitoringController extends Controller
      */
     public function index()
     {
-        $cabangId = auth()->user()->id_cabang;
-
-        $playboxList = Playbox::with('cabang')
-            ->where('id_cabang', $cabangId)
-            ->get();
-
-        return view('operator.monitoring.index', compact('playboxList'));
+        return view('operator.monitoring.index');
     }
 }
