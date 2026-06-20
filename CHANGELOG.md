@@ -8,6 +8,11 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ### Added
 
+* Implementasi halaman Monitoring Playbox berbasis Livewire.
+* Monitoring status Playbox secara real-time menggunakan polling setiap 5 detik.
+* Menampilkan informasi sesi bermain aktif pada Monitoring Playbox.
+* Menambahkan countdown timer untuk sesi tetap dan timer berjalan untuk sesi fleksibel.
+* Menambahkan penyelesaian sesi otomatis saat waktu bermain habis.
 * Integrasi data cabang dengan halaman Booking Playbox.
 * Integrasi data cabang dengan halaman Branch pada sisi pelanggan.
 * BookingController untuk pengelolaan data cabang pada workflow booking.
@@ -15,6 +20,10 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ### Changed
 
+* Menyesuaikan tampilan Monitoring Playbox sesuai desain Figma terbaru.
+* Menyempurnakan tampilan status Playbox untuk kondisi Tersedia, Digunakan, Maintenance, dan Rusak.
+* Menambahkan perbedaan visual antara sesi tetap dan sesi fleksibel.
+* Mengganti ikon berbasis emoji menjadi SVG pada halaman Monitoring Playbox.
 * Daftar cabang pada halaman Booking kini menggunakan data dari database dan tidak lagi hardcoded.
 * Daftar cabang pada halaman Branch kini menggunakan data dari database dan tidak lagi hardcoded.
 * Cabang berstatus Nonaktif tidak dapat dipilih pada proses booking.
@@ -23,6 +32,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ### Documentation
 
+* Memperbarui CHANGELOG sesuai implementasi fitur Monitoring Playbox.
 * Memperbarui CHANGELOG sesuai implementasi fitur kontrol ketersediaan cabang.
 
 
