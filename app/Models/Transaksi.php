@@ -23,6 +23,7 @@ class Transaksi extends Model
         'id_promo',
         'durasi',
         'total_harga',
+        'jenis_sesi',
         'tgl_transaksi',
     ];
     protected $casts = [

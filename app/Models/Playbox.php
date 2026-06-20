@@ -27,6 +27,18 @@ class Playbox extends Model
         return $this->hasMany(Transaksi::class, 'id_playbox', 'id_playbox');
     }
 
+    /**
+     * Transaksi aktif — transaksi terbaru yang memiliki sesi berjalan.
+     */
+    public function transaksiAktif()
+    {
+        return $this->hasOne(Transaksi::class, 'id_playbox', 'id_playbox')
+            ->whereHas('sesiBermain', function ($q) {
+                $q->where('status_sesi', 'Berjalan');
+            })
+            ->latestOfMany('id_transaksi');
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
