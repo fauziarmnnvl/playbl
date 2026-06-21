@@ -33,4 +33,24 @@ class SesiBermain extends Model
             ->logOnly(['status_sesi', 'sisa_waktu'])
             ->logOnlyDirty();
     }
+
+    public function getDescriptionForEvent(string $eventName): string {
+        $playbox = optional(
+            optional($this->transaksi)->playbox
+        )->nama_playbox ?? 'Playbox';
+
+        if (
+            $eventName === 'updated' &&
+            $this->status_sesi === 'Selesai'
+        ) {
+            return "Sesi {$playbox} telah selesai";
+        }
+
+        return match ($eventName) {
+            'created' => "Sesi {$playbox} dimulai",
+            'updated' => "Data sesi {$playbox} diperbarui",
+            'deleted' => "Sesi {$playbox} dihapus",
+            default => $eventName,
+        };
+    }
 }

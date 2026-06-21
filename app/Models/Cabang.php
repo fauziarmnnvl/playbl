@@ -40,4 +40,14 @@ class Cabang extends Model
             ->logOnly(['nama_cabang', 'alamat_cabang', 'kontak_cabang', 'jam_operasional'])
             ->logOnlyDirty();
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return match ($eventName) {
+            'created' => "Cabang {$this->nama_cabang} ditambahkan",
+            'updated' => "Data cabang {$this->nama_cabang} diperbarui",
+            'deleted' => "Cabang {$this->nama_cabang} dihapus",
+            default => $eventName,
+        };
+    }
 }

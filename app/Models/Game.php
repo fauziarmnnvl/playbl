@@ -23,4 +23,14 @@ class Game extends Model
             ->logOnly(['judul_game', 'kategori', 'deskripsi', 'cover_image'])
             ->logOnlyDirty();
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return match ($eventName) {
+            'created' => "Game {$this->judul_game} ditambahkan",
+            'updated' => "Game {$this->judul_game} diperbarui",
+            'deleted' => "Game {$this->judul_game} dihapus",
+            default => $eventName,
+        };
+    }
 }
