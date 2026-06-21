@@ -1783,3 +1783,123 @@ body {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.6; }
 }
+
+/* ============================================
+    RIWAYAT BERMAIN
+   ============================================ */
+
+ /* ── Page Header ── */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+        gap: .5rem;
+    }
+    .page-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: .25rem;
+        color: #1a1a2e;
+    }
+    .page-subtitle {
+        color: #6c757d;
+        margin-bottom: 0;
+        font-size: .875rem;
+    }
+
+    /* ── Cards ── */
+    .filter-card,
+    .table-card {
+        border: 1px solid #e9ecef;
+        border-radius: .75rem;
+        box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    }
+    .table-card .card-header {
+        background: #fff;
+        border-bottom: 1px solid #e9ecef;
+        padding: .875rem 1.25rem;
+        border-radius: .75rem .75rem 0 0;
+    }
+    .table-card .card-footer {
+        background: #fafafa;
+        border-top: 1px solid #e9ecef;
+        padding: .75rem 1.25rem;
+        border-radius: 0 0 .75rem .75rem;
+    }
+
+    /* ── Table ── */
+    .table thead th {
+        font-size: .8rem;
+        font-weight: 600;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        padding: .875rem 1rem;
+        border: none;
+    }
+    .table tbody td {
+        padding: .875rem 1rem;
+        font-size: .875rem;
+        vertical-align: middle;
+        border-color: #f0f0f0;
+    }
+    .table-striped > tbody > tr:nth-of-type(odd) > td {
+        background-color: rgba(0,0,0,.018);
+    }
+    .table-hover > tbody > tr:hover > td {
+        background-color: rgba(13,110,253,.04);
+    }
+
+    /* ── Avatar initial ── */
+    .avatar-initial {
+        width: 30px;
+        height: 30px;
+        font-size: .75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    /* ── Status Badges ── */
+    .badge-status {
+        font-size: .75rem;
+        font-weight: 500;
+        padding: .35em .7em;
+        border-radius: 1rem;
+    }
+
+    /* ── Subtle colour helpers (Bootstrap 5.3 fallback) ── */
+    .bg-primary-subtle { background-color: rgba(13,110,253,.1) !important; }
+    .bg-info-subtle    { background-color: rgba(13,202,240,.12) !important; }
+    .text-primary      { color: #0d6efd !important; }
+    .text-info         { color: #0dcaf0 !important; }
+
+    /* ── Empty state ── */
+    .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* ── Filter label ── */
+    .form-label {
+        font-size: .8rem;
+        margin-bottom: .3rem;
+        color: #495057;
+    }
+
+    .bg-purple-subtle {
+        background-color: rgba(147, 51, 234, .12) !important;
+    }
+
+    .text-purple {
+        color: #9333ea !important;
+    }
+
+    .riwayat-table-head th{
+        background:#f8fafc !important;
+        color:#475569 !important;
+        border-bottom:1px solid #e2e8f0 !important;
+    }
