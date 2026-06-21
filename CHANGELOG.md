@@ -8,6 +8,13 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ### Added
 
+* Implementasi halaman Riwayat Bermain.
+* Fitur filter Riwayat Bermain berdasarkan tanggal, Playbox, dan pelanggan.
+* Implementasi halaman Laporan & Statistik.
+* Fitur visualisasi data menggunakan Chart.js.
+* Fitur export laporan ke PDF dan Excel.
+* Implementasi halaman Riwayat Aktivitas (Audit Trail).
+* Integrasi Spatie Activity Log untuk pencatatan aktivitas sistem.
 * Implementasi halaman Monitoring Playbox berbasis Livewire.
 * Monitoring status Playbox secara real-time menggunakan polling setiap 5 detik.
 * Menampilkan informasi sesi bermain aktif pada Monitoring Playbox.
@@ -20,6 +27,10 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ### Changed
 
+* Menyempurnakan tampilan halaman Riwayat Bermain.
+* Menyesuaikan tampilan dashboard statistik sesuai desain terbaru.
+* Menyederhanakan filter pada halaman Riwayat Aktivitas.
+* Melakukan refactor dan pembersihan CSS pada panel admin.
 * Menyesuaikan tampilan Monitoring Playbox sesuai desain Figma terbaru.
 * Menyempurnakan tampilan status Playbox untuk kondisi Tersedia, Digunakan, Maintenance, dan Rusak.
 * Menambahkan perbedaan visual antara sesi tetap dan sesi fleksibel.
@@ -32,6 +43,9 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ### Documentation
 
+* Memperbarui CHANGELOG sesuai implementasi fitur Laporan & Statistik.
+* Memperbarui CHANGELOG sesuai implementasi fitur Riwayat Bermain.
+* Memperbarui CHANGELOG sesuai implementasi fitur Riwayat Aktivitas.
 * Memperbarui CHANGELOG sesuai implementasi fitur Monitoring Playbox.
 * Memperbarui CHANGELOG sesuai implementasi fitur kontrol ketersediaan cabang.
 
