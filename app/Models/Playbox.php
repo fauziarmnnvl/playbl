@@ -45,4 +45,13 @@ class Playbox extends Model
             ->logOnly(['id_cabang', 'nama_playbox', 'status_unit'])
             ->logOnlyDirty();
     }
+
+    public function getDescriptionForEvent(string $eventName): string{
+        return match ($eventName) {
+            'created' => "Playbox {$this->nama_playbox} ditambahkan",
+            'updated' => "Playbox {$this->nama_playbox} diperbarui",
+            'deleted' => "Playbox {$this->nama_playbox} dihapus",
+            default => $eventName,
+        };
+    }
 }

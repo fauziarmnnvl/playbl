@@ -79,4 +79,14 @@ class Transaksi extends Model
             ->logOnly(['kode_transaksi', 'total_harga'])
             ->logOnlyDirty();
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return match ($eventName) {
+            'created' => "Transaksi {$this->kode_transaksi} dibuat",
+            'updated' => "Transaksi {$this->kode_transaksi} diperbarui",
+            'deleted' => "Transaksi {$this->kode_transaksi} dihapus",
+            default => $eventName,
+        };
+    }
 }

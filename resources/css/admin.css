@@ -330,11 +330,11 @@ body {
    ============================================ */
 .page-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-bottom: 32px;
+    align-items: flex-start;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: .5rem;
+    margin-bottom: 1.5rem;
 }
 
 .page-header h1 {
@@ -686,7 +686,11 @@ body {
 .empty-state {
     text-align: center;
     padding: 64px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     color: var(--text-muted);
+    
 }
 
 .empty-state svg {
@@ -1104,12 +1108,11 @@ body {
 /* ============================================
    ADMIN TABLE (PLAYBOX)
    ============================================ */
-.table-card {
-    background: var(--card-bg);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
-    overflow: hidden;
+.table-card{
+    background:#fff;
+    border:none;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
 }
 
 .admin-table {
@@ -1441,19 +1444,6 @@ body {
     gap:12px;
 }
 
-.playbox-icon{
-    width:52px;
-    height:52px;
-    border-radius:12px;
-    background:#dbeafe;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:24px;
-}
-
 .playbox-head h3{
     font-size:25px;
     font-weight:700;
@@ -1625,20 +1615,7 @@ body {
 .mon-card--fleksibel .mon-card__header .badge {
     animation: mon-pulse 2s infinite;
 }
-.playbox-available{
-    height:260px;
 
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-}
-
-.playbox-available h2{
-    font-size:35px;
-    font-weight:700;
-    margin:10px 0;
-}
 .playbox-cabang{
     font-size:12px;
     color:#94a3b8;
@@ -1646,16 +1623,6 @@ body {
     margin-bottom:6px;
 }
 
-.available-badge{
-    background:#dcfce7;
-    color:#16a34a;
-
-    padding:10px 40px;
-
-    border-radius:999px;
-
-    font-weight:600;
-}
 
 .playbox-icon{
     width:52px;
@@ -1676,19 +1643,6 @@ body {
     height:28px;
 }
 
-.playbox-available-icon{
-    width:72px;
-    height:72px;
-
-    border-radius:16px;
-
-    background:#dbeafe;
-    color:#3b82f6;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
 
 .playbox-available-icon svg{
     width:36px;
@@ -1782,4 +1736,362 @@ body {
 @keyframes mon-pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.6; }
+}
+
+/* ============================================
+    RIWAYAT BERMAIN
+   ============================================ */
+
+ /* ── Page Header ── */
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: .25rem;
+    color: #1a1a2e;
+}
+.page-subtitle {
+    color: #6c757d;
+    margin-bottom: 0;
+    font-size: .875rem;
+}
+
+/* ── Cards ── */
+.filter-card,
+.table-card {
+    border: 1px solid #e9ecef;
+    border-radius: .75rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+.table-card .card-header {
+    background: #fff;
+    border-bottom: 1px solid #e9ecef;
+    padding: .875rem 1.25rem;
+    border-radius: .75rem .75rem 0 0;
+}
+.table-card .card-footer {
+    background: #fafafa;
+    border-top: 1px solid #e9ecef;
+    padding: .75rem 1.25rem;
+    border-radius: 0 0 .75rem .75rem;
+}
+
+/* ── Table ── */
+.table thead th {
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: .875rem 1rem;
+    border: none;
+}
+.table tbody td {
+    padding: .875rem 1rem;
+    font-size: .875rem;
+    vertical-align: middle;
+    border-color: #f0f0f0;
+}
+.table-striped > tbody > tr:nth-of-type(odd) > td {
+    background-color: rgba(0,0,0,.018);
+}
+.table-hover > tbody > tr:hover > td {
+    background-color: rgba(13,110,253,.04);
+}
+
+/* ── Avatar initial ── */
+.avatar-initial {
+    width: 30px;
+    height: 30px;
+    font-size: .75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* ── Status Badges ── */
+.badge-status {
+    font-size: .75rem;
+    font-weight: 500;
+    padding: .35em .7em;
+    border-radius: 1rem;
+}
+
+/* ── Subtle colour helpers (Bootstrap 5.3 fallback) ── */
+.bg-primary-subtle { background-color: rgba(13,110,253,.1) !important; }
+.bg-info-subtle    { background-color: rgba(13,202,240,.12) !important; }
+.text-primary      { color: #0d6efd !important; }
+.text-info         { color: #0dcaf0 !important; }
+
+
+/* ── Filter label ── */
+.form-label {
+    font-size: .8rem;
+    margin-bottom: .3rem;
+    color: #495057;
+}
+
+.bg-purple-subtle {
+    background-color: rgba(147, 51, 234, .12) !important;
+}
+
+.text-purple {
+    color: #9333ea !important;
+}
+
+.riwayat-table-head th{
+    background:#f8fafc !important;
+    color:#475569 !important;
+    border-bottom:1px solid #e2e8f0 !important;
+}
+
+/* ============================================
+    HALAMAN LAPORAN STATISTIK
+   ============================================ */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-bottom:24px;
+}
+
+.stat-blue{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.stat-orange{
+    background:#ffedd5;
+    color:#ea580c;
+}
+
+@media(max-width:1200px){
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:768px){
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+/* ============================================
+   STATISTIK KPI CARD
+   ============================================ */
+
+.stat-card{
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:20px;
+    min-height: 128px;
+    padding: 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 8px 24px rgba(15,23,42,.04);
+}
+
+.stat-info{
+    display:flex;
+    flex-direction:column;
+}
+
+.stat-title{
+    font-size:14px;
+    color:#64748b;
+    margin-bottom:8px;
+}
+
+.stat-value{
+    font-size:25px;
+    font-weight:700;
+    color:#0f172a;
+    line-height:1.2;
+}
+
+.stat-subtitle{
+    margin-top:8px;
+    font-size:13px;
+    color:#94a3b8;
+}
+
+.stat-icon{
+    width:52px;
+    height:52px;
+    border-radius:16px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+}
+
+.stat-icon svg{
+    width:28px;
+    height:28px;
+}
+
+.stat-green{
+    background:#dcfce7;
+    color:#10b981;
+}
+
+.stat-purple{
+    background:#ede9fe;
+    color:#7c3aed;
+}
+
+.stat-orange{
+    background:#ffedd5;
+    color:#ea580c;
+}
+
+/* ============================================
+   ACTIVITY TIMELINE
+   ============================================ */
+.activity-timeline {
+    position: relative;
+    padding-left: 16px;
+}
+
+.activity-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 23px;
+    width: 2px;
+    background-color: #e2e8f0;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 24px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-indicator {
+    position: absolute;
+    left: 3px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 4px #e2e8f0;
+    z-index: 1;
+}
+
+.timeline-content {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    gap: 16px;
+}
+
+.timeline-description {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1e293b;
+    line-height: 1.4;
+}
+
+.timeline-time {
+    font-size: 0.8125rem;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+.timeline-body {
+    font-size: 0.875rem;
+    color: #475569;
+}
+
+.timeline-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: #f8fafc;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #f1f5f9;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.meta-item svg {
+    width: 16px;
+    height: 16px;
+    color: #94a3b8;
+}
+
+.causer-name, .subject-type {
+    font-weight: 500;
+    color: #334155;
+}
+
+/* ============================================
+   ACTIVITY TIMELINE V2
+============================================ */
+
+.timeline-content{
+    background:transparent;
+    border:none;
+    box-shadow:none;
+    padding:0;
+}
+
+.timeline-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+}
+
+.timeline-main{
+    flex:1;
+}
+
+.timeline-description{
+    font-size:15px;
+    font-weight:600;
+    color:#0f172a;
+    margin-bottom:6px;
+}
+
+.timeline-meta-simple{
+    font-size:13px;
+    color:#94a3b8;
+}
+
+.timeline-time{
+    font-size:13px;
+    color:#94a3b8;
+    white-space:nowrap;
+}
+
+.timeline-body,
+.timeline-meta,
+.timeline-header{
+    display:none;
 }

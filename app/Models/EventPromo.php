@@ -40,4 +40,14 @@ class EventPromo extends Model
             ->logOnly(['nama_promo', 'tipe_diskon', 'nilai_diskon', 'tanggal_mulai', 'tanggal_selesai', 'banner_promo'])
             ->logOnlyDirty();
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return match ($eventName) {
+            'created' => "Promo {$this->nama_promo} ditambahkan",
+            'updated' => "Promo {$this->nama_promo} diperbarui",
+            'deleted' => "Promo {$this->nama_promo} dihapus",
+            default => $eventName,
+        };
+    }
 }
