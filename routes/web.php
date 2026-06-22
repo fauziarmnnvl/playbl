@@ -15,6 +15,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\Operator\OperatorMonitoringController;
 use App\Http\Controllers\Operator\OperatorRiwayatController;
 use App\Http\Controllers\BookingController; 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,13 +24,13 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::view('/', 'welcome')->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/branch', [CabangController::class, 'publicBranch'])->name('branch');
 
 Route::view('/event-promo', 'events-promos')->name('event-promo');
 
-Route::view('/game', 'games')->name('game');
+Route::get('/game', [GameController::class, 'publicGames'])->name('game');
 
 Route::view('/booking', 'bookings.info')->name('booking.info');
 
