@@ -43,7 +43,7 @@
                 <div class="data-card">
                     <div class="data-card-image game-cover">
                         @if ($game->cover_image)
-                            <img src="{{ Storage::url($game->cover_image) }}" alt="{{ $game->judul_game }}">
+                            <img src="{{ asset($game->cover_image) }}" alt="{{ $game->judul_game }}">
                         @else
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                 <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>

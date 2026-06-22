@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class GameController extends Controller
 {
@@ -57,9 +56,10 @@ class GameController extends Controller
         ]);
 
         if ($request->hasFile('cover_image')) {
-            $validated['cover_image'] = $request
-                ->file('cover_image')
-                ->store('games', 'public');
+            $file = $request->file('cover_image');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('images/games'), $filename);
+            $validated['cover_image'] = 'images/games/'.$filename;
         }
 
         Game::create($validated);
@@ -93,14 +93,14 @@ class GameController extends Controller
         ]);
 
         if ($request->hasFile('cover_image')) {
-            // Hapus file lama
-            if ($game->cover_image && Storage::disk('public')->exists($game->cover_image)) {
-                Storage::disk('public')->delete($game->cover_image);
+            if ($game->cover_image && file_exists(public_path($game->cover_image))) {
+                unlink(public_path($game->cover_image));
             }
 
-            $validated['cover_image'] = $request
-                ->file('cover_image')
-                ->store('games', 'public');
+            $file = $request->file('cover_image');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('images/games'), $filename);
+            $validated['cover_image'] = 'images/games/'.$filename;
         }
 
         $game->update($validated);
@@ -119,8 +119,8 @@ class GameController extends Controller
         $game = Game::findOrFail($id);
 
         // Hapus cover image dari storage
-        if ($game->cover_image && Storage::disk('public')->exists($game->cover_image)) {
-            Storage::disk('public')->delete($game->cover_image);
+        if ($game->cover_image && file_exists(public_path($game->cover_image))) {
+            unlink(public_path($game->cover_image));
         }
 
         $game->delete();
@@ -136,5 +136,24 @@ class GameController extends Controller
     public function show($id)
     {
         return redirect()->route('admin.game.index');
+    }
+
+    public function publicGames(Request $request)
+    {
+        $query = Game::query();
+        if ($request->filled('search')) {
+            $query->where('judul_game', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('kategori')) {
+            $query->where('kategori', $request->kategori);
+        }
+
+        $games = $query->orderBy('id_game', 'desc')->get();
+        $kategoriList = Game::select('kategori')
+            ->distinct()
+            ->whereNotNull('kategori')
+            ->pluck('kategori');
+        return view('games', compact('games', 'kategoriList'));
     }
 }
