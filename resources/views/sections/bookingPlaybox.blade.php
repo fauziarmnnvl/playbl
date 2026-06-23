@@ -102,82 +102,15 @@
                 value="{{ request('branch') }}">
 
             <div class="grid grid-cols-4 gap-4">
+                @foreach($playboxes as $playbox)
+                @if($playbox->status_unit == 'Digunakan')
 
-                {{-- PB1 --}}
-                <label
-                    @click="playbox='PB1'"
-                    class="cursor-pointer">
-
-                    <input
-                        type="radio"
-                        name="playbox"
-                        value="PB1"
-                        x-model="playbox"
-                        class="hidden">
-
-                    <div
-                        :class="playbox === 'PB1'
-                            ? 'border-blue-500 bg-blue-900/30 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                            : 'border-slate-700 hover:border-blue-400 hover:bg-blue-900/20 hover:shadow-[0_0_12px_rgba(59,130,246,0.25)]'"
-                        class="border rounded-2xl h-32 flex flex-col items-center justify-center text-white transition-all duration-300">
-
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-10 h-10 text-slate-400 mb-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
-                        </svg>
-
-                        <span class="font-semibold">PB1</span>
-                    </div>
-                </label>
-
-                {{-- PB2 --}}
-                <label
-                    @click="playbox='PB2'"
-                    class="cursor-pointer">
-
-                    <input
-                        type="radio"
-                        name="playbox"
-                        value="PB2"
-                        x-model="playbox"
-                        class="hidden">
-
-                    <div
-                        :class="playbox === 'PB2'
-                            ? 'border-blue-500 bg-blue-900/30 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                            : 'border-slate-700 hover:border-blue-400 hover:bg-blue-900/20 hover:shadow-[0_0_12px_rgba(59,130,246,0.25)]'"
-                        class="border rounded-2xl h-32 flex flex-col items-center justify-center text-white transition-all duration-300">
-
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-10 h-10 text-slate-400 mb-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
-                        </svg>
-
-                        <span class="font-semibold">PB2</span>
-                    </div>
-                </label>
-
-                {{-- PB3 USED --}}
                 <div class="relative opacity-50">
-
                     <span class="absolute top-2 right-2 text-xs px-2 py-1 bg-red-900 text-red-300 rounded-full">
                         Used
                     </span>
 
                     <div class="border border-slate-700 rounded-2xl h-32 flex flex-col items-center justify-center text-white">
-
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="w-10 h-10 text-slate-500 mb-2"
                             fill="none"
@@ -189,24 +122,17 @@
                                 d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
                         </svg>
 
-                        <span class="font-semibold">PB3</span>
+                        <span class="font-semibold">
+                            {{ $playbox->nama_playbox }}
+                        </span>
                     </div>
                 </div>
 
-                {{-- PB4 --}}
-                <label
-                    @click="playbox='PB4'"
-                    class="cursor-pointer">
-
-                    <input
-                        type="radio"
-                        name="playbox"
-                        value="PB4"
-                        x-model="playbox"
-                        class="hidden">
-
+                @else
+                <label @click="playbox='{{ $playbox->id_playbox }}'" class="cursor-pointer">
+                    <input type="radio" name="playbox" value="{{ $playbox->id_playbox }}" x-model="playbox" class="hidden">
                     <div
-                        :class="playbox === 'PB4'
+                        :class="playbox === '{{ $playbox->id_playbox }}'
                             ? 'border-blue-500 bg-blue-900/30 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
                             : 'border-slate-700 hover:border-blue-400 hover:bg-blue-900/20 hover:shadow-[0_0_12px_rgba(59,130,246,0.25)]'"
                         class="border rounded-2xl h-32 flex flex-col items-center justify-center text-white transition-all duration-300">
@@ -222,49 +148,15 @@
                                 d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
                         </svg>
 
-                        <span class="font-semibold">PB4</span>
+                        <span class="font-semibold">
+                            {{ $playbox->nama_playbox }}
+                        </span>
+
                     </div>
                 </label>
-
-                {{-- PB5 - PB8 --}}
-                @for ($i = 5; $i <= 8; $i++)
-                    <label
-                        @click="playbox='PB{{ $i }}'"
-                        class="cursor-pointer">
-
-                        <input
-                            type="radio"
-                            name="playbox"
-                            value="PB{{ $i }}"
-                            x-model="playbox"
-                            class="hidden">
-
-                        <div
-                            :class="playbox === 'PB{{ $i }}'
-                                ? 'border-blue-500 bg-blue-900/30 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                                : 'border-slate-700 hover:border-blue-400 hover:bg-blue-900/20 hover:shadow-[0_0_12px_rgba(59,130,246,0.25)]'"
-                            class="border rounded-2xl h-32 flex flex-col items-center justify-center text-white transition-all duration-300">
-
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="w-10 h-10 text-slate-400 mb-2"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
-                            </svg>
-
-                            <span class="font-semibold">
-                                PB{{ $i }}
-                            </span>
-
-                        </div>
-                    </label>
-                @endfor
-
-    </div>
+                @endif
+                @endforeach
+            </div>
 
     {{-- Footer --}}
     <div class="border-t border-slate-800 mt-8 pt-8 flex justify-between">

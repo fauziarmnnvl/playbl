@@ -36,7 +36,7 @@ Route::view('/booking', 'bookings.info')->name('booking.info');
 
 Route::get('/booking/cabang', [BookingController::class, 'cabang'])->name('booking.cabang');
 
-Route::view('/booking/playbox', 'bookings.playbox')->name('booking.playbox');
+Route::get('/booking/playbox',[BookingController::class,'playbox'])->name('booking.playbox');
 
 Route::view('/booking/durasi', 'bookings.durasi')->name('booking.durasi');
 
