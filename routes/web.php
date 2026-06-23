@@ -28,7 +28,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/branch', [CabangController::class, 'publicBranch'])->name('branch');
 
-Route::view('/event-promo', 'events-promos')->name('event-promo');
+Route::get('/event-promo', [EventPromoController::class, 'publicPromo'])->name('event-promo');
 
 Route::get('/game', [GameController::class, 'publicGames'])->name('game');
 

@@ -1315,6 +1315,27 @@ body {
     letter-spacing: -0.025em;
 }
 
+.promo-status-badge{
+    position:absolute;
+    top:14px;
+    right:14px;
+    z-index:20;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.promo-status-badge.aktif{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.promo-status-badge.nonaktif{
+    background:#f1f5f9;
+    color:#64748b;
+}
+
 /* ============================================
    GAME CARD EXTRAS
    ============================================ */

@@ -54,6 +54,16 @@
                                 Rp {{ number_format($promo->nilai_diskon, 0, ',', '.') }}
                             @endif
                         </div>
+
+                        @if ($promo->is_aktif)
+                            <div class="promo-status-badge aktif">
+                                Aktif
+                            </div>
+                        @else
+                            <div class="promo-status-badge nonaktif">
+                                Nonaktif
+                            </div>
+                        @endif
                     </div>
 
                     <div class="data-card-body">
@@ -67,12 +77,6 @@
                         </div>
 
                         <div class="data-card-footer">
-                            @if ($promo->is_aktif)
-                                <span class="badge badge-green">Aktif</span>
-                            @else
-                                <span class="badge badge-default">Nonaktif</span>
-                            @endif
-
                             <div class="data-card-actions">
                                 <a href="{{ route('admin.promo.edit', $promo->id_promo) }}" class="btn btn-secondary btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="confirmDeletePromo({{ $promo->id_promo }}, '{{ addslashes($promo->nama_promo) }}')">Hapus</button>

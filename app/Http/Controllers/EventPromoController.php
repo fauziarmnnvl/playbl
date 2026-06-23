@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\EventPromo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class EventPromoController extends Controller
 {
@@ -16,10 +15,10 @@ class EventPromoController extends Controller
         $query = EventPromo::query();
 
         // Filter tabs
-        if ($request->filter === 'aktif') {
+        if ($request->status === 'aktif') {
             $query->where('tanggal_mulai', '<=', today())
                   ->where('tanggal_selesai', '>=', today());
-        } elseif ($request->filter === 'nonaktif') {
+        } elseif ($request->status === 'nonaktif') {
             $query->where(function ($q) {
                 $q->where('tanggal_mulai', '>', today())
                   ->orWhere('tanggal_selesai', '<', today());
@@ -59,9 +58,10 @@ class EventPromoController extends Controller
         }
 
         if ($request->hasFile('banner_promo')) {
-            $validated['banner_promo'] = $request
-                ->file('banner_promo')
-                ->store('promos', 'public');
+            $file = $request->file('banner_promo');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('images/event-promo'), $filename);
+            $validated['banner_promo'] = 'images/event-promo/'.$filename;
         }
 
         EventPromo::create($validated);
@@ -103,14 +103,14 @@ class EventPromoController extends Controller
         }
 
         if ($request->hasFile('banner_promo')) {
-            // Hapus banner lama
-            if ($promo->banner_promo && Storage::disk('public')->exists($promo->banner_promo)) {
-                Storage::disk('public')->delete($promo->banner_promo);
+            if ($promo->banner_promo && file_exists(public_path($promo->banner_promo))) {
+                unlink(public_path($promo->banner_promo));
             }
 
-            $validated['banner_promo'] = $request
-                ->file('banner_promo')
-                ->store('promos', 'public');
+            $file = $request->file('banner_promo');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('images/event-promo'), $filename);
+            $validated['banner_promo'] = 'images/event-promo/'.$filename;
         }
 
         $promo->update($validated);
@@ -127,9 +127,9 @@ class EventPromoController extends Controller
     {
         $promo = EventPromo::findOrFail($id);
 
-        // Hapus banner dari storage
-        if ($promo->banner_promo && Storage::disk('public')->exists($promo->banner_promo)) {
-            Storage::disk('public')->delete($promo->banner_promo);
+        // Hapus banner
+        if ($promo->banner_promo && file_exists(public_path($promo->banner_promo))) {
+            unlink(public_path($promo->banner_promo));
         }
 
         $promo->delete();
@@ -145,5 +145,15 @@ class EventPromoController extends Controller
     public function show($id)
     {
         return redirect()->route('admin.promo.index');
+    }
+
+    public function publicPromo()
+    {
+        $promoList = EventPromo::where('tanggal_mulai', '<=', now())
+            ->where('tanggal_selesai', '>=', now())
+            ->orderBy('tanggal_selesai')
+            ->get();
+
+        return view('events-promos', compact('promoList'));
     }
 }
