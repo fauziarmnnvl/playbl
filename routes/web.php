@@ -28,7 +28,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/branch', [CabangController::class, 'publicBranch'])->name('branch');
 
-Route::view('/event-promo', 'events-promos')->name('event-promo');
+Route::get('/event-promo', [EventPromoController::class, 'publicPromo'])->name('event-promo');
 
 Route::get('/game', [GameController::class, 'publicGames'])->name('game');
 
@@ -36,7 +36,7 @@ Route::view('/booking', 'bookings.info')->name('booking.info');
 
 Route::get('/booking/cabang', [BookingController::class, 'cabang'])->name('booking.cabang');
 
-Route::view('/booking/playbox', 'bookings.playbox')->name('booking.playbox');
+Route::get('/booking/playbox',[BookingController::class,'playbox'])->name('booking.playbox');
 
 Route::view('/booking/durasi', 'bookings.durasi')->name('booking.durasi');
 

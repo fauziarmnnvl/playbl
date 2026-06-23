@@ -24,6 +24,14 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Integrasi data cabang dengan halaman Branch pada sisi pelanggan.
 * BookingController untuk pengelolaan data cabang pada workflow booking.
 * Validasi ketersediaan cabang berdasarkan status operasional.
+* Integrasi data Game dengan halaman Games pada sisi pelanggan.
+* Menampilkan koleksi game menggunakan data dari database.
+* Menampilkan game unggulan (featured games) pada carousel Landing Page.
+* Integrasi data Event & Promo dengan halaman Event & Promo pada sisi pelanggan.
+* Menampilkan promo aktif berdasarkan data yang dikelola admin.
+* Integrasi data Playbox dengan halaman Booking Playbox.
+* Menampilkan daftar Playbox berdasarkan cabang yang dipilih pelanggan.
+* Menampilkan status ketersediaan Playbox pada proses booking.
 
 ### Changed
 
@@ -40,6 +48,15 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Cabang berstatus Nonaktif tidak dapat dipilih pada proses booking.
 * Status cabang pada sisi pelanggan kini mengikuti perubahan yang dilakukan admin pada Manajemen Cabang.
 * Terminologi status cabang disesuaikan menjadi Aktif dan Nonaktif.
+* Daftar game pada halaman Games kini menggunakan data dari database dan tidak lagi hardcoded.
+* Carousel Koleksi Game pada Landing Page kini menggunakan data Game yang dikelola admin.
+* Pengelolaan cover game disesuaikan menggunakan direktori public/images/games.
+* Halaman Event & Promo kini menggunakan data dari database dan tidak lagi hardcoded.
+* Status promo aktif dan nonaktif kini dihitung berdasarkan periode promo.
+* Filter promo aktif dan nonaktif pada panel admin disesuaikan dengan status periode promo.
+* Pengelolaan banner promo disesuaikan menggunakan direktori public/images/event-promo.
+* Halaman Booking Playbox kini menggunakan data Playbox dari database dan tidak lagi hardcoded.
+* Status Playbox pada proses booking kini mengikuti kondisi aktual unit yang dikelola admin.
 
 ### Documentation
 
@@ -48,6 +65,10 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbarui CHANGELOG sesuai implementasi fitur Riwayat Aktivitas.
 * Memperbarui CHANGELOG sesuai implementasi fitur Monitoring Playbox.
 * Memperbarui CHANGELOG sesuai implementasi fitur kontrol ketersediaan cabang.
+* Memperbarui CHANGELOG sesuai implementasi integrasi Game dengan frontend.
+* Memperbarui CHANGELOG sesuai implementasi integrasi Event & Promo dengan frontend.
+* Memperbarui CHANGELOG sesuai implementasi integrasi Playbox dengan proses booking.
+
 
 
 ## [0.2.0] - 14 Juni 2026
