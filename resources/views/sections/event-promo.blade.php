@@ -72,7 +72,7 @@
                             📅 Berlaku hingga: {{ $featuredPromo?->tanggal_selesai?->format('d M Y') }}
                         </p>
 
-                        <a href="#"
+                        <a href="{{ route('booking.info') }}"
                            class="mt-8 w-fit px-12 py-4 rounded-xl
                                   bg-gradient-to-r from-purple-500 to-blue-500
                                   text-white font-medium
@@ -122,7 +122,7 @@
                                 📅 Berlaku hingga: {{ $promo->tanggal_selesai->format('d M Y') }}
                             </p>
 
-                            <a href="#"
+                            <a href="{{ route('booking.info') }}"
                                 class="block text-center mt-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105 transition text-white font-medium">
                                 Gunakan Promo →
                             </a>
