@@ -93,7 +93,9 @@
 
             {{-- Nama --}}
             <div class="mb-7">
-                Nama Lengkap
+                <label class="block text-white font-medium mb-2">
+                    Nama Lengkap
+                </label>
                 <input type="text"
                     placeholder="Masukkan nama kamu"
                     class="w-full h-14 px-5 rounded-xl bg-slate-800/60 border border-slate-700 text-white placeholder-slate-500
@@ -104,7 +106,9 @@
 
             {{-- WhatsApp --}}
             <div class="mb-10">
-                Nomor WhatsApp
+                <label class="block text-white font-medium mb-2">
+                    Nomor WhatsApp
+                </label>
                 <input type="text"
                     placeholder="081234567890"
                     class="w-full h-14 px-5 rounded-xl bg-slate-800/60 border border-slate-700 text-white placeholder-slate-500

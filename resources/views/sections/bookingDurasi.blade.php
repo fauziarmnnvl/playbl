@@ -60,7 +60,7 @@
             Pilih Durasi
         </h2>
 
-        <form x-data="{ session: '', duration: '' }">
+        <form x-data="{ session: null, duration: '' }">
 
             {{-- SESI WAKTU TETAP --}}
             <div
@@ -96,65 +96,128 @@
                             </span>
                         </div>
 
-                        <p class="text-slate-400 mb-5">
+                        <p class="text-slate-400">
                             Pilih durasi pasti. Cocok untuk yang sudah punya rencana waktu.
                         </p>
 
-                        <div class="grid grid-cols-2 gap-4">
+                        <div
+                            x-show="session === 'tetap'"
+                            x-transition
+                            class="mt-5">
 
-                            {{-- 1 Jam --}}
-                            <input
-                                    type="radio"
-                                    name="duration"
-                                    value="1-jam"
-                                    x-model="duration"
-                                    @click.stop
-                                    class="hidden">
+                            <div class="grid grid-cols-2 gap-4">
+                                {{-- 1 Jam --}}
+                                <label class="cursor-pointer relative">
 
-                                <div
-                                    :class="duration === '1-jam'
-                                        ? 'border-blue-500 bg-blue-900/30'
-                                        : 'border-slate-700'"
-                                    class="border rounded-2xl p-5 text-center hover:border-blue-500 transition">
+                                    <input
+                                        type="radio"
+                                        name="duration"
+                                        value="1-jam"
+                                        x-model="duration"
+                                        @click.stop
+                                        class="hidden">
 
-                                    <h4 class="text-xl font-bold text-white">
-                                        1 Jam
-                                    </h4>
+                                    <div
+                                        :class="duration === '1-jam'
+                                            ? 'border-blue-500 bg-blue-900/30'
+                                            : 'border-slate-700'"
+                                        class="border rounded-2xl p-5 text-center hover:border-blue-500 transition">
 
-                                    <p class="text-slate-400 mt-2">
-                                        Rp 15.000
-                                    </p>
+                                        <h4 class="text-xl font-bold text-white">
+                                            1 Jam
+                                        </h4>
 
-                                </div>
-                            </label>
+                                        <p class="text-slate-400 mt-2">
+                                            Rp 15.000
+                                        </p>
 
-                            {{-- 2 Jam --}}
-                            <label class="cursor-pointer relative">
+                                    </div>
+                                </label>
 
-                                <input
-                                    type="radio"
-                                    name="duration"
-                                    value="2-jam"
-                                    x-model="duration"
-                                    @click.stop
-                                    class="hidden">
+                                {{-- 2 Jam --}}
+                                <label class="cursor-pointer relative">
 
-                                <div
-                                    :class="duration === '2-jam'
-                                        ? 'border-blue-500 bg-blue-900/30'
-                                        : 'border-slate-700'"
-                                    class="border rounded-2xl p-5 text-center hover:border-blue-500 transition">
+                                    <input
+                                        type="radio"
+                                        name="duration"
+                                        value="2-jam"
+                                        x-model="duration"
+                                        @click.stop
+                                        class="hidden">
 
-                                    <h4 class="text-xl font-bold text-white">
-                                        2 Jam
-                                    </h4>
+                                    <div
+                                        :class="duration === '2-jam'
+                                            ? 'border-blue-500 bg-blue-900/30'
+                                            : 'border-slate-700'"
+                                        class="border rounded-2xl p-5 text-center hover:border-blue-500 transition">
 
-                                    <p class="text-slate-400 mt-2">
-                                        Rp 30.000
-                                    </p>
+                                        <h4 class="text-xl font-bold text-white">
+                                            2 Jam
+                                        </h4>
 
-                                </div>
-                            </label>
+                                        <p class="text-slate-400 mt-2">
+                                            Rp 30.000
+                                        </p>
+
+                                    </div>
+                                </label>
+
+                                {{-- 3 Jam --}}
+                                <label class="cursor-pointer relative">
+
+                                    <input
+                                        type="radio"
+                                        name="duration"
+                                        value="3-jam"
+                                        x-model="duration"
+                                        @click.stop
+                                        class="hidden">
+
+                                    <div
+                                        :class="duration === '3-jam'
+                                            ? 'border-blue-500 bg-blue-900/30'
+                                            : 'border-slate-700'"
+                                        class="border rounded-2xl p-5 text-center hover:border-blue-500 transition">
+
+                                        <h4 class="text-xl font-bold text-white">
+                                            3 Jam
+                                        </h4>
+
+                                        <p class="text-slate-400 mt-2">
+                                            Rp 45.000
+                                        </p>
+
+                                    </div>
+                                </label>
+
+                                {{-- 4 Jam --}}
+                                <label class="cursor-pointer relative">
+
+                                    <input
+                                        type="radio"
+                                        name="duration"
+                                        value="4-jam"
+                                        x-model="duration"
+                                        @click.stop
+                                        class="hidden">
+
+                                    <div
+                                        :class="duration === '4-jam'
+                                            ? 'border-blue-500 bg-blue-900/30'
+                                            : 'border-slate-700'"
+                                        class="border rounded-2xl p-5 text-center hover:border-blue-500 transition">
+
+                                        <h4 class="text-xl font-bold text-white">
+                                            4 Jam
+                                        </h4>
+
+                                        <p class="text-slate-400 mt-2">
+                                            Rp 60.000
+                                        </p>
+
+                                    </div>
+                                </label>
+                            </div>
 
                         </div>
 
@@ -205,6 +268,11 @@
                             Main tanpa batas waktu. Biaya dihitung otomatis berdasarkan lama bermain.
                         </p>
 
+                        <div
+                            x-show="session === 'fleksibel'"
+                            x-transition
+                            class="mt-4">
+
                         <div class="bg-[#09152D] rounded-2xl p-4">
 
                             <div class="text-white font-semibold mb-3">
@@ -219,6 +287,8 @@
                             </div>
 
                         </div>
+
+                    </div>
 
                     </div>
 
