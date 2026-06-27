@@ -92,71 +92,76 @@
             Pilih Playbox
         </h2>
 
-        <form method="GET"
-            action="{{ route('booking.durasi') }}"
-            x-data="{ playbox: '' }">
-
-            {{-- Simpan cabang dari step sebelumnya --}}
-            <input type="hidden"
-                name="branch"
-                value="{{ request('branch') }}">
+        <form method="POST" action="{{ route('booking.storePlaybox') }}" x-data="{ playbox:'{{ old('playbox', session('booking.id_playbox')) }}'}">
+            @csrf
 
             <div class="grid grid-cols-4 gap-4">
                 @foreach($playboxes as $playbox)
-                @if($playbox->status_unit == 'Digunakan')
+                    @if($playbox->status_unit != 'Tersedia')
 
-                <div class="relative opacity-50">
-                    <span class="absolute top-2 right-2 text-xs px-2 py-1 bg-red-900 text-red-300 rounded-full">
-                        Used
-                    </span>
-
-                    <div class="border border-slate-700 rounded-2xl h-32 flex flex-col items-center justify-center text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-10 h-10 text-slate-500 mb-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
-                        </svg>
-
-                        <span class="font-semibold">
-                            {{ $playbox->nama_playbox }}
-                        </span>
-                    </div>
-                </div>
-
-                @else
-                <label @click="playbox='{{ $playbox->id_playbox }}'" class="cursor-pointer">
-                    <input type="radio" name="playbox" value="{{ $playbox->id_playbox }}" x-model="playbox" class="hidden">
-                    <div
-                        :class="playbox === '{{ $playbox->id_playbox }}'
-                            ? 'border-blue-500 bg-blue-900/30 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                            : 'border-slate-700 hover:border-blue-400 hover:bg-blue-900/20 hover:shadow-[0_0_12px_rgba(59,130,246,0.25)]'"
-                        class="border rounded-2xl h-32 flex flex-col items-center justify-center text-white transition-all duration-300">
-
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-10 h-10 text-slate-400 mb-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
-                        </svg>
-
-                        <span class="font-semibold">
-                            {{ $playbox->nama_playbox }}
+                    <div class="relative opacity-50">
+                        <span class="absolute top-2 right-2 text-xs px-2 py-1 rounded-full
+                            @if($playbox->status_unit == 'Digunakan')
+                                bg-red-900 text-red-300
+                            @else
+                                bg-yellow-900 text-yellow-300
+                            @endif">
+                            {{ $playbox->status_unit }}
                         </span>
 
+                        <div class="border border-slate-700 rounded-2xl h-32 flex flex-col items-center justify-center text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-10 h-10 text-slate-500 mb-2"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
+                            </svg>
+
+                            <span class="font-semibold">
+                                {{ $playbox->nama_playbox }}
+                            </span>
+                        </div>
                     </div>
-                </label>
-                @endif
+
+                    @else
+                    <label @click="playbox='{{ $playbox->id_playbox }}'" class="cursor-pointer">
+                        <input type="radio" name="playbox" value="{{ $playbox->id_playbox }}" x-model="playbox" class="hidden">
+                        <div
+                            :class="playbox === '{{ $playbox->id_playbox }}'
+                                ? 'border-blue-500 bg-blue-900/30 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                                : 'border-slate-700 hover:border-blue-400 hover:bg-blue-900/20 hover:shadow-[0_0_12px_rgba(59,130,246,0.25)]'"
+                            class="border rounded-2xl h-32 flex flex-col items-center justify-center text-white transition-all duration-300">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-10 h-10 text-slate-400 mb-2"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9.75 17L9 20h6l-.75-3M5 4h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/>
+                            </svg>
+
+                            <span class="font-semibold">
+                                {{ $playbox->nama_playbox }}
+                            </span>
+
+                        </div>
+                    </label>
+                    @endif
                 @endforeach
             </div>
+            @error('playbox')
+            <p class="text-red-400 text-sm mt-3">
+                {{ $message }}
+            </p>
+            @enderror
+    
 
     {{-- Footer --}}
     <div class="border-t border-slate-800 mt-8 pt-8 flex justify-between">

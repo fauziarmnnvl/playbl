@@ -71,25 +71,31 @@
             {{-- Nama --}}
             <div class="flex justify-between py-4 border-b border-slate-700">
                 <span class="text-slate-400">Nama</span>
-                <span class="text-white font-medium">PlayBL</span>
+                <span class="text-white font-medium">{{ $booking['nama'] }}</span>
+            </div>
+
+            {{-- No. WhatsApp --}}
+            <div class="flex justify-between py-4 border-b border-slate-700">
+                <span class="text-slate-400">No. WhatsApp</span>
+                <span class="text-white font-medium">{{ $booking['no_hp'] }}</span>
             </div>
 
             {{-- Cabang --}}
             <div class="flex justify-between py-4 border-b border-slate-700">
                 <span class="text-slate-400">Cabang</span>
-                <span class="text-white font-medium">NUD HOUSE</span>
+                <span class="text-white font-medium">{{ $booking['cabang']->nama_cabang }}</span>
             </div>
 
             {{-- Playbox --}}
             <div class="flex justify-between py-4 border-b border-slate-700">
                 <span class="text-slate-400">Playbox</span>
-                <span class="text-white font-medium">PB4</span>
+                <span class="text-white font-medium">{{ $booking['playbox']->nama_playbox }}</span>
             </div>
 
             {{-- Durasi --}}
             <div class="flex justify-between py-4 border-b border-slate-700">
                 <span class="text-slate-400">Durasi</span>
-                <span class="text-white font-medium">1 Jam</span>
+                <span class="text-white font-medium">{{ $booking['durasi']/60 }} Jam</span>
             </div>
 
             {{-- Total --}}
@@ -100,7 +106,7 @@
                 </p>
 
                 <h3 class="text-5xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                    Rp 15.000
+                    Rp {{ number_format($booking['total_harga'],0,',','.') }}
                 </h3>
 
             </div>

@@ -32,25 +32,36 @@ Route::get('/event-promo', [EventPromoController::class, 'publicPromo'])->name('
 
 Route::get('/game', [GameController::class, 'publicGames'])->name('game');
 
-Route::view('/booking', 'bookings.info')->name('booking.info');
+Route::get('/booking', [BookingController::class, 'info'])->name('booking.info');
+
+Route::post('/booking', [BookingController::class, 'storeInfo'])->name('booking.storeInfo');
 
 Route::get('/booking/cabang', [BookingController::class, 'cabang'])->name('booking.cabang');
 
-Route::get('/booking/playbox',[BookingController::class,'playbox'])->name('booking.playbox');
+Route::post('/booking/cabang', [BookingController::class, 'storeCabang'])->name('booking.storeCabang');
 
-Route::view('/booking/durasi', 'bookings.durasi')->name('booking.durasi');
+Route::get('/booking/playbox', [BookingController::class, 'playbox'])->name('booking.playbox');
 
-Route::view('/booking/review', 'bookings.review')->name('booking.review');
+Route::post('/booking/playbox', [BookingController::class, 'storePlaybox'])->name('booking.storePlaybox');
+
+Route::get('/booking/durasi',[BookingController::class,'durasi'])->name('booking.durasi');
+
+Route::post('/booking/durasi',[BookingController::class,'storeDurasi'])->name('booking.storeDurasi');
+
+Route::get('/booking/review',[BookingController::class,'review'])->name('booking.review');
 
 Route::view('/booking/review-flexible', 'bookings.review-flexible')->name('booking.review.flexible');
 
 Route::view('/booking/session-flexible', 'bookings.session-flexible')->name('booking.session.flexible');
 
-Route::view('/booking/pembayaran', 'bookings.pembayaran')->name('booking.pembayaran');
+Route::get('/booking/pembayaran',[BookingController::class,'pembayaran'])->name('booking.pembayaran');
+
+Route::post('/booking/pembayaran',[BookingController::class,'storePembayaran'])->name('booking.storePembayaran');
 
 Route::view('/booking/pembayaran-flexible', 'bookings.pembayaran-flexible')->name('booking.pembayaran.flexible');
 
-Route::view('/booking/success', 'bookings.success')->name('booking.success');
+Route::get('/booking/success',[BookingController::class,'success'])->name('booking.success');
+Route::post('/booking/selesai',[BookingController::class,'selesai'])->name('booking.selesai');
 
 Route::view('/booking/success-flexible', 'bookings.success-flexible')->name('booking.success.flexible');
 

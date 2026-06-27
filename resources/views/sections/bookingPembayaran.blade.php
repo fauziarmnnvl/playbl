@@ -71,9 +71,22 @@
 
             {{-- Total --}}
             <h3 class="text-5xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-10">
-                Rp 15.000
+                Rp {{ number_format($booking['total_harga'],0,',','.') }}
             </h3>
 
+            <div class="mt-8 rounded-2xl border border-yellow-500/30 bg-yellow-500/10 p-5 text-left">
+
+                <h4 class="text-yellow-300 font-semibold mb-3">
+                    Perhatian
+                </h4>
+
+                <p class="text-yellow-200 text-sm leading-6">
+                    Silakan lakukan pembayaran menggunakan QRIS di atas. Setelah pembayaran berhasil,
+                    datang ke lokasi dan tunjukkan bukti pembayaran kepada operator sebelum
+                    sesi bermain dimulai.
+                </p>
+
+            </div>
         </div>
 
         {{-- Footer --}}
@@ -84,17 +97,14 @@
                 ← Kembali
             </a>
 
-            <a href="{{ route('booking.success') }}"
-                class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition flex items-center gap-2">
-
-              
-
-                <span>Saya Sudah Bayar</span>
-
-            </a>
-
+            <form method="POST" action="{{ route('booking.storePembayaran') }}">
+                @csrf
+                <button
+                    type="submit"
+                    class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition flex items-center gap-2">
+                    Saya Sudah Bayar
+                </button>
+            </form>
         </div>
-
     </div>
-
 </section>
