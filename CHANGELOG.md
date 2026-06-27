@@ -32,6 +32,14 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Integrasi data Playbox dengan halaman Booking Playbox.
 * Menampilkan daftar Playbox berdasarkan cabang yang dipilih pelanggan.
 * Menampilkan status ketersediaan Playbox pada proses booking.
+* Implementasi workflow Booking Sesi Tetap (Fixed Session) dari pengisian informasi pemain hingga booking berhasil.
+* Validasi data pemain pada proses booking.
+* Penyimpanan data booking sementara menggunakan session.
+* Halaman Review Booking untuk konfirmasi data sebelum pembayaran.
+* Integrasi pembayaran QRIS pada proses booking sesi tetap.
+* Penyimpanan data pelanggan secara otomatis berdasarkan nomor WhatsApp.
+* Penyimpanan data transaksi setelah pengguna mengonfirmasi pembayaran.
+* Halaman Booking Success yang menampilkan informasi hasil booking.
 
 ### Changed
 
@@ -57,9 +65,14 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Pengelolaan banner promo disesuaikan menggunakan direktori public/images/event-promo.
 * Halaman Booking Playbox kini menggunakan data Playbox dari database dan tidak lagi hardcoded.
 * Status Playbox pada proses booking kini mengikuti kondisi aktual unit yang dikelola admin.
+* Menyempurnakan alur multi-step Booking Playbox untuk sesi tetap.
+* Menambahkan validasi ketersediaan cabang pada proses booking.
+* Menambahkan validasi ketersediaan Playbox berdasarkan status unit.
+* Menyesuaikan tampilan halaman Pembayaran dan Success sesuai workflow terbaru.
 
 ### Documentation
 
+* Memperbarui CHANGELOG sesuai implementasi workflow Booking Sesi Tetap.
 * Memperbarui CHANGELOG sesuai implementasi fitur Laporan & Statistik.
 * Memperbarui CHANGELOG sesuai implementasi fitur Riwayat Bermain.
 * Memperbarui CHANGELOG sesuai implementasi fitur Riwayat Aktivitas.
