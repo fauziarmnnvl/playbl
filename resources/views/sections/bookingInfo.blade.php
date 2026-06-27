@@ -89,19 +89,19 @@
             Informasi Pemain
         </h2>
 
-        <form>
-
+        <form method="POST" action="{{ route('booking.storeInfo') }}" x-data="{nama: '{{ session('booking.nama') }}',no_hp: '{{ session('booking.no_hp') }}'}">
+            @csrf
             {{-- Nama --}}
             <div class="mb-7">
                 <label class="block text-white font-medium mb-2">
                     Nama Lengkap
                 </label>
-                <input type="text"
-                    placeholder="Masukkan nama kamu"
-                    class="w-full h-14 px-5 rounded-xl bg-slate-800/60 border border-slate-700 text-white placeholder-slate-500
-                    hover:border-blue-400
-                    focus:outline-none
-                    focus:border-blue-500">
+                <input type="text" name="nama" x-model="nama" value="{{ session('booking.nama') }}" placeholder="Masukkan nama kamu" class="w-full h-14 px-5 rounded-xl bg-slate-800/60 border border-slate-700 text-white placeholder-slate-500 hover:border-blue-400 focus:outline-none focus:border-blue-500">
+                @error('nama')
+                    <p class="text-red-400 text-sm mt-2">
+                        {{ $message }}
+                    </p>
+                @enderror
             </div>
 
             {{-- WhatsApp --}}
@@ -109,25 +109,21 @@
                 <label class="block text-white font-medium mb-2">
                     Nomor WhatsApp
                 </label>
-                <input type="text"
-                    placeholder="081234567890"
-                    class="w-full h-14 px-5 rounded-xl bg-slate-800/60 border border-slate-700 text-white placeholder-slate-500
-                    hover:border-blue-400
-                    focus:outline-none
-                    focus:border-blue-500">
+                <input type="text" name="no_hp" x-model="no_hp" value="{{ session('booking.no_hp') }}" placeholder="081234567890" class="w-full h-14 px-5 rounded-xl bg-slate-800/60 border border-slate-700 text-white placeholder-slate-500 hover:border-blue-400 focus:outline-none focus:border-blue-500">
+                @error('no_hp')
+                <p class="text-red-400 text-sm mt-2">
+                    {{ $message }}
+                </p>
+                @enderror
             </div>
 
             <div class="border-t border-slate-800 pt-8 flex justify-end">
 
-                <a href="{{ route('booking.cabang') }}"
-                    class="px-10 py-4 rounded-full text-white font-semibold bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105 transition-all duration-300 shadow-lg">
+                <button type="submit" :disabled="nama.trim()=='' || no_hp.trim()==''" :class="nama.trim()=='' || no_hp.trim()=='' ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'"
+                    class="px-10 py-4 rounded-full text-white font-semibold bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300 shadow-lg">
                     Lanjut →
-                </a>
-
+                </button>
             </div>
-
         </form>
-
     </div>
-
 </section>

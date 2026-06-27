@@ -38,7 +38,7 @@
             </h1>
 
             <p class="text-slate-400 text-lg max-w-md mx-auto">
-                Pembayaran telah diterima.
+                Booking berhasil dibuat. Silakan tunjukkan bukti pembayaran kepada operator saat tiba di lokasi.
             </p>
 
         </div>
@@ -57,7 +57,7 @@
                         </h3>
 
                         <p class="text-slate-300 text-sm">
-                            Silakan ambil Playbox dan tunjukkan bukti booking ini.
+                           Silakan tunjukkan bukti pembayaran kepada operator untuk memulai sesi bermain Anda.
                         </p>
 
                     </div>
@@ -72,38 +72,51 @@
         <div class="max-w-md mx-auto mb-8">
 
             <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700">
+                <div class="flex justify-between py-3">
+    <span class="text-slate-400">Kode Booking</span>
+    <span class="text-green-400 font-semibold">
+        {{ $booking['kode_transaksi'] }}
+    </span>
+</div>
 
                 <div class="flex justify-between py-3">
                     <span class="text-slate-400">Nama</span>
-                    <span class="text-white font-semibold">PlayBL</span>
+                    <span class="text-white font-semibold">{{ $booking['nama'] }}</span>
                 </div>
 
                 <div class="flex justify-between py-3">
                     <span class="text-slate-400">Playbox</span>
-                    <span class="text-blue-400 font-semibold">PB4</span>
+                    <span class="text-blue-400 font-semibold">{{ $booking['playbox']->nama_playbox }}</span>
+                </div>
+
+                <div class="flex justify-between py-3">
+                    <span class="text-slate-400">Cabang</span>
+                    <span class="text-white font-semibold">{{ $booking['cabang']->nama_cabang }}</span>
                 </div>
 
                 <div class="flex justify-between py-3">
                     <span class="text-slate-400">Durasi</span>
-                    <span class="text-white font-semibold">1 Jam</span>
+                    <span class="text-white font-semibold">{{ $booking['durasi']/60 }} Jam</span>
                 </div>
 
+                <div class="flex justify-between py-3">
+                    <span class="text-slate-400">Total</span>
+                    <span class="text-green-400 font-semibold">Rp {{ number_format($booking['total_harga'],0,',','.') }}</span>
+                </div>
             </div>
-
         </div>
 
         {{-- Button --}}
         <div class="flex justify-center">
 
-            <a href="{{ route('home') }}"
-                class="w-full max-w-md text-center py-4 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
-
-                Kembali ke Beranda
-
-            </a>
-
+           <form method="POST" action="{{ route('booking.selesai') }}" class="w-full flex justify-center">
+                @csrf
+                <button
+                    type="submit"
+                    class="w-full max-w-md py-4 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
+                    Kembali ke Beranda
+                </button>
+            </form>
         </div>
-
     </div>
-
 </section>

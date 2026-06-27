@@ -60,7 +60,10 @@
             Pilih Durasi
         </h2>
 
-        <form x-data="{ session: null, duration: '' }">
+        <form method="POST" action="{{ route('booking.storeDurasi') }}" x-data="{ session:'{{ old('jenis_sesi',session('booking.jenis_sesi')) }}',duration:'{{ old('durasi',session('booking.durasi')) }}'}">
+            @csrf
+            <input type="hidden" name="jenis_sesi" :value="session">
+            <input type="hidden" name="durasi" :value="duration">
 
             {{-- SESI WAKTU TETAP --}}
             <div
@@ -111,14 +114,13 @@
 
                                     <input
                                         type="radio"
-                                        name="duration"
-                                        value="1-jam"
+                                        value="60"
                                         x-model="duration"
                                         @click.stop
                                         class="hidden">
 
                                     <div
-                                        :class="duration === '1-jam'
+                                        :class="duration === '60'
                                             ? 'border-blue-500 bg-blue-900/30'
                                             : 'border-slate-700'"
                                         class="border rounded-2xl p-5 text-center hover:border-blue-500 transition">
@@ -139,14 +141,13 @@
 
                                     <input
                                         type="radio"
-                                        name="duration"
-                                        value="2-jam"
+                                        value="120"
                                         x-model="duration"
                                         @click.stop
                                         class="hidden">
 
                                     <div
-                                        :class="duration === '2-jam'
+                                        :class="duration === '120'
                                             ? 'border-blue-500 bg-blue-900/30'
                                             : 'border-slate-700'"
                                         class="border rounded-2xl p-5 text-center hover:border-blue-500 transition">
@@ -167,14 +168,13 @@
 
                                     <input
                                         type="radio"
-                                        name="duration"
-                                        value="3-jam"
+                                        value="180"
                                         x-model="duration"
                                         @click.stop
                                         class="hidden">
 
                                     <div
-                                        :class="duration === '3-jam'
+                                        :class="duration === '180'
                                             ? 'border-blue-500 bg-blue-900/30'
                                             : 'border-slate-700'"
                                         class="border rounded-2xl p-5 text-center hover:border-blue-500 transition">
@@ -195,14 +195,13 @@
 
                                     <input
                                         type="radio"
-                                        name="duration"
-                                        value="4-jam"
+                                        value="240"
                                         x-model="duration"
                                         @click.stop
                                         class="hidden">
 
                                     <div
-                                        :class="duration === '4-jam'
+                                        :class="duration === '240'
                                             ? 'border-blue-500 bg-blue-900/30'
                                             : 'border-slate-700'"
                                         class="border rounded-2xl p-5 text-center hover:border-blue-500 transition">
@@ -218,13 +217,9 @@
                                     </div>
                                 </label>
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
 
             {{-- SESI FLEKSIBEL --}}
@@ -243,25 +238,19 @@
                 hover:-translate-y-1">
 
                 <div class="flex items-start gap-4">
-
                     <div class="w-12 h-12 rounded-xl bg-purple-600 flex items-center justify-center text-white">
-
                         <i class="bi bi-lightning-charge-fill text-2xl"></i>
-
                     </div>
 
                     <div class="flex-1">
 
                         <div class="flex items-center gap-3 mb-2">
-
                             <h3 class="text-2xl font-bold text-white">
                                 Sesi Fleksibel
                             </h3>
-
                             <span class="px-3 py-1 text-xs rounded-full bg-blue-600 text-white">
                                 Bayar di Akhir
                             </span>
-
                         </div>
 
                         <p class="text-slate-400 mb-4">
@@ -273,28 +262,35 @@
                             x-transition
                             class="mt-4">
 
-                        <div class="bg-[#09152D] rounded-2xl p-4">
+                            <div class="bg-[#09152D] rounded-2xl p-4">
 
-                            <div class="text-white font-semibold mb-3">
-                                Tarif: Rp 395 / menit
+                                <div class="text-white font-semibold mb-3">
+                                    Tarif: Rp 395 / menit
+                                </div>
+
+                                <div class="flex justify-between text-sm text-slate-400">
+
+                                    <span>30m = Rp 11.850</span>
+                                    <span>1j = Rp 23.700</span>
+
+                                </div>
                             </div>
-
-                            <div class="flex justify-between text-sm text-slate-400">
-
-                                <span>30m = Rp 11.850</span>
-                                <span>1j = Rp 23.700</span>
-
-                            </div>
-
                         </div>
-
                     </div>
-
-                    </div>
-
                 </div>
-
             </div>
+
+            @error('jenis_sesi')
+            <p class="text-red-400 text-sm mt-3">
+                {{ $message }}
+            </p>
+            @enderror
+
+            @error('durasi')
+            <p class="text-red-400 text-sm mt-2">
+                {{ $message }}
+            </p>
+            @enderror
 
             {{-- Footer --}}
             <div class="border-t border-slate-800 mt-8 pt-8 flex justify-between">
@@ -304,34 +300,12 @@
                     ← Kembali
                 </a>
 
-            <button
-                type="button"
-
-                @click="
-                    if(session === 'tetap'){
-                        window.location='{{ route('booking.review') }}'
-                    }
-
-                    if(session === 'fleksibel'){
-                        window.location='{{ route('booking.review.flexible') }}'
-                    }
-                "
-
-                :disabled="!session"
-
-                :class="!session
-                    ? 'opacity-50 cursor-not-allowed'
-                    : 'hover:scale-105'"
-
-                class="px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg transition-all duration-300">
-
-                Lanjut →
-            </button>
-
+                <button type="submit" :disabled="!session || (session=='tetap' && !duration)"
+                    :class="!session || (session=='tetap' && !duration)? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'"
+                    class="px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg transition-all duration-300">
+                    Lanjut →
+                </button>
             </div>
-
         </form>
-
     </div>
-
 </section>
