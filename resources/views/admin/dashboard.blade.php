@@ -95,9 +95,9 @@
                 <h2>Penggunaan Playbox (7 Hari Terakhir)</h2>
             </div>
 
-            <div class="panel-body chart-placeholder">
-                Grafik akan ditampilkan di sini
-            </div>
+           <div class="panel-body" style="height:350px;">
+                <canvas id="usageChart"></canvas>
+           </div>
         </div>
 
         <div class="dashboard-panel">
@@ -105,8 +105,8 @@
                 <h2>Distribusi Penggunaan</h2>
             </div>
 
-            <div class="panel-body chart-placeholder">
-                Donut Chart
+            <div class="panel-body" style="height:350px;">
+                <canvas id="donutChart"></canvas>
             </div>
         </div>
     </div>
@@ -115,27 +115,133 @@
             <h2>Aktivitas Terbaru</h2>
         </div>
         <div class="activity-list">
-            <div class="activity-item">
-                <span class="activity-dot blue"></span>
-                <div>
-                    <strong>Playbox berhasil ditambahkan</strong>
-                    <p>Baru saja</p>
+            @forelse($activities as $activity)
+                <div class="activity-item">
+                    <span class="activity-dot blue"></span>
+                    <div>
+                        <strong>{{ $activity->description }}</strong>
+                        <p>{{ $activity->created_at->diffForHumans() }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="activity-item">
-                <span class="activity-dot green"></span>
-                <div>
-                    <strong>Sesi bermain selesai</strong>
-                    <p>Hari ini</p>
-                </div>
-            </div>
-            <div class="activity-item">
-                <span class="activity-dot amber"></span>
-                <div>
-                    <strong>Pendapatan diperbarui</strong>
-                    <p>Hari ini</p>
-                </div>
-            </div>
+            @empty
+
+                <p class="text-gray-500">
+                    Belum ada aktivitas.
+                </p>
+            @endforelse
+
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// ================= BAR CHART =================
+const ctx = document.getElementById('usageChart');
+
+new Chart(ctx, {
+    type: 'bar',
+
+    data: {
+        labels: @json($labels),
+
+        datasets: [{
+            label: 'Jumlah Booking',
+            data: @json($data),
+            backgroundColor: '#2563eb',
+            borderColor: '#2563eb',
+            borderWidth: 0,
+            borderRadius: 6,
+            borderSkipped: false,
+            barPercentage: 0.7,
+            categoryPercentage: 0.8
+        }]
+    },
+
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+
+        scales: {
+            x: {
+                grid: {
+                    color: '#e5e7eb'
+                },
+
+                ticks: {
+                    color: '#6b7280',
+                    font: {
+                        size: 13
+                    }
+                }
+            },
+
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: '#e5e7eb'
+                },
+                ticks: {
+                    precision: 0,
+                    color: '#6b7280'
+                }
+            }
+        }
+    }
+});
+
+// ================= DONUT CHART =================
+
+const donutCtx = document.getElementById('donutChart');
+new Chart(donutCtx, {
+    type: 'doughnut',
+    data: {
+        labels: @json($donutLabels),
+        datasets: [{
+            data: @json($donutData),
+            backgroundColor: [
+                '#3b82f6',
+                '#10b981',
+                '#f59e0b',
+                '#8b5cf6',
+                '#ef4444',
+                '#06b6d4',
+                '#ec4899',
+                '#84cc16',
+            ],
+
+            borderWidth: 0,
+            hoverOffset: 10
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '68%',
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    usePointStyle: true,
+                    pointStyle: 'circle',
+                    padding: 20,
+
+                    font: {
+                        size: 13
+                    }
+                }
+            }
+        }
+    }
+});
+
+</script>
+@endpush
