@@ -50,20 +50,27 @@ Route::post('/booking/durasi',[BookingController::class,'storeDurasi'])->name('b
 
 Route::get('/booking/review',[BookingController::class,'review'])->name('booking.review');
 
-Route::view('/booking/review-flexible', 'bookings.review-flexible')->name('booking.review.flexible');
+Route::get('/booking/review-flexible',[BookingController::class,'reviewFlexible'])->name('booking.review.flexible');
 
-Route::view('/booking/session-flexible', 'bookings.session-flexible')->name('booking.session.flexible');
+Route::get('/booking/success-flexible-booking',[BookingController::class,'successFlexibleBooking'])->name('booking.success.flexible.booking');
+
+Route::post('/booking/mulai-sesi',[BookingController::class,'mulaiSesi'])->name('booking.mulaiSesi');
+Route::post('/booking/selesai-sesi', [BookingController::class, 'selesaiSesi'])->name('booking.selesaiSesi');
+
+Route::post('/booking/flexible',[BookingController::class,'storeBookingFlexible'])->name('booking.storeBookingFlexible');
+
+Route::get('/booking/session-flexible',[BookingController::class,'sessionFlexible'])->name('booking.session.flexible');
 
 Route::get('/booking/pembayaran',[BookingController::class,'pembayaran'])->name('booking.pembayaran');
 
 Route::post('/booking/pembayaran',[BookingController::class,'storePembayaran'])->name('booking.storePembayaran');
 
-Route::view('/booking/pembayaran-flexible', 'bookings.pembayaran-flexible')->name('booking.pembayaran.flexible');
+Route::get('/booking/pembayaran-flexible', [BookingController::class, 'pembayaranFlexible'])->name('booking.pembayaran.flexible');
+Route::get('/booking/success-flexible',[BookingController::class, 'successFlexible'])->name('booking.success.flexible');
+Route::post('/booking/pembayaran-flexible', [BookingController::class, 'storePembayaranFlexible'])->name('booking.storePembayaranFlexible');
 
 Route::get('/booking/success',[BookingController::class,'success'])->name('booking.success');
 Route::post('/booking/selesai',[BookingController::class,'selesai'])->name('booking.selesai');
-
-Route::view('/booking/success-flexible', 'bookings.success-flexible')->name('booking.success.flexible');
 
 Route::view('/faq', 'faq')->name('faq');
 

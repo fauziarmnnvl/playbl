@@ -11,7 +11,7 @@
                 </p>
 
                 <h3 class="text-white text-2xl font-bold">
-                    PlayBL
+                    {{ $booking['nama'] }}
                 </h3>
             </div>
 
@@ -22,15 +22,10 @@
                 </p>
 
                 <span class="inline-flex items-center px-4 py-2 rounded-xl bg-blue-900/40 text-blue-400 font-semibold">
-
-                    Playbox 04
-
+                    {{ $booking['playbox']->nama_playbox }}
                 </span>
-
             </div>
-
         </div>
-
     </div>
 
     {{-- Timer Card --}}
@@ -50,18 +45,17 @@
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0"/>
 
             </svg>
-
             Waktu Bermain
-
         </div>
 
         {{-- Timer --}}
-        <h1 id="timer"
-            class="text-7xl md:text-8xl font-bold text-white tracking-tight mb-10">
-
-            01:00:21
-
+        <h1 class="text-7xl md:text-8xl font-bold text-white tracking-tight mb-10">
+            <span id="timer">
+                00:00:00
+            </span>
         </h1>
+
+        <input type="hidden" id="waktuMulai" value="{{ optional($booking['sesi']->waktu_mulai)->timestamp }}">
 
         {{-- Billing --}}
         <div class="bg-slate-800/30 border border-slate-700 rounded-3xl py-8 px-6">
@@ -70,8 +64,8 @@
                 Estimasi Tagihan Sementara
             </p>
 
-            <h2 class="text-5xl font-bold text-white mb-4">
-                Rp 23.700
+            <h2 id="billing" class="text-5xl font-bold text-white mb-4">
+                Rp 0
             </h2>
 
             <p class="text-slate-500">
@@ -83,9 +77,8 @@
     </div>
 
     {{-- End Session Button --}}
-    <form 
-    action="{{ route('booking.pembayaran.flexible') }}"
-    class="mt-6 mb-12 w-full max-w-xl flex justify-center">
+    <form method="POST" action="{{ route('booking.selesaiSesi') }}" class="mt-6 mb-12 w-full max-w-xl flex justify-center">
+        @csrf
 
         <button
             type="submit"
@@ -114,19 +107,35 @@
 </section>
 
 <script>
-let seconds = 3621;
+    const waktuMulai = Number(document.getElementById('waktuMulai').value);
+    const tarifPerMenit = 395;
 
-function updateTimer() {
+    function updateTimer() {
 
-    let h = String(Math.floor(seconds / 3600)).padStart(2, '0');
-    let m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
-    let s = String(seconds % 60).padStart(2, '0');
+        const sekarang = Math.floor(Date.now() / 1000);
 
-    document.getElementById('timer').innerText =
-        `${h}:${m}:${s}`;
+        let totalDetik = sekarang - waktuMulai;
 
-    seconds++;
-}
+        if (totalDetik < 0)
+            totalDetik = 0;
 
-setInterval(updateTimer, 1000);
+        const jam = String(Math.floor(totalDetik / 3600)).padStart(2, '0');
+        const menit = String(Math.floor((totalDetik % 3600) / 60)).padStart(2, '0');
+        const detik = String(totalDetik % 60).padStart(2, '0');
+
+        // Hitung estimasi tagihan
+        const totalMenit = Math.floor(totalDetik / 60);
+
+        const totalHarga = totalMenit * tarifPerMenit;
+
+        document.getElementById('billing').innerText =
+            'Rp ' + totalHarga.toLocaleString('id-ID');
+
+        document.getElementById('timer').innerText =
+            `${jam}:${menit}:${detik}`;
+    }
+
+    updateTimer();
+
+    setInterval(updateTimer, 1000);
 </script>

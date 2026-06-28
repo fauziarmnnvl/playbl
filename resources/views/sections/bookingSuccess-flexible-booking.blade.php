@@ -32,15 +32,9 @@
 
         {{-- Title --}}
         <div class="text-center mb-8">
-
             <h1 class="text-5xl font-bold text-white mb-4">
                 Booking Berhasil!
             </h1>
-
-            <p class="text-slate-400 text-lg max-w-md mx-auto">
-                Booking berhasil dibuat. Silakan tunjukkan bukti pembayaran kepada operator saat tiba di lokasi.
-            </p>
-
         </div>
 
         {{-- Next Step --}}
@@ -57,7 +51,7 @@
                         </h3>
 
                         <p class="text-slate-300 text-sm">
-                           Silakan tunjukkan bukti pembayaran kepada operator untuk memulai sesi bermain Anda.
+                            Datang ke lokasi, lalu tekan tombol <span class="font-semibold text-white">Mulai Bermain</span> ketika sudah berada di lokasi. Timer akan mulai berjalan setelah sesi dimulai.
                         </p>
 
                     </div>
@@ -94,25 +88,17 @@
                     <span class="text-white font-semibold">{{ $booking['cabang']->nama_cabang }}</span>
                 </div>
 
-                <div class="flex justify-between py-3">
-                    <span class="text-slate-400">Durasi</span>
-                    <span class="text-white font-semibold">{{ $booking['durasi']/60 }} Jam</span>
-                </div>
-
-                <div class="flex justify-between py-3">
-                    <span class="text-slate-400">Total</span>
-                    <span class="text-green-400 font-semibold">Rp {{ number_format($booking['total_harga'],0,',','.') }}</span>
-                </div>
             </div>
         </div>
 
         {{-- Button --}}
         <div class="flex justify-center">
 
-           <form method="POST" action="{{ route('booking.selesai') }}" class="w-full flex justify-center">
+           <form method="POST" action="{{ route('booking.mulaiSesi') }}" class="w-full flex justify-center">
                 @csrf
+
                 <button type="submit" class="w-full max-w-md py-4 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
-                    Kembali ke Beranda
+                    Mulai Bermain
                 </button>
             </form>
         </div>
