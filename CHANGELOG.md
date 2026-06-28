@@ -40,6 +40,8 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Penyimpanan data pelanggan secara otomatis berdasarkan nomor WhatsApp.
 * Penyimpanan data transaksi setelah pengguna mengonfirmasi pembayaran.
 * Halaman Booking Success yang menampilkan informasi hasil booking.
+* Implementasi workflow Booking Sesi Fleksibel.
+* Halaman sesi bermain dan pembayaran untuk Booking Sesi Fleksibel.
 
 ### Changed
 
@@ -72,10 +74,14 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menyederhanakan tampilan halaman Event & Promo agar berfokus sebagai media informasi promo.
 * Menghapus tombol "Gunakan Promo" pada halaman Event & Promo.
 * Menyesuaikan tampilan game pada Landing Page melalui HomeController.
+* Menyempurnakan alur Booking Playbox untuk mendukung sesi tetap dan sesi fleksibel.
+* Menyesuaikan Monitoring Playbox agar mendukung proses mulai sesi dan status booking.
+* Menyesuaikan tampilan halaman Booking Success dan Payment sesuai workflow terbaru.
 
 
 ### Documentation
 
+* Memperbarui CHANGELOG sesuai implementasi Booking Sesi Fleksibel.
 * Memperbarui CHANGELOG sesuai implementasi workflow Booking Sesi Tetap.
 * Memperbarui CHANGELOG sesuai implementasi fitur Laporan & Statistik.
 * Memperbarui CHANGELOG sesuai implementasi fitur Riwayat Bermain.
