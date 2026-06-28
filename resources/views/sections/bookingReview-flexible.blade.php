@@ -72,7 +72,7 @@
                 </span>
 
                 <span class="text-white font-semibold">
-                    Playbox 04
+                    {{ $booking['playbox']->nama_playbox }}
                 </span>
             </div>
 
@@ -82,7 +82,7 @@
                 </span>
 
                 <span class="text-white font-semibold">
-                    Fleksibel
+                    {{ ucfirst($booking['jenis_sesi']) }}
                 </span>
             </div>
 
@@ -92,7 +92,7 @@
                 </span>
 
                 <span class="text-blue-400 font-bold text-2xl">
-                    Bayar Nanti
+                    Dihitung Saat Selesai
                 </span>
             </div>
 
@@ -100,7 +100,6 @@
 
         {{-- Flexible Box --}}
         <div class="border border-blue-500/50 bg-blue-900/20 rounded-2xl p-10 text-center mb-8">
-
             <div class="text-5xl text-blue-400 mb-5">
                 ∞
             </div>
@@ -110,10 +109,9 @@
             </h3>
 
             <p class="text-slate-400 max-w-lg mx-auto">
-                Kamu tidak perlu membayar sekarang.
-                Tagihan akan berjalan otomatis saat kamu mulai bermain.
+                Kamu tidak perlu melakukan pembayaran saat booking.
+                Tagihan akan dihitung berdasarkan lama bermain setelah sesi selesai.
             </p>
-
         </div>
 
         {{-- Footer --}}
@@ -121,20 +119,15 @@
 
             <a href="{{ route('booking.durasi') }}"
                 class="px-8 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
-
                 ← Kembali
-
             </a>
 
-            <a href="{{ route('booking.session.flexible') }}"
-                class="px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
-
-                Lanjut →
-
-            </a>
-
+            <form method="POST" action="{{ route('booking.storeBookingFlexible') }}">
+                @csrf
+                <button type="submit" class="px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
+                    Buat Booking →
+                </button>
+            </form>
         </div>
-
     </div>
-
 </section>

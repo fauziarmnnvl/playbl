@@ -161,6 +161,229 @@ class BookingController extends Controller
         return view('bookings.review',compact('booking'));
     }
 
+    public function reviewFlexible()
+    {
+        $booking=session('booking');
+
+        if(!$booking||$booking['jenis_sesi']!='fleksibel')
+            return redirect()->route('booking.durasi');
+
+        $booking['cabang']=Cabang::find($booking['id_cabang']);
+        $booking['playbox']=Playbox::find($booking['id_playbox']);
+
+        return view('bookings.review-flexible',compact('booking'));
+    }
+
+    public function successFlexibleBooking()
+    {
+        $booking = session('booking');
+
+        if (!$booking || !isset($booking['id_transaksi']) || $booking['jenis_sesi'] != 'fleksibel') {
+            return redirect()->route('booking.review.flexible');
+        }
+
+        $booking['cabang'] = Cabang::find($booking['id_cabang']);
+        $booking['playbox'] = Playbox::find($booking['id_playbox']);
+
+        return view('bookings.success-flexible-booking', compact('booking'));
+    }
+
+    public function storeBookingFlexible()
+    {
+        $booking = session('booking');
+
+        if (!$booking || $booking['jenis_sesi'] != 'fleksibel') {
+            return redirect()->route('booking.info');
+        }
+
+        DB::transaction(function () use (&$booking) {
+            $pelanggan = Pelanggan::firstOrCreate(
+                ['no_hp' => $booking['no_hp']],
+                [
+                    'nama_pelanggan' => $booking['nama'],
+                    'waktu_daftar' => now()
+                ]
+            );
+
+            $pelanggan->update([
+                'nama_pelanggan' => $booking['nama']
+            ]);
+
+            $transaksi = Transaksi::create([
+                'kode_transaksi' => Transaksi::generateKodeTransaksi(),
+                'id_pelanggan' => $pelanggan->id_pelanggan,
+                'id_cabang' => $booking['id_cabang'],
+                'id_playbox' => $booking['id_playbox'],
+                'id_promo' => null,
+                'durasi' => 0,
+                'total_harga' => 0,
+                'jenis_sesi' => 'Fleksibel',
+                'tgl_transaksi' => now(),
+            ]);
+
+            SesiBermain::create([
+                'id_transaksi' => $transaksi->id_transaksi,
+                'waktu_mulai' => null,
+                'waktu_selesai' => null,
+                'sisa_waktu' => 0,
+                'status_sesi' => 'Belum Mulai'
+            ]);
+
+            $booking['id_transaksi'] = $transaksi->id_transaksi;
+            $booking['kode_transaksi'] = $transaksi->kode_transaksi;
+
+            session(['booking' => $booking]);
+        });
+        return redirect()->route('booking.success.flexible.booking');
+    }
+
+    public function mulaiSesi()
+    {
+        $booking = session('booking');
+
+        if ( !$booking || !isset($booking['id_transaksi']) || $booking['jenis_sesi'] != 'fleksibel') {
+            return redirect()->route('booking.info');
+        }
+
+        DB::transaction(function () use ($booking) {
+
+            $sesi = SesiBermain::where('id_transaksi', $booking['id_transaksi'])
+                ->first();
+
+            if (!$sesi)
+                abort(404);
+
+            $sesi->update([
+                'waktu_mulai' => now(),
+                'status_sesi' => 'Berjalan'
+            ]);
+
+            Playbox::where('id_playbox', $booking['id_playbox'])
+                ->update([
+                    'status_unit' => 'Digunakan'
+                ]);
+        });
+
+        return redirect()->route('booking.session.flexible');
+    }
+
+    public function selesaiSesi()
+    {
+        $booking = session('booking');
+
+        if ( !$booking || !isset($booking['id_transaksi']) || $booking['jenis_sesi'] != 'fleksibel' ) {
+            return redirect()->route('booking.info');
+        }
+
+        $sesi = SesiBermain::where('id_transaksi', $booking['id_transaksi'])->firstOrFail();
+        if (!$sesi->waktu_mulai) {
+            return redirect()->route('booking.session.flexible');
+        }
+        DB::transaction(function () use (&$booking, $sesi) {
+
+            
+            $waktuSelesai = now();
+
+            $durasiMenit = floor(
+                $sesi->waktu_mulai->diffInSeconds($waktuSelesai) / 60
+            );
+
+            $tarifPerMenit = 395;
+            $totalHarga = $durasiMenit * $tarifPerMenit;
+
+            $sesi->update([
+                'waktu_selesai' => $waktuSelesai,
+                'sisa_waktu' => $durasiMenit,
+                'status_sesi' => 'Selesai'
+            ]);
+
+            Transaksi::where(
+                'id_transaksi',
+                $booking['id_transaksi']
+            )->update([
+                'durasi' => $durasiMenit,
+                'total_harga' => $totalHarga
+            ]);
+
+            Playbox::where(
+                'id_playbox',
+                $booking['id_playbox']
+            )->update([
+                'status_unit' => 'Tersedia'
+            ]);
+
+            $booking['durasi'] = $durasiMenit;
+            $booking['total_harga'] = $totalHarga;
+
+            session([
+                'booking' => $booking
+            ]);
+        });
+
+        return redirect()->route('booking.pembayaran.flexible');
+    }
+
+    public function pembayaranFlexible()
+    {
+        $booking = session('booking');
+
+        if (!$booking) {
+            return redirect()->route('booking.info');
+        }
+
+        $booking['cabang'] = Cabang::find($booking['id_cabang']);
+        $booking['playbox'] = Playbox::find($booking['id_playbox']);
+
+        return view('bookings.pembayaran-flexible', compact('booking'));
+    }
+
+    public function storePembayaranFlexible()
+    {
+        $booking = session('booking');
+
+        if (!$booking || !isset($booking['id_transaksi']) || $booking['jenis_sesi'] != 'fleksibel') {
+            return redirect()->route('booking.info');
+        }
+
+        return redirect()->route('booking.success.flexible');
+    }
+
+    public function successFlexible()
+    {
+        $booking = session('booking');
+
+        if (!$booking || !isset($booking['id_transaksi']) || $booking['jenis_sesi'] != 'fleksibel') {
+            return redirect()->route('booking.info');
+        }
+
+        $booking['cabang'] = Cabang::find($booking['id_cabang']);
+        $booking['playbox'] = Playbox::find($booking['id_playbox']);
+
+        return view('bookings.success-flexible', compact('booking'));
+    }
+
+    public function sessionFlexible()
+    {
+        $booking = session('booking');
+
+        if (
+            !$booking ||
+            !isset($booking['id_transaksi']) ||
+            $booking['jenis_sesi'] != 'fleksibel'
+        ) {
+            return redirect()->route('booking.info');
+        }
+
+        $booking['playbox'] = Playbox::find($booking['id_playbox']);
+
+        $booking['sesi'] = SesiBermain::where(
+            'id_transaksi',
+            $booking['id_transaksi']
+        )->first();
+
+        return view('bookings.session-flexible', compact('booking'));
+    }
+
     public function pembayaran()
     {
         $booking=session('booking');
@@ -216,6 +439,8 @@ class BookingController extends Controller
                 'sisa_waktu'=>$booking['durasi'],
                 'status_sesi'=>'Belum Mulai'
             ]);
+
+            Playbox::where('id_playbox',$booking['id_playbox'])->update(['status_unit' => 'Dipesan']);
 
             $booking['id_transaksi']=$transaksi->id_transaksi;
             $booking['kode_transaksi']=$transaksi->kode_transaksi;

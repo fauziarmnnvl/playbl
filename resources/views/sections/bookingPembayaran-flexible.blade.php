@@ -62,31 +62,67 @@
             </div>
 
             {{-- Total --}}
-            <h3 class="text-blue-400 text-4xl font-bold mt-8 mb-12">
-                Rp 23.700
+            <h3 class="text-5xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mt-8 mb-10">
+                Rp {{ number_format($booking['total_harga'], 0, ',', '.') }}
             </h3>
 
         </div>
 
-        {{-- Footer --}}
-        <div class="border-t border-slate-800 pt-8 flex justify-between">
+        <div class="mt-8 bg-[#08152D] border border-slate-700 rounded-2xl p-5 text-left">
 
-            <a href="{{ route('booking.session.flexible') }}"
-               class="px-8 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
+            <h4 class="text-white font-semibold mb-3">
+                Detail Booking
+            </h4>
 
-                ← Kembali
+            <div class="space-y-2 text-sm">
 
-            </a>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Nama</span>
+                    <span class="text-white">{{ $booking['nama'] }}</span>
+                </div>
 
-            <a href="{{ route('booking.success.flexible') }}"
-               class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Cabang</span>
+                    <span class="text-white">{{ $booking['cabang']->nama_cabang }}</span>
+                </div>
 
-            Saya Sudah Bayar
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Playbox</span>
+                    <span class="text-white">{{ $booking['playbox']->nama_playbox }}</span>
+                </div>
 
-            </a>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Durasi Bermain</span>
+                    <span class="text-white">{{ $booking['durasi'] }} Menit</span>
+                </div>
+
+            </div>
+
+            <div class="mt-6 rounded-2xl border border-yellow-500/30 bg-yellow-500/10 p-5">
+
+                <p class="text-yellow-300 text-sm leading-6">
+                    Setelah melakukan pembayaran, tunjukkan bukti pembayaran kepada operator.
+                </p>
+
+            </div>
 
         </div>
 
-    </div>
+        {{-- Footer --}}
+        <div class="mt-8 border-t border-slate-800 pt-8 flex justify-between">
 
+            <a href="{{ route('booking.session.flexible') }}"
+               class="px-8 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
+                ← Kembali
+            </a>
+
+            <form method="POST" action="{{ route('booking.storePembayaranFlexible') }}">
+                @csrf
+                <button type="submit" class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
+                    Saya Sudah Bayar
+                </button>
+
+            </form>
+        </div>
+    </div>
 </section>

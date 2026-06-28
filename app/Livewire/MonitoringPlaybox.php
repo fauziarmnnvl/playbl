@@ -3,8 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\Playbox;
-use Livewire\Component;
+use App\Models\Transaksi;
 use App\Models\SesiBermain;
+use Livewire\Component;
 
 class MonitoringPlaybox extends Component
 {
@@ -49,6 +50,41 @@ class MonitoringPlaybox extends Component
         }
 
         $this->playboxes = $query->orderBy('nama_playbox')->get();
+    }
+
+    public function mulaiSesi($idPlaybox)
+    {
+        $playbox = Playbox::findOrFail($idPlaybox);
+
+        $transaksi = Transaksi::where('id_playbox', $idPlaybox)
+        ->where('jenis_sesi', 'Tetap')
+        ->whereHas('sesiBermain', function ($q) { $q->where('status_sesi', 'Belum Mulai'); })
+        ->latest('tgl_transaksi')
+        ->first();
+
+        if (!$transaksi) {
+            return;
+        }
+
+        $sesi = SesiBermain::where('id_transaksi', $transaksi->id_transaksi)
+            ->first();
+
+        if (!$sesi) {
+            return;
+        }
+
+       $sesi->update([
+            'waktu_mulai' => now(),
+            'waktu_selesai' => now()->addMinutes($transaksi->durasi),
+            'sisa_waktu' => $transaksi->durasi,
+            'status_sesi' => 'Berjalan',
+        ]);
+
+        $playbox->update([
+            'status_unit' => 'Digunakan',
+        ]);
+
+        $this->loadPlayboxes();
     }
 
     public function render()

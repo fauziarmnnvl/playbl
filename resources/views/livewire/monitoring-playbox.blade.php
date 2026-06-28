@@ -13,7 +13,10 @@
 
                 // Card color class
                 $cardClass = match($status) {
-                    'Digunakan' => $jenisSesi === 'Fleksibel' ? 'mon-card--fleksibel' : 'mon-card--digunakan',
+                    'Digunakan' => $jenisSesi === 'Fleksibel'
+                        ? 'mon-card--fleksibel'
+                        : 'mon-card--digunakan',
+                    'Dipesan' => 'mon-card--digunakan',
                     'Maintenance' => 'mon-card--maintenance',
                     'Rusak' => 'mon-card--rusak',
                     default => 'mon-card--tersedia',
@@ -22,6 +25,7 @@
                 // Badge
                 $badgeClass = match($status) {
                     'Tersedia' => 'badge-green',
+                    'Dipesan' => 'badge-amber',
                     'Digunakan' => 'badge-amber',
                     'Maintenance' => 'badge-amber',
                     'Rusak' => 'badge-red',
@@ -29,6 +33,7 @@
                 };
                 $badgeText = match($status) {
                     'Digunakan' => 'Sedang Digunakan',
+                    'Dipesan' => 'Menunggu Dimulai',
                     default => $status,
                 };
             @endphp
@@ -157,13 +162,13 @@
                                  data-countup="{{ $sesi->waktu_mulai ? $sesi->waktu_mulai->timestamp : 0 }}">
                                 <div class="mon-card__timer-display">
                                    <span class="timer-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M6 2h12"/>
-                                        <path d="M6 22h12"/>
-                                        <path d="M8 2v6a4 4 0 0 0 1.17 2.83L12 13.66l2.83-2.83A4 4 0 0 0 16 8V2"/>
-                                        <path d="M16 22v-6a4 4 0 0 0-1.17-2.83L12 10.34l-2.83 2.83A4 4 0 0 0 8 16v6"/>
-                                    </svg>
-</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M6 2h12"/>
+                                            <path d="M6 22h12"/>
+                                            <path d="M8 2v6a4 4 0 0 0 1.17 2.83L12 13.66l2.83-2.83A4 4 0 0 0 16 8V2"/>
+                                            <path d="M16 22v-6a4 4 0 0 0-1.17-2.83L12 10.34l-2.83 2.83A4 4 0 0 0 8 16v6"/>
+                                        </svg>
+                                    </span>
                                     <span class="timer-value" id="timer-{{ $pb->id_playbox }}">
                                         {{ sprintf('%02d:%02d:%02d', floor($menitBerjalan/60), $menitBerjalan%60, 0) }}
                                     </span>
@@ -180,6 +185,16 @@
                                 </strong>
                             </div>
                         @endif
+
+                    @elseif ($status === 'Dipesan')
+                        <div class="playbox-available">
+
+                            @if(auth()->user()->role === 'operator')
+                                <button wire:click="mulaiSesi({{ $pb->id_playbox }})" class="btn btn-primary">
+                                    ▶ Mulai Sesi
+                                </button>
+                            @endif
+                        </div>
 
                    @elseif ($status === 'Maintenance')
                         <div class="playbox-available">
