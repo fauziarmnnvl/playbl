@@ -69,6 +69,10 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menambahkan validasi ketersediaan cabang pada proses booking.
 * Menambahkan validasi ketersediaan Playbox berdasarkan status unit.
 * Menyesuaikan tampilan halaman Pembayaran dan Success sesuai workflow terbaru.
+* Menyederhanakan tampilan halaman Event & Promo agar berfokus sebagai media informasi promo.
+* Menghapus tombol "Gunakan Promo" pada halaman Event & Promo.
+* Menyesuaikan tampilan game pada Landing Page melalui HomeController.
+
 
 ### Documentation
 
@@ -81,6 +85,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbarui CHANGELOG sesuai implementasi integrasi Game dengan frontend.
 * Memperbarui CHANGELOG sesuai implementasi integrasi Event & Promo dengan frontend.
 * Memperbarui CHANGELOG sesuai implementasi integrasi Playbox dengan proses booking.
+* Memperbarui CHANGELOG sesuai penyederhanaan halaman Event & Promo.
 
 
 
