@@ -10,7 +10,7 @@ class HomeController extends Controller
     {
         $featuredGames = Game::whereNotNull('cover_image')
             ->inRandomOrder()
-            ->take(7)
+            ->take(6)
             ->get();
 
         return view('welcome', compact('featuredGames'));

@@ -71,17 +71,6 @@
                         <p class="text-gray-400 mt-8 text-sm">
                             📅 Berlaku hingga: {{ $featuredPromo?->tanggal_selesai?->format('d M Y') }}
                         </p>
-
-                        <a href="{{ route('booking.info') }}"
-                           class="mt-8 w-fit px-12 py-4 rounded-xl
-                                  bg-gradient-to-r from-purple-500 to-blue-500
-                                  text-white font-medium
-                                  hover:scale-105 transition
-                                  ">
-
-                            Gunakan Promo →
-
-                        </a>
                     </div>
                 </div>
             </div>
@@ -118,14 +107,13 @@
                                 {{ $promo->nama_promo }}
                             </h4>
 
+                            <p class="text-gray-300 text-[15px] mt-3 leading-5">
+                            Siang hari bukan berarti sepi. Nikmati promo Happy Hour dan mabar dengan harga lebih hemat!
+                            </p>
+
                             <p class="text-gray-500 mt-5 text-sm">
                                 📅 Berlaku hingga: {{ $promo->tanggal_selesai->format('d M Y') }}
                             </p>
-
-                            <a href="{{ route('booking.info') }}"
-                                class="block text-center mt-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105 transition text-white font-medium">
-                                Gunakan Promo →
-                            </a>
                         </div>
 
                     </div>
