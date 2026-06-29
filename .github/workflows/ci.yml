@@ -1,0 +1,68 @@
+name: BoxPlay Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  ci:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Checkout Repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Setup PHP
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, sqlite, pdo_sqlite
+          coverage: none
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Install Composer Dependencies
+      - name: Install Composer Dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      # Install NPM Dependencies
+      - name: Install NPM Dependencies
+        run: npm install
+
+      # Build Frontend Assets
+      - name: Build Frontend Assets
+        run: npm run build
+
+      # Configure Laravel Environment
+      - name: Configure Environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      # Create SQLite Database
+      - name: Create SQLite Database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+
+      # Run Database Migration
+      - name: Run Database Migration
+        run: php artisan migrate --force
+
+      # Execute Test
+      - name: Run PHPUnit Test
+        run: php artisan test
