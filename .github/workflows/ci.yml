@@ -79,9 +79,7 @@ jobs:
       - name: Prepare Laravel Environment
         run: |
           cp .env.example .env
-          php artisan key:generate
           php artisan config:clear
-          php artisan cache:clear
 
       - name: Wait for MySQL
         run: |
