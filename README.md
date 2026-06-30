@@ -19,8 +19,9 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
 
 ## Target Pengguna
 - Pelanggan: Mengakses web untuk melihat katalog, melakukan penyewaan, dan membayar sesi bermain.
-- Admin: Memantau dasbor real-time, mengelola master data (Cabang, Playbox, Game, Promo), dan melihat riwayat penggunaan.
-- Owner / Mitra: Memantau laporan pendapatan operasional dan kinerja bisnis dari jarak jauh.
+- Admin: Mengelola master data (Cabang, Playbox, Game, Event & Promo, Operator), memantau aktivitas sistem, serta melihat laporan dan statistik.
+- Operator: Memantau status Playbox di cabangnya, memulai sesi bermain, menerima notifikasi Telegram, serta melihat riwayat bermain.
+- Owner / Mitra: Memantau laporan pendapatan operasional dan statistik bisnis.
 
 ## Fitur Utama
 
@@ -29,15 +30,19 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
 - Melakukan Pemesanan Playbox: Memilih Playbox, menentukan durasi bermain (1 jam, 2 jam, atau unlimited), dan kalkulasi harga otomatis.
 - Konfirmasi Pembayaran: Integrasi scan barcode QRIS dan perubahan status transaksi.
 
-### Sisi Admin (Back-Office)
+### Sisi Admin & Operator (Back-Office)
 - Autentikasi: Login dan Logout dengan pembatasan hak akses dasbor.
 - Manajemen Master Data: 
   - Kelola Cabang 
   - Kelola Data Playbox 
   - Kelola Game 
   - Kelola Event & Promo 
-- Monitoring Playbox: Memantau status mesin secara real-time (tersedia/digunakan/selesai) dan melihat data pelanggan yang sedang bermain.
+- Monitoring Playbox:
+  - Admin memantau seluruh Playbox.
+  - Operator memantau Playbox pada cabangnya.
 - Melihat Riwayat Bermain: Arsip riwayat penggunaan Playbox oleh pelanggan.
+- Notifikasi Telegram Operator:
+  - Operator menerima notifikasi otomatis saat sesi bermain akan berakhir (5 menit sebelum selesai) dan ketika sesi bermain telah selesai.
 - Melihat Laporan & Statistik: 
   - Laporan Pendapatan 
   - Statistik Penggunaan 
@@ -61,6 +66,8 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
   - Laravel Debugbar (Pemantauan dan debugging sistem)
   - Swiper.js (Game showcase carousel pada Landing Page)
   - SweetAlert2 (Konfirmasi aksi seperti mengakhiri sesi bermain)
+- External Service:
+  - Telegram Bot API (Pengiriman notifikasi otomatis kepada operator mengenai status sesi bermain)
 
 ## Instalasi Singkat
 
