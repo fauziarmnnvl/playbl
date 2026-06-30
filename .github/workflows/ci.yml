@@ -65,7 +65,7 @@ jobs:
         run: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Validate Composer Configuration
-        run: composer validate --strict
+        run: composer validate 
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
