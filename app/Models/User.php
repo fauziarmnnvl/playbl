@@ -21,6 +21,7 @@ class User extends Authenticatable
         'password',
         'role',
         'id_cabang',
+        'telegram_id',
     ];
 
     protected $hidden = [
@@ -57,4 +58,7 @@ class User extends Authenticatable
             ->logOnly(['nama', 'username', 'email', 'role', 'id_cabang'])
             ->logOnlyDirty();
     }
+
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_OPERATOR = 'operator';
 }

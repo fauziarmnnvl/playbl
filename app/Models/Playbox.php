@@ -54,4 +54,7 @@ class Playbox extends Model
             default => $eventName,
         };
     }
+
+    public const STATUS_TERSEDIA = 'Tersedia';
+    public const STATUS_DIGUNAKAN = 'Digunakan';
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
@@ -15,7 +16,7 @@ class SesiBermain extends Model
     protected $primaryKey = 'id_sesi';
     public $timestamps = false;
 
-    protected $fillable = ['id_transaksi', 'waktu_mulai', 'waktu_selesai', 'sisa_waktu', 'status_sesi'];
+    protected $fillable = ['id_transaksi', 'waktu_mulai', 'waktu_selesai', 'sisa_waktu', 'status_sesi', 'is_notified_5_minutes', 'is_notified_finished'];
 
     protected $casts = [
         'waktu_mulai' => 'datetime',
@@ -53,4 +54,20 @@ class SesiBermain extends Model
             default => $eventName,
         };
     }
+    
+    public function scopeRunning(Builder $query): Builder
+    {
+        return $query
+            ->where('status_sesi', self::STATUS_BERJALAN)
+            ->whereNotNull('waktu_selesai');
+    }
+
+    public function scopeBelumMulai(Builder $query): Builder
+    {
+        return $query->where('status_sesi', self::STATUS_BELUM_MULAI);
+    }
+
+    public const STATUS_BELUM_MULAI = 'Belum Mulai';
+    public const STATUS_BERJALAN = 'Berjalan';
+    public const STATUS_SELESAI = 'Selesai';
 }

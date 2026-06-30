@@ -64,6 +64,15 @@
                     <div class="form-error">{{ $message }}</div>
                 @enderror
             </div>
+            
+            <div class="form-group">
+                <label for="telegram_id" class="form-label">Telegram ID</label>
+                <input type="text" name="telegram_id" id="telegram_id" class="form-input" value="{{ old('telegram_id', $operator->telegram_id) }}" placeholder="Contoh: 123456789">
+                <small style="color:#64748b">Chat ID Telegram operator untuk menerima notifikasi.</small>
+                @error('telegram_id')
+                    <div class="form-error">{{ $message }}</div>
+                @enderror
+            </div>
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">
