@@ -77,12 +77,11 @@
     </div>
 
     {{-- End Session Button --}}
-    <form method="POST" action="{{ route('booking.selesaiSesi') }}" class="mt-6 mb-12 w-full max-w-xl flex justify-center">
+    <form id="endSessionForm" method="POST" action="{{ route('booking.selesaiSesi') }}" class="mt-6 mb-12 w-full max-w-xl flex justify-center">
         @csrf
 
         <button
             type="submit"
-            onclick="return confirm('Yakin ingin mengakhiri sesi bermain?')"
             class="w-[90%] py-2 rounded-2xl
             border border-red-500/40
             bg-red-900/10
@@ -138,4 +137,47 @@
     updateTimer();
 
     setInterval(updateTimer, 1000);
+</script>
+
+<script type="module">
+
+import Swal from 'sweetalert2';
+
+const form = document.getElementById('endSessionForm');
+
+form.addEventListener('submit', function(e){
+
+    e.preventDefault();
+
+    Swal.fire({
+
+        title: 'Akhiri Sesi?',
+        text: 'Yakin ingin mengakhiri sesi bermain?',
+        icon: 'warning',
+
+        background: '#041233',
+        color: '#ffffff',
+
+        showCancelButton: true,
+
+        confirmButtonText: 'Ya, Akhiri',
+        cancelButtonText: 'Batal',
+
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#334155',
+
+        reverseButtons: true
+
+    }).then((result)=>{
+
+        if(result.isConfirmed){
+
+            form.submit();
+
+        }
+
+    });
+
+});
+
 </script>

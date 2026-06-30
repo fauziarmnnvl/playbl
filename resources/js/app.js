@@ -2,6 +2,8 @@ import './bootstrap';
 
 import Alpine from 'alpinejs';
 
+import Swal from 'sweetalert2';
+
 window.Alpine = Alpine;
 
 Alpine.start();
@@ -83,3 +85,47 @@ if(slides.length){
     }, 5000);
 
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const form = document.getElementById('endSessionForm');
+
+    if (!form) return;
+
+    form.addEventListener('submit', function(e){
+
+        e.preventDefault();
+
+        Swal.fire({
+
+            title: 'Akhiri Sesi?',
+            text: 'Yakin ingin mengakhiri sesi bermain?',
+            icon: 'warning',
+
+            background: '#041233',
+            color: '#fff',
+
+            showCancelButton: true,
+
+            confirmButtonText: 'Ya, Akhiri',
+            cancelButtonText: 'Batal',
+
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#475569',
+
+            reverseButtons: true
+
+        }).then((result)=>{
+
+            if(result.isConfirmed){
+
+                form.submit();
+
+            }
+
+        });
+
+    });
+
+});
+
