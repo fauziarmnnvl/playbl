@@ -6,9 +6,9 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="login-group">
-                <label>Username</label>
-                <input type="email" name="email" value="{{ old('email') }}" placeholder="Masukkan username" required>
-                @error('email')
+                <label>Email atau Username</label>
+                <input type="text" name="login" value="{{ old('login') }}" placeholder="Masukkan email atau username" required>
+                @error('login')
                     <small class="login-error">{{ $message }}</small>
                 @enderror
             </div>
@@ -29,12 +29,6 @@
                     <input type="checkbox" name="remember">
                     <span>Ingat saya</span>
                 </label>
-
-                @if(Route::has('password.request'))
-                    <a href="{{ route('password.request') }}">
-                        Lupa password?
-                    </a>
-                @endif
             </div>
             <button type="submit" class="login-button">Masuk Dashboard</button>
         </form>
