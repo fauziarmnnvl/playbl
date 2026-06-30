@@ -64,11 +64,14 @@ jobs:
       - name: Install Composer Dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
 
+      - name: Validate Composer Configuration
+        run: composer validate --strict
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "npm"
+          cache: npm
 
       - name: Install NPM Dependencies
         run: npm ci
@@ -92,5 +95,5 @@ jobs:
       - name: Run Database Migration
         run: php artisan migrate --force
 
-      - name: Run PHPUnit Tests
-        run: php artisan test
+      - name: Check Code Style (Laravel Pint)
+        run: ./vendor/bin/pint --test
