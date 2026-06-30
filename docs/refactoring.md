@@ -370,6 +370,55 @@ Meningkatkan konsistensi identitas visual aplikasi dan memberikan pengalaman pen
 
 ---
 
+# Refactoring 10
+
+## Sebelum
+
+### Masalah
+
+Logika monitoring sesi bermain, pengiriman notifikasi Telegram, dan proses memulai sesi masih tersebar pada Command dan Livewire Component sehingga kode menjadi panjang, sulit dipelihara, serta meningkatkan duplikasi logika aplikasi.
+
+---
+
+## Perubahan
+
+Business logic dipindahkan ke dalam Service Layer.
+
+Service yang ditambahkan meliputi:
+
+```
+app/Services
+├── TelegramService.php
+├── SessionNotificationService.php
+└── PlayboxSessionService.php
+```
+
+Selain itu dilakukan penyesuaian pada:
+
+- MonitorSessionCommand agar hanya bertugas menjalankan proses monitoring.
+- MonitoringPlaybox agar proses memulai sesi menggunakan PlayboxSessionService.
+- Model aplikasi dengan menambahkan constant dan query scope untuk meningkatkan konsistensi kode.
+
+---
+
+## Alasan
+
+- Memisahkan business logic dari Command dan Livewire Component.
+- Mengurangi duplikasi kode.
+- Meningkatkan keterbacaan dan maintainability.
+- Menerapkan prinsip Single Responsibility Principle (SRP).
+
+---
+
+## Dampak
+
+- Struktur kode menjadi lebih modular.
+- Business logic lebih mudah dipelihara.
+- Pengembangan fitur monitoring dan notifikasi menjadi lebih mudah.
+- Kode menjadi lebih terstruktur dan mudah dipahami.
+
+---
+
 # Kesimpulan
 
 Refactoring yang dilakukan selama pengembangan proyek berfokus pada peningkatan kualitas struktur kode, modularitas komponen, konsistensi antarmuka, serta kemudahan maintenance tanpa mengubah proses bisnis aplikasi. Dengan struktur yang lebih terorganisir, pengembangan fitur baru dan kolaborasi antar anggota tim dapat dilakukan dengan lebih mudah dan efisien.
