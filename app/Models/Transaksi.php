@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
@@ -89,4 +90,12 @@ class Transaksi extends Model
             default => $eventName,
         };
     }
+
+    public function scopeTetap(Builder $query): Builder
+    {
+        return $query->where('jenis_sesi', self::JENIS_SESI_TETAP);
+    }
+
+    public const JENIS_SESI_TETAP = 'Tetap';
+    public const JENIS_SESI_FLEKSIBEL = 'Fleksibel';
 }

@@ -38,11 +38,12 @@ class OperatorController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama'      => 'required|string|max:100',
-            'username'  => 'required|string|max:50|unique:users,username',
-            'email'     => 'required|email|max:100|unique:users,email',
-            'password'  => 'required|string|min:8',
-            'id_cabang' => 'required|exists:cabang,id_cabang',
+            'nama'        => 'required|string|max:100',
+            'username'    => 'required|string|max:50|unique:users,username',
+            'email'       => 'required|email|max:100|unique:users,email',
+            'password'    => 'required|string|min:8',
+            'id_cabang'   => 'required|exists:cabang,id_cabang',
+            'telegram_id' => 'nullable|string|max:50',
         ]);
 
         User::create([
@@ -52,6 +53,7 @@ class OperatorController extends Controller
             'password'  => Hash::make($validated['password']),
             'role'      => 'operator', // BR-03: Force role
             'id_cabang' => $validated['id_cabang'],
+            'telegram_id' => $validated['telegram_id'],
         ]);
 
         return redirect()
@@ -79,11 +81,12 @@ class OperatorController extends Controller
         $operator = User::findOrFail($id);
 
         $validated = $request->validate([
-            'nama'      => 'required|string|max:100',
-            'username'  => 'required|string|max:50|unique:users,username,' . $operator->id,
-            'email'     => 'required|email|max:100|unique:users,email,' . $operator->id,
-            'password'  => 'nullable|string|min:8',
-            'id_cabang' => 'required|exists:cabang,id_cabang',
+            'nama'        => 'required|string|max:100',
+            'username'    => 'required|string|max:50|unique:users,username,' . $operator->id,
+            'email'       => 'required|email|max:100|unique:users,email,' . $operator->id,
+            'password'    => 'nullable|string|min:8',
+            'id_cabang'   => 'required|exists:cabang,id_cabang',
+            'telegram_id' => 'nullable|string|max:50',
         ]);
 
         $data = [
@@ -91,6 +94,7 @@ class OperatorController extends Controller
             'username'  => $validated['username'],
             'email'     => $validated['email'],
             'id_cabang' => $validated['id_cabang'],
+            'telegram_id' => $validated['telegram_id'],
         ];
 
         // Update password hanya jika diisi
