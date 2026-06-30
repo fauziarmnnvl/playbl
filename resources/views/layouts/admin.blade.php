@@ -18,13 +18,10 @@
         {{-- ========== SIDEBAR ========== --}}
         <aside class="admin-sidebar" id="adminSidebar">
             <div class="sidebar-brand">
-                <svg class="sidebar-brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="2" y="6" width="20" height="12" rx="2"/>
-                    <circle cx="8" cy="12" r="1.5"/>
-                    <circle cx="16" cy="12" r="1.5"/>
-                    <path d="M9 2L12 6M15 2L12 6"/>
-                </svg>
-                <span>BoxPlay.id</span>
+                <img
+                src="{{ asset('images/logo-boxplay.png') }}"
+                alt="BOXPLAY.ID"
+                class="sidebar-logo">
             </div>
 
             <nav class="sidebar-nav">

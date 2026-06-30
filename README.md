@@ -44,13 +44,13 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
 - Audit Trail / Log Aktivitas: Mencatat riwayat perubahan data (CRUD) yang dilakukan oleh pengguna sistem untuk keamanan dan pemantauan.
 
 ## Tech Stack
-## Tech Stack
 - Framework & Language: Laravel 12 / PHP 8.2+
 - Database: MySQL / MariaDB
 - Frontend: Bootstrap, Tailwind CSS, Blade Templates, Alpine.js
 - Build Tool: Vite, Node.js & NPM
 - UI Library:
   - Swiper.js (Interactive carousel & slider)
+  - SweetAlert2 (Interactive confirmation dialog & notification)
 - Dependency / Packages:
   - Laravel Breeze (Starter kit autentikasi & fondasi Custom Admin Panel)
   - Laravel Livewire (Monitoring Timer Real-time)
@@ -60,6 +60,7 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
   - Laravel Charts (Visualisasi statistik dasbor)
   - Laravel Debugbar (Pemantauan dan debugging sistem)
   - Swiper.js (Game showcase carousel pada Landing Page)
+  - SweetAlert2 (Konfirmasi aksi seperti mengakhiri sesi bermain)
 
 ## Instalasi Singkat
 
@@ -98,12 +99,19 @@ docs/
 Screenshot aplikasi akan diperbarui secara bertahap sesuai perkembangan implementasi.
 
 Screenshot yang direncanakan:
-- Halaman utama atau Landing Page(informasi layanan, cabang, Games, event dan promo).
-- Halaman pemesanan Playbox dan katalog game.
-- Halaman konfirmasi pembayaran QRIS.
-- Halaman login admin.
-- Dashboard admin untuk monitoring status Playbox secara real-time.
-- Halaman laporan pendapatan dan statistik penggunaan.
+- Landing Page pelanggan.
+- Halaman Cabang.
+- Halaman Games.
+- Halaman Event & Promo.
+- Halaman Booking Playbox.
+- Halaman Review Booking.
+- Halaman Pembayaran QRIS.
+- Dashboard Admin.
+- Dashboard Operator.
+- Monitoring Playbox.
+- Riwayat Bermain.
+- Riwayat Aktivitas.
+- Dashboard Statistik.
 
 ## Documentation
 

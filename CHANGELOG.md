@@ -42,6 +42,8 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Halaman Booking Success yang menampilkan informasi hasil booking.
 * Implementasi workflow Booking Sesi Fleksibel.
 * Halaman sesi bermain dan pembayaran untuk Booking Sesi Fleksibel.
+* Integrasi SweetAlert2 sebagai dialog konfirmasi pada proses mengakhiri sesi bermain.
+* Branding logo BoxPlay.id pada panel admin.
 
 ### Changed
 
@@ -77,7 +79,11 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menyempurnakan alur Booking Playbox untuk mendukung sesi tetap dan sesi fleksibel.
 * Menyesuaikan Monitoring Playbox agar mendukung proses mulai sesi dan status booking.
 * Menyesuaikan tampilan halaman Booking Success dan Payment sesuai workflow terbaru.
-
+* Menyempurnakan tampilan branding panel admin menggunakan logo resmi BoxPlay.id.
+* Menyesuaikan posisi dan ukuran logo pada sidebar admin agar lebih proporsional.
+* Menyesuaikan tampilan halaman Booking Review Sesi Fleksibel.
+* Menyesuaikan tampilan halaman Session Sesi Fleksibel.
+* Melakukan penyesuaian styling frontend melalui CSS dan JavaScript.
 
 ### Documentation
 
@@ -172,6 +178,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 * Menambahkan Swiper.js versi 12.2.0 untuk fitur carousel katalog game.
 * Memperbarui konfigurasi frontend menggunakan Vite.
+* Menambahkan SweetAlert2 sebagai library dialog konfirmasi interaktif.
 
 ### Documentation
 
@@ -184,7 +191,8 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbarui dokumentasi fitur Operator dan manajemen pengguna.
 * Memperbarui CHANGELOG sesuai perkembangan fitur terbaru.
 * Memperbarui CHANGELOG sesuai perkembangan implementasi fitur Booking terbaru.
-
+* Memperbarui README sesuai dependency dan implementasi terbaru.
+* Memperbarui CHANGELOG sesuai penyempurnaan tampilan frontend dan branding admin.
 ---
 
 ## [0.1.0] - 12 Juni 2026

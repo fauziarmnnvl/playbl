@@ -66,34 +66,38 @@
         {{-- Detail --}}
         <div class="bg-[#101B35] border border-slate-700 rounded-2xl p-4 mb-8">
 
-            <div class="flex justify-between items-center px-4 py-4 border-b border-slate-700">
-                <span class="text-slate-400 text-lg">
-                    Playbox
-                </span>
-
-                <span class="text-white font-semibold">
-                    {{ $booking['playbox']->nama_playbox }}
-                </span>
+            {{-- Nama --}}
+            <div class="flex justify-between py-4 border-b border-slate-700">
+                <span class="text-slate-400">Nama</span>
+                <span class="text-white font-medium">{{ $booking['nama'] }}</span>
             </div>
 
-            <div class="flex justify-between items-center px-4 py-4 border-b border-slate-700">
-                <span class="text-slate-400 text-lg">
-                    Tipe Sesi
-                </span>
-
-                <span class="text-white font-semibold">
-                    {{ ucfirst($booking['jenis_sesi']) }}
-                </span>
+            {{-- No. WhatsApp --}}
+            <div class="flex justify-between py-4 border-b border-slate-700">
+                <span class="text-slate-400">No. WhatsApp</span>
+                <span class="text-white font-medium">{{ $booking['no_hp'] }}</span>
             </div>
 
-            <div class="flex justify-between items-center px-4 py-5">
-                <span class="text-slate-400 text-lg">
-                    Total Pembayaran
-                </span>
+            {{-- Cabang --}}
+            <div class="flex justify-between py-4 border-b border-slate-700">
+                <span class="text-slate-400">Cabang</span>
+                <span class="text-white font-medium">{{ $booking['cabang']->nama_cabang }}</span>
+            </div>
 
-                <span class="text-blue-400 font-bold text-2xl">
-                    Dihitung Saat Selesai
-                </span>
+            {{-- Playbox --}}
+            <div class="flex justify-between py-4 border-b border-slate-700">
+                <span class="text-slate-400">Playbox</span>
+                <span class="text-white font-medium">{{ $booking['playbox']->nama_playbox }}</span>
+            </div>
+
+            <div class="flex justify-between py-4 border-b border-slate-700">
+                <span class="text-slate-400">Tipe Sesi</span>
+                <span class="text-white font-medium">{{ ucfirst($booking['jenis_sesi']) }}</span>
+            </div>
+
+            <div class="flex justify-between py-4 border-b border-slate-700">
+                <span class="text-slate-400">Total Pembayaran</span>
+                <span class="text-blue-400 font-bold text-2xl">Dihitung Saat Selesai</span>
             </div>
 
         </div>
