@@ -2,14 +2,13 @@
 
 ## Pendahuluan
 
-GitHub Actions digunakan sebagai layanan **Continuous Integration (CI)** pada proyek **BoxPlay.id** untuk membantu proses validasi kode secara otomatis. Workflow ini memastikan bahwa setiap perubahan yang dikirim ke repository dapat melalui proses build dan pengujian sebelum digabungkan ke branch utama.
+GitHub Actions digunakan sebagai layanan **Continuous Integration (CI)** pada proyek **BoxPlay.id** untuk membantu proses validasi kode secara otomatis. Workflow ini memastikan bahwa setiap perubahan yang dikirim ke repository dapat melalui proses build dan validasi dasar aplikasi sebelum digabungkan ke branch utama.
 
 ---
 
 # Workflow
 
-Repository BoxPlay.id menggunakan workflow **Continuous Integration (CI)** yang bertujuan untuk memvalidasi proses build aplikasi Laravel secara otomatis.
-Workflow akan menjalankan instalasi dependency, konfigurasi environment, proses build frontend, migrasi database, serta pengujian aplikasi menggunakan PHPUnit.
+Repository **BoxPlay.id** menggunakan workflow **Continuous Integration (CI)** untuk memvalidasi proses build aplikasi Laravel secara otomatis. Workflow akan menjalankan instalasi dependency, validasi konfigurasi Composer, konfigurasi environment Laravel, proses build frontend, serta migrasi database menggunakan MySQL.
 
 ---
 
@@ -27,10 +26,10 @@ Workflow disimpan pada direktori berikut.
 
 Workflow dijalankan secara otomatis pada kondisi berikut.
 
-| Event        | Keterangan                                                                                             |
-| ------------ | ------------------------------------------------------------------------------------------------------ |
-| Push         | Workflow dijalankan setiap kali terdapat perubahan yang di-push ke branch `main` maupun `development`. |
-| Pull Request | Workflow dijalankan ketika terdapat Pull Request menuju branch `main` atau `development`.              |
+| Event | Keterangan |
+|-------|------------|
+| Push | Workflow dijalankan setiap kali terdapat perubahan yang di-push ke branch `main` maupun `development`. |
+| Pull Request | Workflow dijalankan ketika terdapat Pull Request menuju branch `main` atau `development`. |
 
 ---
 
@@ -42,12 +41,12 @@ Workflow Continuous Integration terdiri dari beberapa tahapan berikut.
 2. Menyiapkan environment PHP 8.4.
 3. Menyiapkan environment Node.js 22.
 4. Menginstal dependency menggunakan Composer.
-5. Menginstal dependency frontend menggunakan NPM.
-6. Melakukan proses build aset frontend menggunakan Vite.
-7. Membuat file konfigurasi `.env` dan menghasilkan Laravel Application Key.
-8. Membuat database SQLite untuk proses pengujian.
-9. Menjalankan migrasi database.
-10. Menjalankan pengujian aplikasi menggunakan PHPUnit.
+5. Melakukan validasi konfigurasi `composer.json`.
+6. Menginstal dependency frontend menggunakan NPM.
+7. Melakukan proses build aset frontend menggunakan Vite.
+8. Menyiapkan environment Laravel menggunakan file `.env.example`.
+9. Menunggu layanan MySQL hingga siap digunakan.
+10. Menjalankan migrasi database menggunakan MySQL.
 
 ---
 
@@ -72,6 +71,9 @@ Developer Push / Pull Request
  Install Composer Dependencies
             │
             ▼
+ Validate Composer Configuration
+            │
+            ▼
     Install NPM Dependencies
             │
             ▼
@@ -81,10 +83,10 @@ Developer Push / Pull Request
  Configure Laravel Environment
             │
             ▼
-   Run Database Migration
+       Wait for MySQL
             │
             ▼
-      Run PHPUnit Test
+   Run Database Migration
             │
             ▼
        Workflow Status
@@ -95,7 +97,7 @@ Developer Push / Pull Request
 
 # Hasil Workflow
 
-Apabila seluruh tahapan berhasil dijalankan, GitHub Actions akan memberikan status **Passed** sebagai indikator bahwa aplikasi berhasil dibangun dan seluruh proses validasi selesai tanpa kendala.
+Apabila seluruh tahapan berhasil dijalankan, GitHub Actions akan memberikan status **Passed** sebagai indikator bahwa aplikasi berhasil dibangun, dependency berhasil divalidasi, proses build frontend berhasil dilakukan, serta migrasi database dapat dijalankan tanpa kendala.
 
 Sebaliknya, apabila terjadi kesalahan pada salah satu tahapan, workflow akan menghasilkan status **Failed** sehingga pengembang dapat segera melakukan perbaikan sebelum perubahan digabungkan ke branch utama.
 
@@ -119,6 +121,12 @@ Contoh penggunaan:
 
 ---
 
+# Catatan Implementasi
+
+Saat ini workflow difokuskan pada proses validasi build aplikasi, instalasi dependency, dan migrasi database. Pengujian otomatis menggunakan PHPUnit serta pemeriksaan standar penulisan kode menggunakan Laravel Pint belum diaktifkan karena masih memerlukan penyesuaian dengan struktur aplikasi dan basis data yang digunakan pada proyek BoxPlay.id.
+
+---
+
 # Manfaat Implementasi
 
-Penerapan GitHub Actions membantu meningkatkan kualitas proses pengembangan perangkat lunak dengan melakukan validasi otomatis terhadap setiap perubahan kode. Melalui mekanisme Continuous Integration, potensi kesalahan dapat diketahui lebih awal sehingga proses kolaborasi antar anggota tim menjadi lebih terstruktur dan kualitas aplikasi tetap terjaga.
+Penerapan GitHub Actions membantu meningkatkan kualitas proses pengembangan perangkat lunak dengan melakukan validasi otomatis terhadap setiap perubahan kode. Melalui mekanisme Continuous Integration, setiap perubahan akan diperiksa mulai dari instalasi dependency, validasi konfigurasi Composer, proses build frontend, hingga migrasi database. Dengan demikian, potensi kesalahan dapat diketahui lebih awal sehingga proses kolaborasi antar anggota tim menjadi lebih terstruktur dan kualitas aplikasi tetap terjaga.
