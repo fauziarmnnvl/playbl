@@ -68,6 +68,12 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | `postcss` | CSS Processor | Memproses CSS sebelum dibuild oleh Vite | `^8.4.31` | Bergantung pada konfigurasi PostCSS |
 | `concurrently` | Multiple Process Runner | Menjalankan Laravel Server, Queue, dan Vite secara bersamaan saat development | `^9.0.1` | Digunakan hanya pada lingkungan development |
 
+# External Service
+
+| Service | Fungsi | Alasan | Risiko |
+|----------|--------|--------|--------|
+| `Telegram Bot API` | Mengirim notifikasi otomatis kepada operator | Mendukung monitoring sesi bermain secara real-time melalui Telegram | Bergantung pada koneksi internet, Bot Token, dan ketersediaan layanan Telegram |
+
 ---
 
 # Analisis 5W+1H Dependency Utama
@@ -203,6 +209,20 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 
 **Referensi:**
 - https://sweetalert2.github.io/
+
+## Telegram Bot API
+
+| 5W+1H | Penjelasan |
+|--------|------------|
+| **What** | Layanan API dari Telegram yang memungkinkan aplikasi mengirim pesan melalui Bot Telegram. |
+| **Why** | Digunakan untuk mengirim notifikasi otomatis kepada operator ketika sesi bermain akan berakhir dan saat sesi telah selesai. |
+| **Who** | Operator yang telah menghubungkan akun Telegram dengan sistem. |
+| **When** | Saat sisa waktu bermain mencapai 5 menit dan ketika sesi bermain berakhir. |
+| **Where** | Modul Monitoring Playbox dan Session Notification Service. |
+| **How** | Sistem mengirim HTTP Request ke endpoint Telegram Bot API menggunakan Laravel HTTP Client (`Http::post`) dengan Bot Token dan Chat ID operator. |
+
+**Referensi:**
+- https://core.telegram.org/bots/api
 
 ---
 

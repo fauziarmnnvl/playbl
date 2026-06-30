@@ -19,6 +19,11 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Monitoring status Playbox secara real-time menggunakan polling setiap 5 detik.
 * Menampilkan informasi sesi bermain aktif pada Monitoring Playbox.
 * Menambahkan countdown timer untuk sesi tetap dan timer berjalan untuk sesi fleksibel.
+* Integrasi notifikasi Telegram untuk operator.
+* Notifikasi otomatis kepada operator saat sisa waktu bermain mencapai 5 menit.
+* Notifikasi otomatis kepada operator saat sesi bermain berakhir.
+* Monitoring sesi bermain menggunakan Laravel Scheduler dan Artisan Command.
+* Service Layer untuk pengelolaan monitoring sesi dan notifikasi Telegram.
 * Menambahkan penyelesaian sesi otomatis saat waktu bermain habis.
 * Integrasi data cabang dengan halaman Booking Playbox.
 * Integrasi data cabang dengan halaman Branch pada sisi pelanggan.
@@ -44,6 +49,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Halaman sesi bermain dan pembayaran untuk Booking Sesi Fleksibel.
 * Integrasi SweetAlert2 sebagai dialog konfirmasi pada proses mengakhiri sesi bermain.
 * Branding logo BoxPlay.id pada panel admin.
+
 
 ### Changed
 
@@ -78,6 +84,9 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menyesuaikan tampilan game pada Landing Page melalui HomeController.
 * Menyempurnakan alur Booking Playbox untuk mendukung sesi tetap dan sesi fleksibel.
 * Menyesuaikan Monitoring Playbox agar mendukung proses mulai sesi dan status booking.
+* Memindahkan business logic monitoring sesi dan notifikasi Telegram ke dalam Service Layer.
+* Menyederhanakan Monitoring Playbox dengan memindahkan proses mulai sesi ke PlayboxSessionService.
+* Menambahkan constant dan query scope pada model untuk meningkatkan konsistensi kode.
 * Menyesuaikan tampilan halaman Booking Success dan Payment sesuai workflow terbaru.
 * Menyempurnakan tampilan branding panel admin menggunakan logo resmi BoxPlay.id.
 * Menyesuaikan posisi dan ukuran logo pada sidebar admin agar lebih proporsional.
@@ -98,6 +107,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbarui CHANGELOG sesuai implementasi integrasi Event & Promo dengan frontend.
 * Memperbarui CHANGELOG sesuai implementasi integrasi Playbox dengan proses booking.
 * Memperbarui CHANGELOG sesuai penyederhanaan halaman Event & Promo.
+* Memperbarui CHANGELOG sesuai implementasi monitoring sesi dan notifikasi Telegram.
 
 
 
