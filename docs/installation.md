@@ -135,7 +135,6 @@ Sistem BoxPlay.id memisahkan antarmuka pengguna biasa dan manajemen pengelola. S
 
 * Mengakses halaman utama (Front-end)
 * Melakukan pemesanan (Self-service)
-* Melihat riwayat bermain
 
 #### Admin
 
@@ -250,7 +249,7 @@ Pada Windows, pastikan folder `storage` dan `bootstrap/cache` memiliki izin tuli
 Instalasi dianggap berhasil apabila:
 
 * Halaman utama (Self-service) BoxPlay.id dapat diakses
-* Halaman registrasi dan login pelanggan berfungsi dengan baik
+* Halaman pelanggan berfungsi dengan baik
 * Dashboard administrasi dapat diakses sesuai hak akses pengguna
 * Migration dan Seeder berhasil dijalankan
 * Seluruh test berjalan tanpa kegagalan

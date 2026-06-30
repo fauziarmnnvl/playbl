@@ -76,16 +76,21 @@ Fitur ini digunakan untuk melakukan pemesanan Playbox dengan durasi bermain yang
 ### Aktor
 
 - Pelanggan
+- Operator
 
 ### Alur
 
 1. Pelanggan mengisi informasi diri.
-2. Memilih cabang.
-3. Memilih Playbox yang tersedia.
-4. Memilih durasi bermain.
-5. Melakukan review booking.
-6. Melakukan pembayaran menggunakan QRIS.
-7. Sistem menyimpan data booking dan menampilkan halaman Booking Berhasil.
+2. Pelanggan memilih cabang.
+3. Pelanggan memilih Playbox yang tersedia.
+4. Pelanggan memilih durasi bermain.
+5. Pelanggan melakukan review booking.
+6. Pelanggan melakukan pembayaran menggunakan QRIS.
+7. Sistem menyimpan data booking dan menampilkan halaman Booking Berhasil yang berisi informasi booking.
+8. Pelanggan menunjukkan bukti booking dan bukti pembayaran kepada operator.
+9. Operator mencek data booking dan pembayaran.
+10. Operator menekan tombol Mulai Sesi pada dashboard monitoring.
+11. Sistem mengubah status Playbox menjadi Sedang Digunakan dan menghitung waktu bermain sesuai durasi yang dipilih.
 
 ### Route & Controller
 
@@ -109,15 +114,23 @@ Fitur ini memungkinkan pelanggan melakukan booking tanpa menentukan durasi berma
 ### Aktor
 
 - Pelanggan
+- Operator
 
 ### Alur
 
 1. Pelanggan mengisi informasi diri.
-2. Memilih cabang dan Playbox.
-3. Melakukan review booking.
-4. Melakukan pembayaran.
-5. Operator memulai sesi bermain.
-6. Sistem menghitung durasi bermain hingga sesi selesai.
+2. Pelanggan memilih cabang.
+3. Pelanggan memilih Playbox yang tersedia.
+4. Pelanggan memilih durasi bermain (Sesi-flexible).
+5. Pelanggan melakukan review booking.
+6. Sistem menyimpan data booking.
+7. Pelanggan menekan tombol Mulai Bermain, kemudian sistem mulai menghitung durasi bermain hingga sesi selesai.
+8. Pelanggan mengakhiri sesi bermain, kemudian sistem menghitung total biaya berdasarkan durasi bermain serta menampilkan kode QRIS dan rincian pembayaran.
+9. Pelanggan melakukan pembayaran menggunakan QRIS.
+10. Sistem mencatat transaksi dengan status Menunggu Verifikasi Pembayaran.
+11. Operator memverifikasi pembayaran melalui halaman Monitoring Playbox.
+12. Operator menekan tombol Sudah Bayar.
+13. Sistem memperbarui status transaksi menjadi Lunas dan menampilkan halaman Pembayaran Selesai yang berisi informasi booking dan pembayaran.
 
 ### Route & Controller
 
@@ -173,11 +186,14 @@ Monitoring Playbox digunakan untuk memantau kondisi setiap Playbox secara real-t
 
 ### Alur
 
-1. Pengguna membuka halaman Monitoring Playbox.
-2. Sistem menampilkan daftar Playbox sesuai hak akses.
-3. Status Playbox diperbarui secara otomatis mengikuti kondisi sesi bermain.
-4. Operator dapat memulai sesi bermain untuk booking sesi tetap.
-5. Setelah sesi selesai, status Playbox kembali menjadi tersedia.
+1. Admin atau Operator berhasil login.
+2. Admin atau Operator membuka halaman Monitoring Playbox.
+3. Sistem menampilkan daftar Playbox sesuai hak akses.
+4. Operator dapat memulai sesi bermain untuk booking sesi tetap sesuai hak akses masing-masing operator.
+5. Sistem memperbarui status Playbox secara real-time selama sesi berlangsung.
+6. Setelah pelanggan mengakhiri sesi bermain, sistem menampilkan status Menunggu Verifikasi Pembayaran pada sesi flexible.
+7. Operator memverifikasi pembayaran dengan menekan tombol Sudah Bayar.
+8. Sistem mengubah status transaksi menjadi Lunas dan status Playbox kembali menjadi Tersedia.
 
 ### Route & Controller
 
@@ -208,10 +224,11 @@ Fitur ini digunakan untuk mengelola data Playbox pada setiap cabang agar informa
 
 ### Alur
 
-1. Admin membuka menu Manajemen Playbox.
-2. Sistem menampilkan daftar Playbox.
-3. Admin dapat menambah, mengubah, maupun menghapus data Playbox.
-4. Sistem menyimpan perubahan yang dilakukan.
+1. Admin berhasil login.
+2. Admin membuka menu Manajemen Playbox.
+3. Sistem menampilkan daftar Playbox.
+4. Admin dapat menambah, mengubah, maupun menghapus data Playbox.
+5. Sistem menyimpan perubahan yang dilakukan.
 
 ### Route & Controller
 
@@ -240,10 +257,11 @@ Manajemen Cabang digunakan untuk mengelola informasi seluruh cabang BoxPlay.id y
 
 ### Alur
 
-1. Admin membuka menu Manajemen Cabang.
-2. Sistem menampilkan daftar cabang.
-3. Admin dapat menambah, mengubah, maupun menghapus data cabang.
-4. Sistem menyimpan perubahan yang dilakukan.
+1. Admin berhasil login.
+2. Admin membuka menu Manajemen Cabang.
+3. Sistem menampilkan daftar cabang.
+4. Admin dapat menambah, mengubah, maupun menghapus data cabang.
+5. Sistem menyimpan perubahan yang dilakukan.
 
 ### Route & Controller
 
@@ -272,10 +290,11 @@ Fitur ini digunakan untuk mengelola daftar game yang tersedia pada sistem sehing
 
 ### Alur
 
-1. Admin membuka menu Manajemen Game.
-2. Sistem menampilkan daftar game.
-3. Admin dapat menambah, mengubah, maupun menghapus data game.
-4. Sistem menyimpan perubahan yang dilakukan.
+1. Admin berhasil login.
+2. Admin membuka menu Manajemen Game.
+3. Sistem menampilkan daftar game.
+4. Admin dapat menambah, mengubah, maupun menghapus data game.
+5. Sistem menyimpan perubahan yang dilakukan.
 
 ### Route & Controller
 
@@ -304,10 +323,11 @@ Fitur ini digunakan untuk mengelola informasi event dan promo yang ditampilkan p
 
 ### Alur
 
-1. Admin membuka menu Event & Promo.
-2. Sistem menampilkan daftar event dan promo.
-3. Admin dapat menambah, mengubah, maupun menghapus data.
-4. Perubahan akan langsung ditampilkan pada website.
+1. Admin berhasil login.
+2. Admin membuka menu Event & Promo.
+3. Sistem menampilkan daftar event dan promo.
+4. Admin dapat menambah, mengubah, maupun menghapus data.
+5. Perubahan akan langsung ditampilkan pada website.
 
 ### Route & Controller
 
@@ -336,10 +356,11 @@ Fitur ini digunakan untuk mengelola akun operator yang bertugas pada setiap caba
 
 ### Alur
 
-1. Admin membuka menu Manajemen Operator.
-2. Sistem menampilkan daftar operator.
-3. Admin dapat menambah, mengubah, maupun menghapus akun operator.
-4. Sistem menyimpan perubahan yang dilakukan.
+1. Admin berhasil login.
+2. Admin membuka menu Manajemen Operator.
+3. Sistem menampilkan daftar operator.
+4. Admin dapat menambah, mengubah, maupun menghapus akun operator.
+5. Sistem menyimpan perubahan yang dilakukan.
 
 ### Route & Controller
 
@@ -368,6 +389,7 @@ Fitur Data Pelanggan digunakan untuk menampilkan informasi pelanggan yang pernah
 
 ### Alur
 
+1. Admin berhasil login.
 1. Admin membuka menu Data Pelanggan.
 2. Sistem menampilkan daftar pelanggan.
 3. Admin dapat melihat informasi pelanggan berdasarkan riwayat booking.
@@ -397,9 +419,10 @@ Riwayat Bermain digunakan untuk menampilkan seluruh riwayat sesi bermain yang te
 
 ### Alur
 
-1. Pengguna membuka menu Riwayat Bermain.
-2. Sistem mengambil data riwayat permainan.
-3. Riwayat ditampilkan sesuai hak akses pengguna.
+1. Admin atau Operator berhasil login.
+2. Admin atau Operator membuka menu Riwayat Bermain.
+3. Sistem mengambil data riwayat permainan.
+4. Riwayat permainan ditampilkan sesuai hak akses.
 
 ### Route & Controller
 
@@ -426,9 +449,10 @@ Fitur ini menyediakan laporan dan statistik penggunaan Playbox sebagai bahan eva
 
 ### Alur
 
-1. Admin membuka menu Laporan & Statistik.
-2. Sistem menampilkan grafik penggunaan dan statistik pendapatan.
-3. Admin dapat mengunduh laporan sesuai kebutuhan.
+1. Admin berhasil login.
+2. Admin membuka menu Laporan & Statistik.
+3. Sistem menampilkan grafik penggunaan dan statistik pendapatan.
+4. Admin dapat mengunduh laporan sesuai kebutuhan.
 
 ### Route & Controller
 
@@ -454,9 +478,10 @@ Riwayat Aktivitas digunakan untuk mencatat aktivitas penting yang dilakukan peng
 
 ### Alur
 
-1. Admin membuka menu Riwayat Aktivitas.
-2. Sistem menampilkan daftar aktivitas pengguna.
-3. Aktivitas disusun berdasarkan waktu kejadian.
+1. Admin berhasil login.
+2. Admin membuka menu Riwayat Aktivitas.
+3. Sistem menampilkan daftar aktivitas pengguna.
+4. Aktivitas disusun berdasarkan waktu kejadian.
 
 ### Route & Controller
 
