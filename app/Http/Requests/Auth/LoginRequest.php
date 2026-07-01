@@ -45,7 +45,7 @@ class LoginRequest extends FormRequest
         $login = $this->input('login');
 
         $field = filter_var($login, FILTER_VALIDATE_EMAIL)
-            ? 'login'
+            ? 'email'
             : 'username';
 
         if (! Auth::attempt([
@@ -59,6 +59,7 @@ class LoginRequest extends FormRequest
                 'login' => trans('auth.failed'),
             ]);
         }
+        
 
         RateLimiter::clear($this->throttleKey());
     }
