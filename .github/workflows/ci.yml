@@ -51,6 +51,12 @@ jobs:
           cp .env.example .env
           php artisan key:generate
 
+      # Clear Configuration Cache
+      - name: Clear Configuration Cache
+        run: |
+          php artisan config:clear
+          php artisan cache:clear
+
       # Create SQLite Database
       - name: Create SQLite Database
         run: |
