@@ -55,9 +55,9 @@
             {{-- QRIS --}}
             <div class="inline-block bg-white p-4 rounded-2xl border-4 border-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.3)]">
 
-                <img src="{{ asset('images/qris-demo.png') }}"
+                <img src="{{ asset($booking['cabang']->qris) }}"
                      alt="QRIS"
-                     class="w-48 h-48 object-cover">
+                     class="w-72 h-auto">
 
             </div>
 

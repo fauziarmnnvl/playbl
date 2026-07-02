@@ -60,11 +60,10 @@
 
                 <div class="bg-white p-4 rounded-2xl border-4 border-blue-500 shadow-[0_0_25px_rgba(59,130,246,0.4)]">
 
-                    {{-- Ganti dengan QR Asli --}}
-                    <img src="{{ asset('images/qris-demo.png') }}"
+                    <img src="{{ asset($booking['cabang']->qris) }}"
                         alt="QRIS"
-                        class="w-48 h-48 object-contain">
-
+                        class="w-72 h-auto">
+                        
                 </div>
 
             </div>
