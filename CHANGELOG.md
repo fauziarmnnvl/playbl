@@ -6,6 +6,16 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ## [Belum Dirilis]
 
+
+### Added
+
+### Changed
+
+### Documentation
+
+
+## [0.3.0] - 3 Juli 2026
+
 ### Added
 
 * Implementasi halaman Riwayat Bermain.
@@ -108,8 +118,6 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbarui CHANGELOG sesuai implementasi integrasi Playbox dengan proses booking.
 * Memperbarui CHANGELOG sesuai penyederhanaan halaman Event & Promo.
 * Memperbarui CHANGELOG sesuai implementasi monitoring sesi dan notifikasi Telegram.
-
-
 
 ## [0.2.0] - 14 Juni 2026
 
