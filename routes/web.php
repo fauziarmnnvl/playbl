@@ -1,20 +1,174 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MonitoringController;
+use App\Http\Controllers\PlayboxController;
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\CabangController;
+use App\Http\Controllers\EventPromoController;
+use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\StatistikController;
+use App\Http\Controllers\AktivitasController;
+use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\Operator\OperatorMonitoringController;
+use App\Http\Controllers\Operator\OperatorRiwayatController;
+use App\Http\Controllers\BookingController; 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+/*
+|--------------------------------------------------------------------------
+| Landing Page (Public)
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/branch', [CabangController::class, 'publicBranch'])->name('branch');
+
+Route::get('/event-promo', [EventPromoController::class, 'publicPromo'])->name('event-promo');
+
+Route::get('/game', [GameController::class, 'publicGames'])->name('game');
+
+Route::get('/booking', [BookingController::class, 'info'])->name('booking.info');
+
+Route::post('/booking', [BookingController::class, 'storeInfo'])->name('booking.storeInfo');
+
+Route::get('/booking/cabang', [BookingController::class, 'cabang'])->name('booking.cabang');
+
+Route::post('/booking/cabang', [BookingController::class, 'storeCabang'])->name('booking.storeCabang');
+
+Route::get('/booking/playbox', [BookingController::class, 'playbox'])->name('booking.playbox');
+
+Route::post('/booking/playbox', [BookingController::class, 'storePlaybox'])->name('booking.storePlaybox');
+
+Route::get('/booking/durasi',[BookingController::class,'durasi'])->name('booking.durasi');
+
+Route::post('/booking/durasi',[BookingController::class,'storeDurasi'])->name('booking.storeDurasi');
+
+Route::get('/booking/review',[BookingController::class,'review'])->name('booking.review');
+
+Route::get('/booking/review-flexible',[BookingController::class,'reviewFlexible'])->name('booking.review.flexible');
+
+Route::get('/booking/success-flexible-booking',[BookingController::class,'successFlexibleBooking'])->name('booking.success.flexible.booking');
+
+Route::post('/booking/mulai-sesi',[BookingController::class,'mulaiSesi'])->name('booking.mulaiSesi');
+Route::post('/booking/selesai-sesi', [BookingController::class, 'selesaiSesi'])->name('booking.selesaiSesi');
+
+Route::post('/booking/flexible',[BookingController::class,'storeBookingFlexible'])->name('booking.storeBookingFlexible');
+
+Route::get('/booking/session-flexible',[BookingController::class,'sessionFlexible'])->name('booking.session.flexible');
+
+Route::get('/booking/pembayaran',[BookingController::class,'pembayaran'])->name('booking.pembayaran');
+
+Route::post('/booking/pembayaran',[BookingController::class,'storePembayaran'])->name('booking.storePembayaran');
+
+Route::get('/booking/pembayaran-flexible', [BookingController::class, 'pembayaranFlexible'])->name('booking.pembayaran.flexible');
+Route::get('/booking/success-flexible',[BookingController::class, 'successFlexible'])->name('booking.success.flexible');
+Route::post('/booking/pembayaran-flexible', [BookingController::class, 'storePembayaranFlexible'])->name('booking.storePembayaranFlexible');
+
+Route::get('/booking/success',[BookingController::class,'success'])->name('booking.success');
+Route::post('/booking/selesai',[BookingController::class,'selesai'])->name('booking.selesai');
+
+Route::view('/faq', 'faq')->name('faq');
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin Area (role: admin only)
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+
+    // Dashboard
+    Route::get('/', [DashboardController::class, 'index'])
+        ->name('admin.dashboard');
+
+    // Monitoring Playbox (Admin — semua cabang)
+    Route::get('/monitoring', [MonitoringController::class, 'index'])
+        ->name('admin.monitoring');
+
+    // Playbox
+    Route::resource('/playbox', PlayboxController::class)
+        ->names('admin.playbox');
+
+    // Game
+    Route::resource('/game', GameController::class)
+        ->names('admin.game');
+
+    // Cabang
+    Route::resource('/cabang', CabangController::class)
+        ->names('admin.cabang');
+
+    // Promo
+    Route::resource('/promo', EventPromoController::class)
+        ->names('admin.promo');
+
+    // Operator
+    Route::resource('/operator', OperatorController::class)
+        ->names('admin.operator');
+
+    // Pelanggan
+    Route::get('/pelanggan', [PelangganController::class, 'index'])
+        ->name('admin.pelanggan');
+
+    // Riwayat
+    Route::get('/riwayat', [RiwayatController::class, 'index'])
+        ->name('admin.riwayat');
+
+    // Statistik
+    Route::get('/statistik', [StatistikController::class, 'index'])
+        ->name('admin.statistik');
+
+    Route::get('/statistik/export-pdf', [StatistikController::class, 'exportPdf'])
+        ->name('admin.statistik.export-pdf');
+
+    Route::get('/statistik/export-excel', [StatistikController::class, 'exportExcel'])
+        ->name('admin.statistik.export-excel');
+
+    // Aktivitas
+    Route::get('/aktivitas', [AktivitasController::class, 'index'])
+        ->name('admin.aktivitas');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+/*
+|--------------------------------------------------------------------------
+| Operator Area (role: operator only)
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'role:operator'])->prefix('operator')->group(function () {
+
+    // Monitoring Playbox (filtered by cabang_id)
+    Route::get('/monitoring', [OperatorMonitoringController::class, 'index'])
+        ->name('operator.monitoring');
+
+    // Riwayat Bermain (filtered by cabang_id)
+    Route::get('/riwayat', [OperatorRiwayatController::class, 'index'])
+        ->name('operator.riwayat');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| User Profile
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';

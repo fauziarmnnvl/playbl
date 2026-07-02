@@ -1,3 +1,286 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ===========================
+   GAME SECTION
+=========================== */
+
+.gameSwiper{
+    width:100%;
+    padding-top:60px;
+    padding-bottom:30px;
+}
+
+.gameSwiper .swiper-slide{
+    width:280px;
+    height:400px;
+    border-radius:24px;
+    overflow:hidden;
+    transition:all .5s ease;
+    opacity:.45;
+    transform:scale(.85);
+}
+
+.gameSwiper .swiper-slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.gameSwiper .swiper-slide-active{
+    opacity:1;
+    transform:scale(1.1);
+    box-shadow:
+        0 0 30px rgba(96,165,250,.25),
+        0 0 80px rgba(168,85,247,.15);
+}
+
+.stars{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    background-image:
+        radial-gradient(white 1px, transparent 1px),
+        radial-gradient(white 1px, transparent 1px);
+    background-size:120px 120px,180px 180px;
+    background-position:0 0,60px 60px;
+    opacity:.18;
+}
+
+.game-glow-left{
+    position:absolute;
+    left:-250px;
+    top:50%;
+    transform:translateY(-50%);
+    width:700px;
+    height:700px;
+    border-radius:999px;
+    background:#00d4ff;
+    opacity:.12;
+    filter:blur(200px);
+}
+
+.game-glow-right{
+    position:absolute;
+    right:-250px;
+    top:50%;
+    transform:translateY(-50%);
+    width:700px;
+    height:700px;
+    border-radius:999px;
+    background:#7c3aed;
+    opacity:.12;
+    filter:blur(200px);
+}
+
+/* ==================================
+   LOGIN PAGE
+================================== */
+
+.login-page{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f1f5f9;
+    padding:24px;
+}
+
+.login-card{
+    width:100%;
+    max-width:420px;
+    background:#fff;
+    border-radius:20px;
+    padding:40px 32px;
+    box-shadow:
+        0 20px 40px rgba(0,0,0,.06);
+}
+
+.login-title{
+    text-align:center;
+    font-size:2rem;
+    font-weight:700;
+    color:#0f172a;
+    margin-bottom:32px;
+}
+
+.login-group{
+    margin-bottom:20px;
+}
+
+.login-group label{
+    display:block;
+    margin-bottom:8px;
+    font-size:.9rem;
+    font-weight:500;
+    color:#334155;
+}
+
+.login-group input{
+    width:100%;
+    height:52px;
+    border:1px solid #dbe3ec;
+    border-radius:10px;
+    padding:0 16px;
+    outline:none;
+    font-size:.95rem;
+}
+
+.login-group input:focus{
+    border-color:#3b82f6;
+}
+
+.password-wrapper{
+    position:relative;
+}
+
+.toggle-password{
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    border:none;
+    background:none;
+    cursor:pointer;
+    color:#94a3b8;
+}
+
+.toggle-password i{
+    font-size:18px;
+}
+
+.toggle-password:hover{
+    color:#64748b;
+}
+
+.login-options{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:24px;
+}
+
+.remember-box{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:.9rem;
+}
+
+.login-options a{
+    text-decoration:none;
+    color:#2563eb;
+    font-size:.9rem;
+}
+
+.login-button{
+    width:100%;
+    height:54px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    color:#fff;
+    font-size:.95rem;
+    font-weight:600;
+    background:
+        linear-gradient(
+            90deg,
+            #06b6d4,
+            #2563eb
+        );
+}
+
+.login-button:hover{
+    opacity:.95;
+}
+
+.login-error{
+    color:#ef4444;
+    font-size:.8rem;
+}
+
+/* ==================================
+   SCROLL INDICATOR
+================================== */
+
+.dot{
+    width:8px;
+    height:8px;
+    border-radius:999px;
+    background:rgba(255,255,255,.25);
+    transition:all .3s ease;
+    cursor:pointer;
+}
+
+.dot.active{
+    width:10px;
+    height:10px;
+
+    background:#fff;
+    box-shadow:0 0 20px rgba(255,255,255,.8);
+}
+
+/* ==================================
+   HIDE SCROLLBAR
+================================== */
+
+html{
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+}
+
+body{
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
+    display:none;
+}
+
+/* ==========================
+   HERO SLIDESHOW
+========================== */
+
+.hero-slider{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+}
+
+.hero-slide{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    opacity:0;
+
+    transition:
+        opacity 1.5s ease;
+
+    transform:scale(1.05);
+}
+
+.hero-slide.active{
+    opacity:.60;
+    animation:heroZoom 6s linear;
+}
+
+@keyframes heroZoom{
+
+    from{
+        transform:scale(1.05);
+    }
+
+    to{
+        transform:scale(1.12);
+    }
+
+}
+

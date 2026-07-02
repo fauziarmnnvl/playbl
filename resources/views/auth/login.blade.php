@@ -1,47 +1,63 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.guest')
+@section('content')
+<div class="login-page">
+    <div class="login-card">
+        <h1 class="login-title">Login</h1>
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <div class="login-group">
+                <label>Email atau Username</label>
+                <input type="text" name="login" value="{{ old('login') }}" placeholder="Masukkan email atau username" required>
+                @error('login')
+                    <small class="login-error">{{ $message }}</small>
+                @enderror
+            </div>
+            <div class="login-group">
+                <label>Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" placeholder="Masukkan password" required>
+                    <button type="button" class="toggle-password" onclick="togglePassword()">
+                        <i id="passwordIcon" class="bi bi-eye"></i>
+                    </button>
+                </div>
+                @error('password')
+                    <small class="login-error">{{ $message }}</small>
+                @enderror
+            </div>
+            <div class="login-options">
+                <label class="remember-box">
+                    <input type="checkbox" name="remember">
+                    <span>Ingat saya</span>
+                </label>
+            </div>
+            <button type="submit" class="login-button">Masuk Dashboard</button>
+        </form>
+    </div>
+</div>
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+<script>
+function togglePassword()
+{
+    const password =
+        document.getElementById('password');
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    const icon =
+        document.getElementById('passwordIcon');
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    if(password.type === 'password')
+    {
+        password.type = 'text';
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+    }
+    else
+    {
+        password.type = 'password';
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+    }
+}
+</script>
+@endsection

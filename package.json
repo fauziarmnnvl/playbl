@@ -1,6 +1,6 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
-    "name":"playbl",
+    "name": "playbl",
     "private": true,
     "type": "module",
     "scripts": {
@@ -24,6 +24,8 @@
         "@popperjs/core": "^2.11.8",
         "alpinejs": "^3.15.12",
         "bootstrap": "^5.3.8",
-        "chart.js": "^4.5.1"
+        "chart.js": "^4.5.1",
+        "sweetalert2": "^11.26.25",
+        "swiper": "^12.2.0"
     }
 }

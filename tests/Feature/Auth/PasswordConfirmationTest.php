@@ -27,7 +27,7 @@ class PasswordConfirmationTest extends TestCase
             'password' => 'password',
         ]);
 
-        $response->assertRedirect();
+        $response->assertRedirect(route('admin.dashboard', absolute: false));
         $response->assertSessionHasNoErrors();
     }
 
