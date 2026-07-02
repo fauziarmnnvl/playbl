@@ -419,6 +419,55 @@ Selain itu dilakukan penyesuaian pada:
 
 ---
 
+# Refactoring 11
+
+## Sebelum
+
+### Masalah
+
+File media seperti gambar Cabang, Game, dan Event & Promo masih disimpan langsung pada folder `public/images`. Pendekatan ini menyebabkan pengelolaan file menjadi kurang fleksibel, sulit dipindahkan ke media penyimpanan lain, serta tidak mengikuti mekanisme penyimpanan file yang direkomendasikan oleh Laravel.
+
+---
+
+## Perubahan
+
+Pengelolaan media diubah menggunakan Laravel Storage dengan memanfaatkan disk `public`.
+
+Perubahan yang dilakukan meliputi:
+
+- Memindahkan penyimpanan file media dari folder `public/images` ke `storage/app/public`.
+- Mengubah proses upload pada Controller agar menggunakan Laravel Storage.
+- Menyesuaikan path gambar pada Seeder agar menggunakan direktori Storage.
+- Mengubah seluruh tampilan (Blade) agar menggunakan `Storage::url()` saat menampilkan gambar.
+- Menghapus aset gambar lama yang sudah tidak digunakan pada folder `public/images`.
+
+Contoh struktur penyimpanan:
+
+```text
+storage/app/public
+├── cabang
+├── games
+└── event-promo
+```
+
+---
+
+## Alasan
+
+- Mengikuti standar pengelolaan file yang direkomendasikan oleh Laravel.
+- Mempermudah proses upload, update, dan penghapusan file.
+- Meningkatkan fleksibilitas apabila di masa mendatang menggunakan media penyimpanan lain seperti Amazon S3.
+- Mengurangi ketergantungan terhadap folder `public`.
+
+---
+
+## Dampak
+
+- Struktur penyimpanan media menjadi lebih terorganisir.
+- Pengelolaan file lebih mudah dipelihara.
+- Tampilan aplikasi tetap berjalan tanpa mengubah proses bisnis.
+- Sistem menjadi lebih mudah dikembangkan apabila menggunakan media penyimpanan yang berbeda di masa mendatang.
+
 # Kesimpulan
 
 Refactoring yang dilakukan selama pengembangan proyek berfokus pada peningkatan kualitas struktur kode, modularitas komponen, konsistensi antarmuka, serta kemudahan maintenance tanpa mengubah proses bisnis aplikasi. Dengan struktur yang lebih terorganisir, pengembangan fitur baru dan kolaborasi antar anggota tim dapat dilakukan dengan lebih mudah dan efisien.
