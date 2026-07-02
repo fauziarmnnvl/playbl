@@ -521,12 +521,21 @@ body {
     color: var(--text-muted);
 }
 
-.data-card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-top: 16px;
-    border-top: 1px solid var(--border-color);
+.data-card-footer{
+    display:flex;
+    align-items:center;
+    padding-top:16px;
+    border-top:1px solid var(--border-color);
+}
+
+.data-card-footer .badge{
+    margin-right:auto;
+}
+
+.data-card-actions{
+    display:flex;
+    gap:8px;
+    margin-left:auto;
 }
 
 .badge {
@@ -2123,4 +2132,52 @@ body {
 .timeline-meta,
 .timeline-header{
     display:none;
+}
+
+/* ============================================
+   TABLE PAGINATION
+============================================ */
+
+.table-pagination{
+    margin-top:24px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+.page-btn{
+    min-width:42px;
+    height:42px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+
+    background:#fff;
+    color:#334155;
+
+    text-decoration:none;
+    font-weight:600;
+
+    transition:.2s;
+}
+
+.page-btn:hover{
+    background:#f8fafc;
+}
+
+.page-btn.active{
+    background:#06b6d4;
+    border-color:#06b6d4;
+    color:#fff;
+}
+
+.page-btn.disabled{
+    color:#94a3b8;
+    background:#f8fafc;
+    cursor:not-allowed;
 }

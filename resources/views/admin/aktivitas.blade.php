@@ -69,9 +69,8 @@
 
                                     <div class="timeline-meta-simple">
                                         @if($activity->causer)
-                                            {{ $activity->causer->nama }}
                                             •
-                                            {{ ucfirst($activity->causer->role) }}
+                                            {{ $activity->causer->nama }}
                                         @else
                                             Sistem
                                         @endif

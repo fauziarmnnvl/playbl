@@ -14,9 +14,16 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 ### Changed
 * Halaman Pembayaran Booking Sesi Tetap kini menampilkan QRIS sesuai cabang yang dipilih pelanggan.
 * Halaman Pembayaran Booking Sesi Fleksibel kini menampilkan QRIS sesuai cabang tempat pelanggan bermain.
+* Memigrasikan pengelolaan media Cabang, Game, dan Event & Promo dari `public/images` ke Laravel Storage.
+* Menyesuaikan proses upload dan penampilan gambar menggunakan `Storage::url()`.
+* Menambahkan pagination pada halaman Manajemen Playbox.
+* Mengurutkan daftar Playbox berdasarkan Cabang dan kode Playbox.
+* Mencegah pemilihan cabang berstatus Nonaktif saat menambahkan Playbox.
+* Menyempurnakan tampilan halaman Manajemen Playbox, Manajemen Game, Manajemen Cabang, Riwayat Aktivitas, dan beberapa section pada Landing Page.
 
 ### Documentation
 * Memperbarui CHANGELOG sesuai implementasi QRIS dinamis berdasarkan cabang.
+* Memperbarui CHANGELOG sesuai implementasi migrasi media ke Laravel Storage.
 
 ## [0.3.0] - 3 Juli 2026
 

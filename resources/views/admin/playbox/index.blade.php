@@ -31,7 +31,7 @@
                 <tbody>
                     @foreach ($playboxList as $i => $playbox)
                         <tr>
-                            <td>{{ $i + 1 }}</td>
+                            <td>{{ $playboxList->firstItem() + $i }}</td>
                             <td class="td-bold">{{ $playbox->nama_playbox }}</td>
                             <td>{{ $playbox->cabang->nama_cabang ?? '—' }}</td>
                             <td>
@@ -56,6 +56,30 @@
                 </tbody>
             </table>
         </div>
+        @if ($playboxList->hasPages())
+            <div class="table-pagination">
+
+                @if ($playboxList->onFirstPage())
+                    <span class="page-btn disabled">&laquo;</span>
+                @else
+                    <a class="page-btn" href="{{ $playboxList->previousPageUrl() }}">&laquo;</a>
+                @endif
+
+                @for ($i = 1; $i <= $playboxList->lastPage(); $i++)
+                    <a href="{{ $playboxList->url($i) }}"
+                    class="page-btn {{ $playboxList->currentPage() == $i ? 'active' : '' }}">
+                        {{ $i }}
+                    </a>
+                @endfor
+
+                @if ($playboxList->hasMorePages())
+                    <a class="page-btn" href="{{ $playboxList->nextPageUrl() }}">&raquo;</a>
+                @else
+                    <span class="page-btn disabled">&raquo;</span>
+                @endif
+
+            </div>
+        @endif
     @else
         <div class="empty-state">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="8" cy="12" r="1.5"/><circle cx="16" cy="12" r="1.5"/></svg>

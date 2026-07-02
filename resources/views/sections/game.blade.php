@@ -90,7 +90,7 @@
             @forelse ($games as $game)
                 <div class="group">
                     <div class="overflow-hidden rounded-3xl">
-                        <img src="{{ $game->cover_image ? asset($game->cover_image) : asset('images/no-image.png') }}"
+                        <img src="{{ $game->cover_image ? Storage::url($game->cover_image) : asset('images/no-image.png') }}"
                             alt="{{ $game->judul_game }}" class="w-full h-[320px] object-cover group-hover:scale-105 transition duration-300">
                     </div>
                     <div class="mt-3">

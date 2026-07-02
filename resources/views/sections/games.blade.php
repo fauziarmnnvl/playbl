@@ -22,7 +22,7 @@
             @forelse($featuredGames as $game)
                 <div class="swiper-slide">
                     <img
-                        src="{{ $game->cover_image ? asset($game->cover_image) : asset('images/no-image.png') }}"
+                        src="{{ $game->cover_image ? Storage::url($game->cover_image) : asset('images/no-image.png') }}"
                         alt="{{ $game->judul_game }}">
                 </div>
             @empty

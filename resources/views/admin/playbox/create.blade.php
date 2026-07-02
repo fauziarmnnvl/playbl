@@ -31,9 +31,13 @@
                 <select name="id_cabang" id="id_cabang" class="form-select" required>
                     <option value="">— Pilih Cabang —</option>
                     @foreach ($cabangList as $cabang)
-                        <option value="{{ $cabang->id_cabang }}" {{ old('id_cabang') == $cabang->id_cabang ? 'selected' : '' }}>
-                            {{ $cabang->nama_cabang }}
-                        </option>
+                    <option
+                        value="{{ $cabang->id_cabang }}"
+                        {{ old('id_cabang') == $cabang->id_cabang ? 'selected' : '' }}
+                        {{ !$cabang->status_buka ? 'disabled' : '' }}>
+                        {{ $cabang->nama_cabang }}
+                        {{ !$cabang->status_buka ? ' (Nonaktif)' : '' }}
+                    </option>
                     @endforeach
                 </select>
                 @error('id_cabang')

@@ -13,7 +13,12 @@ class PlayboxController extends Controller
      */
     public function index()
     {
-        $playboxList = Playbox::with('cabang')->get();
+        $playboxList = Playbox::with('cabang')
+            ->join('cabang', 'playbox.id_cabang', '=', 'cabang.id_cabang')
+            ->orderBy('cabang.nama_cabang')
+            ->orderBy('playbox.nama_playbox')
+            ->select('playbox.*')
+            ->paginate(10);
 
         return view('admin.playbox.index', compact('playboxList'));
     }
@@ -23,7 +28,7 @@ class PlayboxController extends Controller
      */
     public function create()
     {
-        $cabangList = Cabang::all();
+        $cabangList = Cabang::orderBy('nama_cabang')->get();
 
         return view('admin.playbox.create', compact('cabangList'));
     }
@@ -38,6 +43,14 @@ class PlayboxController extends Controller
             'nama_playbox'  => 'required|string|max:50',
             'status_unit'   => 'required|in:Tersedia,Maintenance,Rusak',
         ]);
+
+        $cabang = Cabang::findOrFail($validated['id_cabang']);
+
+        if (!$cabang->status_buka) {
+            return back()
+                ->withInput()
+                ->with('error', 'Cabang yang dipilih sedang nonaktif.');
+        }
 
         Playbox::create($validated);
 
@@ -69,6 +82,14 @@ class PlayboxController extends Controller
             'nama_playbox'  => 'required|string|max:50',
             'status_unit'   => 'required|in:Tersedia,Maintenance,Rusak',
         ]);
+
+        $cabang = Cabang::findOrFail($validated['id_cabang']);
+
+        if (!$cabang->status_buka) {
+            return back()
+                ->withInput()
+                ->with('error', 'Cabang yang dipilih sedang nonaktif.');
+        }
 
         $playbox->update($validated);
 

@@ -37,7 +37,7 @@
                     <div class="relative">
 
                         <img
-                            src="{{ $featuredPromo && $featuredPromo->banner_promo ? asset($featuredPromo->banner_promo) : asset('images/no-image.png') }}"
+                            src="{{ $featuredPromo && $featuredPromo->banner_promo ? Storage::url($featuredPromo->banner_promo) : asset('images/no-image.png') }}"
                             class="w-full h-full object-cover">
 
                         <span class="absolute top-4 left-4
@@ -90,7 +90,7 @@
 
                         <div class="relative">
                             <img
-                                src="{{ $promo->banner_promo ? asset($promo->banner_promo) : asset('images/no-image.png') }}"
+                                src="{{ $promo->banner_promo ? Storage::url($promo->banner_promo) : asset('images/no-image.png') }}"
                                 class="w-full h-full object-cover">
 
                             <span class="absolute top-3 left-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white text-xs px-3 py-1 rounded-full">
