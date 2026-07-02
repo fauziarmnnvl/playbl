@@ -8,11 +8,15 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 
 ### Added
+* Menambahkan dukungan QRIS berbeda untuk setiap cabang melalui kolom `qris` pada data Cabang.
+* Menambahkan penyimpanan path gambar QRIS pada tabel `cabang`.
 
 ### Changed
+* Halaman Pembayaran Booking Sesi Tetap kini menampilkan QRIS sesuai cabang yang dipilih pelanggan.
+* Halaman Pembayaran Booking Sesi Fleksibel kini menampilkan QRIS sesuai cabang tempat pelanggan bermain.
 
 ### Documentation
-
+* Memperbarui CHANGELOG sesuai implementasi QRIS dinamis berdasarkan cabang.
 
 ## [0.3.0] - 3 Juli 2026
 
