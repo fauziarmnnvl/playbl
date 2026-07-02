@@ -28,7 +28,7 @@
                     <div class="data-card-image">
                         @if($cabang->foto_cabang)
                             <img
-                                src="{{ asset($cabang->foto_cabang) }}"
+                                src="{{ Storage::url($cabang->foto_cabang) }}"
                                 alt="{{ $cabang->nama_cabang }}"
                             >
                         @else

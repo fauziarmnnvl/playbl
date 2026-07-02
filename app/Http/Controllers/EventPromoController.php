@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EventPromo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EventPromoController extends Controller
 {
@@ -58,10 +59,9 @@ class EventPromoController extends Controller
         }
 
         if ($request->hasFile('banner_promo')) {
-            $file = $request->file('banner_promo');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('images/event-promo'), $filename);
-            $validated['banner_promo'] = 'images/event-promo/'.$filename;
+            $validated['banner_promo'] = $request
+                ->file('banner_promo')
+                ->store('promo', 'public');
         }
 
         EventPromo::create($validated);
@@ -103,14 +103,15 @@ class EventPromoController extends Controller
         }
 
         if ($request->hasFile('banner_promo')) {
-            if ($promo->banner_promo && file_exists(public_path($promo->banner_promo))) {
-                unlink(public_path($promo->banner_promo));
+            // Hapus banner lama dari storage
+            if ($promo->banner_promo &&
+                Storage::disk('public')->exists($promo->banner_promo)) {
+                Storage::disk('public')->delete($promo->banner_promo);
             }
 
-            $file = $request->file('banner_promo');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('images/event-promo'), $filename);
-            $validated['banner_promo'] = 'images/event-promo/'.$filename;
+            $validated['banner_promo'] = $request
+                ->file('banner_promo')
+                ->store('promo', 'public');
         }
 
         $promo->update($validated);
@@ -127,9 +128,10 @@ class EventPromoController extends Controller
     {
         $promo = EventPromo::findOrFail($id);
 
-        // Hapus banner
-        if ($promo->banner_promo && file_exists(public_path($promo->banner_promo))) {
-            unlink(public_path($promo->banner_promo));
+        // Hapus banner dari storage
+        if ($promo->banner_promo &&
+            Storage::disk('public')->exists($promo->banner_promo)) {
+            Storage::disk('public')->delete($promo->banner_promo);
         }
 
         $promo->delete();

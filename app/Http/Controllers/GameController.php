@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GameController extends Controller
 {
@@ -56,10 +57,9 @@ class GameController extends Controller
         ]);
 
         if ($request->hasFile('cover_image')) {
-            $file = $request->file('cover_image');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('images/games'), $filename);
-            $validated['cover_image'] = 'images/games/'.$filename;
+            $validated['cover_image'] = $request
+                ->file('cover_image')
+                ->store('games', 'public');
         }
 
         Game::create($validated);
@@ -93,14 +93,15 @@ class GameController extends Controller
         ]);
 
         if ($request->hasFile('cover_image')) {
-            if ($game->cover_image && file_exists(public_path($game->cover_image))) {
-                unlink(public_path($game->cover_image));
+            // Hapus gambar lama dari storage
+            if ($game->cover_image &&
+                Storage::disk('public')->exists($game->cover_image)) {
+                Storage::disk('public')->delete($game->cover_image);
             }
 
-            $file = $request->file('cover_image');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('images/games'), $filename);
-            $validated['cover_image'] = 'images/games/'.$filename;
+            $validated['cover_image'] = $request
+                ->file('cover_image')
+                ->store('games', 'public');
         }
 
         $game->update($validated);
@@ -119,8 +120,9 @@ class GameController extends Controller
         $game = Game::findOrFail($id);
 
         // Hapus cover image dari storage
-        if ($game->cover_image && file_exists(public_path($game->cover_image))) {
-            unlink(public_path($game->cover_image));
+        if ($game->cover_image &&
+            Storage::disk('public')->exists($game->cover_image)) {
+            Storage::disk('public')->delete($game->cover_image);
         }
 
         $game->delete();
