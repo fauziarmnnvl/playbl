@@ -448,7 +448,7 @@ Contoh struktur penyimpanan:
 storage/app/public
 ├── cabang
 ├── games
-└── event-promo
+└── promo
 ```
 
 ---
@@ -468,6 +468,56 @@ storage/app/public
 - Pengelolaan file lebih mudah dipelihara.
 - Tampilan aplikasi tetap berjalan tanpa mengubah proses bisnis.
 - Sistem menjadi lebih mudah dikembangkan apabila menggunakan media penyimpanan yang berbeda di masa mendatang.
+
+---
+
+# Refactoring 12
+
+## Sebelum
+
+### Masalah
+
+Proses Tambah dan Edit Event & Promo masih menggunakan halaman terpisah sehingga pengguna harus berpindah halaman setiap kali melakukan pengelolaan data. Selain itu, route, method Controller, dan file Blade terpisah masih digunakan untuk menampilkan form Tambah dan Edit.
+
+---
+
+## Perubahan
+
+Form Tambah dan Edit Event & Promo dipindahkan ke dalam modal popup pada halaman daftar promo.
+
+Perubahan yang dilakukan meliputi:
+
+- Memindahkan form Tambah Promo ke modal pada `index.blade.php`.
+- Memindahkan form Edit Promo ke modal yang dapat digunakan secara dinamis berdasarkan data promo yang dipilih.
+- Menambahkan preview banner pada form Tambah dan Edit.
+- Memisahkan validation error bag untuk form Tambah dan Edit agar modal yang sesuai terbuka kembali ketika validasi gagal.
+- Mempertahankan input pengguna ketika validasi form gagal.
+- Menghapus file `create.blade.php` dan `edit.blade.php` yang sudah tidak digunakan.
+- Menghapus method `create()`, `edit()`, dan `show()` dari `EventPromoController`.
+- Membatasi resource route Event & Promo hanya untuk `index`, `store`, `update`, dan `destroy`.
+
+---
+
+## Alasan
+
+- Mengurangi perpindahan halaman saat mengelola data Event & Promo.
+- Meningkatkan efisiensi interaksi pengguna.
+- Menghapus route, method Controller, dan file Blade yang sudah tidak digunakan.
+- Mengurangi kode yang tidak diperlukan.
+- Menyederhanakan struktur fitur Event & Promo.
+
+---
+
+## Dampak
+
+- Proses Tambah dan Edit Promo dapat dilakukan langsung dari halaman daftar promo.
+- Pengalaman pengguna menjadi lebih cepat dan praktis.
+- Validasi form tetap berjalan tanpa kehilangan data yang telah diinput.
+- Struktur route dan Controller menjadi lebih sederhana.
+- Kode yang sudah tidak digunakan berhasil dihapus.
+- Maintenance fitur Event & Promo menjadi lebih mudah.
+
+---
 
 # Kesimpulan
 
