@@ -18,11 +18,11 @@ class EventPromoController extends Controller
         // Filter tabs
         if ($request->status === 'aktif') {
             $query->where('tanggal_mulai', '<=', today())
-                  ->where('tanggal_selesai', '>=', today());
+                ->where('tanggal_selesai', '>=', today());
         } elseif ($request->status === 'nonaktif') {
             $query->where(function ($q) {
                 $q->where('tanggal_mulai', '>', today())
-                  ->orWhere('tanggal_selesai', '<', today());
+                ->orWhere('tanggal_selesai', '<', today());
             });
         }
 
@@ -32,19 +32,11 @@ class EventPromoController extends Controller
     }
 
     /**
-     * Tampilkan form tambah promo baru.
-     */
-    public function create()
-    {
-        return view('admin.promo.create');
-    }
-
-    /**
      * Simpan data promo baru ke database.
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validated = $request->validateWithBag('createPromo', [
             'nama_promo' => 'required|string|max:100',
             'deskripsi' => 'required|string|max:1000',
             'tipe_diskon' => 'required|in:Nominal,Persentase',
@@ -56,7 +48,9 @@ class EventPromoController extends Controller
 
         // Validasi tambahan: persentase max 100
         if ($request->tipe_diskon === 'Persentase' && $request->nilai_diskon > 100) {
-            return back()->withErrors(['nilai_diskon' => 'Nilai diskon persentase maksimal 100%.'])->withInput();
+            return back()
+                ->withErrors(['nilai_diskon' => 'Nilai diskon persentase maksimal 100%.'], 'createPromo')
+                ->withInput();
         }
 
         if ($request->hasFile('banner_promo')) {
@@ -72,16 +66,7 @@ class EventPromoController extends Controller
             ->with('success', 'Promo berhasil ditambahkan.');
     }
 
-    /**
-     * Tampilkan form edit promo.
-     */
-    public function edit($id)
-    {
-        $promo = EventPromo::findOrFail($id);
-
-        return view('admin.promo.edit', compact('promo'));
-    }
-
+    
     /**
      * Update data promo di database.
      */
@@ -89,7 +74,9 @@ class EventPromoController extends Controller
     {
         $promo = EventPromo::findOrFail($id);
 
-        $validated = $request->validate([
+        $request->session()->flash('edit_promo_id', $id);
+
+        $validated = $request->validateWithBag('editPromo', [
             'nama_promo' => 'required|string|max:100',
             'deskripsi' => 'required|string|max:1000',
             'tipe_diskon' => 'required|in:Nominal,Persentase',
@@ -101,7 +88,9 @@ class EventPromoController extends Controller
 
         // Validasi tambahan: persentase max 100
         if ($request->tipe_diskon === 'Persentase' && $request->nilai_diskon > 100) {
-            return back()->withErrors(['nilai_diskon' => 'Nilai diskon persentase maksimal 100%.'])->withInput();
+            return back()
+                ->withErrors(['nilai_diskon' => 'Nilai diskon persentase maksimal 100%.'], 'editPromo')
+                ->withInput();
         }
 
         if ($request->hasFile('banner_promo')) {
@@ -141,14 +130,6 @@ class EventPromoController extends Controller
         return redirect()
             ->route('admin.promo.index')
             ->with('success', 'Promo berhasil dihapus.');
-    }
-
-    /**
-     * Show — redirect ke index.
-     */
-    public function show($id)
-    {
-        return redirect()->route('admin.promo.index');
     }
 
     public function publicPromo()
