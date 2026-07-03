@@ -62,7 +62,7 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | `@alpinejs/collapse` | Collapse Component | Menambahkan efek expand/collapse pada komponen Alpine.js | `^3.15.12` | Bergantung pada Alpine.js |
 | `swiper` | Interactive Carousel | Menampilkan katalog game dalam bentuk carousel pada Landing Page | `^12.2.0` | Perubahan API pada versi mayor dapat memerlukan penyesuaian konfigurasi |
 | `chart.js` | Visualisasi Grafik | Menampilkan grafik statistik penggunaan Playbox pada Dashboard | `^4.5.1` | Membutuhkan konfigurasi data yang sesuai agar grafik tampil dengan benar |
-| `sweetalert2` | Dialog Interaktif | Menampilkan dialog konfirmasi dan notifikasi yang lebih menarik | `^11.26.25` | Bergantung pada JavaScript untuk menjalankan dialog |
+| `sweetalert2` | Dialog & Notifikasi Interaktif | Menampilkan dialog konfirmasi, notifikasi, dan toast saat melakukan aksi tertentu seperti menyalin nomor HP | `^11.26.25` | Bergantung pada JavaScript untuk menjalankan dialog dan notifikasi |
 | `axios` | HTTP Client | Mengirim request HTTP secara asynchronous dari frontend | `^1.11.0` | Perlu penanganan error agar request tetap aman |
 | `autoprefixer` | CSS Prefixer | Menambahkan vendor prefix CSS secara otomatis | `^10.4.2` | Digunakan saat proses build |
 | `postcss` | CSS Processor | Memproses CSS sebelum dibuild oleh Vite | `^8.4.31` | Bergantung pada konfigurasi PostCSS |
@@ -201,10 +201,10 @@ Dependency pada dokumen ini dikelompokkan menjadi:
 | 5W+1H | Penjelasan |
 |--------|------------|
 | **What** | SweetAlert2 adalah library JavaScript untuk menampilkan dialog interaktif seperti konfirmasi, peringatan, notifikasi, dan pesan sukses dengan tampilan yang lebih modern dibandingkan alert bawaan browser. |
-| **Why** | Digunakan untuk meningkatkan pengalaman pengguna ketika melakukan aksi penting, seperti mengakhiri sesi bermain atau melakukan konfirmasi tindakan tertentu. |
+| **Why** | Digunakan untuk meningkatkan pengalaman pengguna ketika melakukan aksi penting maupun memberikan umpan balik setelah suatu tindakan berhasil dilakukan. |
 | **Who** | Digunakan oleh Pelanggan maupun Operator saat berinteraksi dengan sistem. |
-| **When** | Ditampilkan ketika pengguna melakukan aksi yang memerlukan konfirmasi atau pemberitahuan hasil proses. |
-| **Where** | Digunakan pada halaman Booking Playbox, Monitoring Playbox, maupun halaman lain yang memerlukan dialog interaktif. |
+| **When** | Ditampilkan ketika pengguna melakukan aksi yang memerlukan konfirmasi atau ketika sistem memberikan notifikasi hasil proses, seperti saat nomor HP berhasil disalin. |
+| **Where** | Digunakan pada halaman Booking Playbox, Monitoring Playbox, Data Pelanggan, maupun halaman lain yang memerlukan dialog atau notifikasi interaktif. |
 | **How** | Diintegrasikan melalui NPM kemudian dipanggil menggunakan JavaScript pada halaman yang membutuhkan dialog konfirmasi atau notifikasi. |
 
 **Referensi:**
@@ -294,7 +294,7 @@ npm install swiper
 29 Juni 2026
 
 ### Tujuan
-Digunakan untuk menampilkan dialog konfirmasi dan notifikasi interaktif, seperti konfirmasi mengakhiri sesi bermain, sehingga memberikan pengalaman pengguna yang lebih baik dibandingkan dialog bawaan browser.
+Digunakan untuk menampilkan dialog konfirmasi dan notifikasi interaktif, seperti konfirmasi mengakhiri sesi bermain dan toast saat menyalin nomor HP pelanggan, sehingga memberikan pengalaman pengguna yang lebih baik dibandingkan dialog bawaan browser.
 
 ### Instalasi
 

@@ -11,6 +11,9 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menambahkan penyimpanan path gambar QRIS pada tabel `cabang`.
 * Menambahkan deskripsi dinamis pada data Event & Promo.
 * Menambahkan dukungan upload banner promo melalui Laravel Storage.
+* Menambahkan fitur Data Pelanggan untuk Operator berdasarkan cabang yang dikelola.
+* Menambahkan pencarian otomatis Data Pelanggan berdasarkan nama dan nomor HP tanpa perlu menekan Enter.
+* Menambahkan notifikasi SweetAlert toast saat nomor HP pelanggan berhasil disalin.
 
 ### Changed
 * Halaman Pembayaran Booking Sesi Tetap kini menampilkan QRIS sesuai cabang yang dipilih pelanggan.
@@ -24,16 +27,24 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Mengganti deskripsi promo yang sebelumnya hardcoded menjadi data dinamis dari database.
 * Menyempurnakan tampilan banner pada halaman Event & Promo pelanggan.
 * Menyesuaikan layout Promo Lainnya agar banner ditampilkan secara lebih proporsional.
+* Menambahkan pagination pada halaman Data Pelanggan dan Riwayat Bermain.
+* Menyesuaikan Data Pelanggan Operator agar hanya menampilkan pelanggan yang pernah melakukan booking di cabang yang dikelola.
+* Menyesuaikan perhitungan Total Booking dan Terakhir Bermain pada halaman Data Pelanggan Operator berdasarkan transaksi di cabang Operator.
+* Menyesuaikan struktur sidebar Operator menjadi Menu Utama, Transaksi, Data, dan Laporan.
+* Mengarahkan pengguna yang sudah login ke halaman sesuai role saat mengakses kembali route `/login`.
 
 ### Fixed
 * Memperbaiki banner promo yang tidak tampil pada halaman Manajemen Event & Promo.
 * Memperbaiki status promo aktif yang sebelumnya dapat ditampilkan sebagai Nonaktif meskipun periode promo belum berakhir.
 * Memperbaiki tampilan banner promo yang terpotong pada halaman Event & Promo pelanggan.
+* Memperbaiki redirect pengguna yang sudah login saat mengakses kembali halaman Login.
 
 ### Documentation
 * Memperbarui CHANGELOG sesuai implementasi QRIS dinamis berdasarkan cabang.
 * Memperbarui CHANGELOG sesuai implementasi migrasi media ke Laravel Storage.
 * Memperbarui CHANGELOG sesuai penyempurnaan data, status, dan tampilan banner Event & Promo.
+* Memperbarui dokumentasi fitur Data Pelanggan sesuai implementasi akses Admin dan Operator.
+* Memperbarui README sesuai penambahan akses Data Pelanggan untuk Operator.
 
 ## [0.3.0] - 3 Juli 2026
 

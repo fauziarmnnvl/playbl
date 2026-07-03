@@ -271,11 +271,12 @@ Controller Admin dan Operator berada pada struktur yang sama sehingga kurang ter
 
 ## Perubahan
 
-Controller Operator dipindahkan ke namespace tersendiri.
+Controller Operator dipindahkan ke namespace tersendiri dan dikembangkan berdasarkan tanggung jawab masing-masing fitur.
 
 ```
 app/Http/Controllers/Operator
 ├── OperatorMonitoringController.php
+├── OperatorPelangganController.php
 └── OperatorRiwayatController.php
 ```
 
