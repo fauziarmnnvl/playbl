@@ -72,9 +72,11 @@
                 </tbody>
             </table>
             
-            <div style="padding: 16px; border-top: 1px solid #e2e8f0;">
-                {{ $pelangganList->links('pagination::bootstrap-5') }}
-            </div>
+            @if($pelangganList->hasPages())
+                <div class="pagination-wrapper">
+                    {{ $pelangganList->links('pagination::bootstrap-5') }}
+                </div>
+            @endif
         </div>
     @else
         <div class="empty-state">
@@ -88,25 +90,39 @@
     @endif
 
     <script>
+        function showCopyToast(text) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil disalin',
+                text: text,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true
+            });
+        }
+
         function copyToClipboard(text) {
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(text).then(() => {
-                    alert('No HP berhasil disalin: ' + text);
+                    showCopyToast(text);
                 }).catch(err => {
-                    console.error('Failed to copy text: ', err);
+                    console.error('Failed to copy text:', err);
                 });
             } else {
-                // Fallback for older browsers
-                const textArea = document.createElement("textarea");
+                const textArea = document.createElement('textarea');
                 textArea.value = text;
                 document.body.appendChild(textArea);
                 textArea.select();
+
                 try {
                     document.execCommand('copy');
-                    alert('No HP berhasil disalin: ' + text);
+                    showCopyToast(text);
                 } catch (err) {
-                    console.error('Fallback: Oops, unable to copy', err);
+                    console.error('Fallback: unable to copy', err);
                 }
+
                 document.body.removeChild(textArea);
             }
         }

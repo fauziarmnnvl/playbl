@@ -172,9 +172,11 @@
                 </tbody>
             </table>
             
-            <div style="padding: 16px; border-top: 1px solid #e2e8f0;">
-                {{ $riwayatList->links() }}
-            </div>
+            @if($riwayatList->hasPages())
+                <div class="pagination-wrapper">
+                    {{ $riwayatList->links('pagination::bootstrap-5') }}
+                </div>
+            @endif
         </div>
     @else
         <div class="empty-state">
