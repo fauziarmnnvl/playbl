@@ -18,9 +18,11 @@ Login digunakan untuk mengautentikasi pengguna sebelum mengakses sistem. Setelah
 ### Alur
 
 1. Pengguna membuka halaman Login.
-2. Pengguna memasukkan email dan password.
+2. Pengguna memasukkan email atau username dan password.
 3. Sistem melakukan proses validasi.
-4. Jika data valid, pengguna diarahkan ke dashboard sesuai role.
+4. Jika data valid, Admin diarahkan ke Dashboard Admin.
+5. Jika data valid, Operator diarahkan ke halaman Monitoring Playbox.
+6. Jika pengguna yang sudah login mengakses kembali route `/login`, sistem akan mengarahkan pengguna ke halaman sesuai role yang dimiliki.
 
 ### Route & Controller
 
@@ -226,9 +228,12 @@ Fitur ini digunakan untuk mengelola data Playbox pada setiap cabang agar informa
 
 1. Admin berhasil login.
 2. Admin membuka menu Manajemen Playbox.
-3. Sistem menampilkan daftar Playbox.
-4. Admin dapat menambah, mengubah, maupun menghapus data Playbox.
-5. Sistem menyimpan perubahan yang dilakukan.
+3. Sistem menampilkan daftar Playbox yang diurutkan berdasarkan Cabang dan kode Playbox.
+4. Daftar Playbox ditampilkan menggunakan pagination untuk mempermudah pengelolaan data.
+5. Admin dapat menambah, mengubah, maupun menghapus data Playbox.
+6. Saat menambahkan Playbox, sistem hanya menampilkan Cabang yang berstatus Aktif.
+7. Cabang berstatus Nonaktif tidak dapat dipilih sebagai lokasi Playbox baru.
+8. Sistem menyimpan perubahan yang dilakukan.
 
 ### Route & Controller
 
@@ -325,9 +330,13 @@ Fitur ini digunakan untuk mengelola informasi event dan promo yang ditampilkan p
 
 1. Admin berhasil login.
 2. Admin membuka menu Event & Promo.
-3. Sistem menampilkan daftar event dan promo.
-4. Admin dapat menambah, mengubah, maupun menghapus data.
-5. Perubahan akan langsung ditampilkan pada website.
+3. Sistem menampilkan daftar event dan promo beserta banner, deskripsi, nilai diskon, periode, dan status promo.
+4. Status Aktif atau Nonaktif ditentukan secara otomatis berdasarkan periode promo.
+5. Admin dapat menambah, mengubah, maupun menghapus data Event & Promo.
+6. Admin dapat mengunggah banner promo yang disimpan menggunakan Laravel Storage.
+7. Sistem menampilkan banner promo secara proporsional pada panel Admin dan halaman pelanggan.
+8. Deskripsi promo yang ditampilkan pada halaman pelanggan diambil secara dinamis dari database.
+9. Perubahan data Event & Promo akan langsung ditampilkan pada website pelanggan.
 
 ### Route & Controller
 
@@ -381,28 +390,43 @@ Fitur ini digunakan untuk mengelola akun operator yang bertugas pada setiap caba
 
 ### Tujuan
 
-Fitur Data Pelanggan digunakan untuk menampilkan informasi pelanggan yang pernah melakukan booking melalui sistem.
+Fitur Data Pelanggan digunakan untuk menampilkan informasi pelanggan yang pernah melakukan booking melalui sistem. Data yang ditampilkan disesuaikan dengan hak akses pengguna.
 
 ### Aktor
 
 - Admin
+- Operator
 
 ### Alur
 
-1. Admin berhasil login.
-1. Admin membuka menu Data Pelanggan.
-2. Sistem menampilkan daftar pelanggan.
-3. Admin dapat melihat informasi pelanggan berdasarkan riwayat booking.
+1. Admin atau Operator berhasil login.
+2. Pengguna membuka menu Data Pelanggan.
+3. Jika pengguna adalah Admin, sistem menampilkan seluruh pelanggan yang pernah melakukan booking.
+4. Jika pengguna adalah Operator, sistem hanya menampilkan pelanggan yang pernah melakukan booking di cabang yang dikelola oleh Operator tersebut.
+5. Sistem menampilkan nama pelanggan, nomor HP, total booking, dan tanggal terakhir bermain.
+6. Pada halaman Operator, Total Booking dihitung khusus berdasarkan transaksi pada cabang Operator.
+7. Pada halaman Operator, Terakhir Bermain dihitung berdasarkan transaksi terakhir pelanggan pada cabang Operator.
+8. Pengguna dapat mencari pelanggan berdasarkan nama atau nomor HP.
+9. Sistem menampilkan notifikasi SweetAlert toast setelah nomor HP berhasil disalin.
+10. Daftar pelanggan ditampilkan menggunakan pagination.
 
 ### Route & Controller
 
 | Method | Route | Controller |
 | :----: | :---- | :--------- |
 | GET | `/admin/pelanggan` | `PelangganController@index` |
+| GET | `/operator/pelanggan` | `OperatorPelangganController@index` |
+
+### Hak Akses Data
+
+| Role | Data yang Ditampilkan |
+| :--- | :-------------------- |
+| Admin | Seluruh pelanggan dari semua cabang |
+| Operator | Pelanggan yang pernah melakukan booking di cabang Operator |
 
 ### Dokumentasi Tampilan
 
-> Screenshot halaman Data Pelanggan akan ditambahkan pada tahap akhir pengembangan sebagai dokumentasi antarmuka sistem.
+> Screenshot halaman Data Pelanggan Admin dan Operator akan ditambahkan pada tahap akhir pengembangan sebagai dokumentasi antarmuka sistem.
 
 ---
 
@@ -508,7 +532,7 @@ Riwayat Aktivitas digunakan untuk mencatat aktivitas penting yang dilakukan peng
 | 9 | Manajemen Game | Admin |
 | 10 | Manajemen Event & Promo | Admin |
 | 11 | Manajemen Operator | Admin |
-| 12 | Data Pelanggan | Admin |
+| 12 | Data Pelanggan | Admin, Operator |
 | 13 | Riwayat Bermain | Admin, Operator |
 | 14 | Laporan & Statistik | Admin |
 | 15 | Riwayat Aktivitas | Admin |

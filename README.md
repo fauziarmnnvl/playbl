@@ -20,7 +20,7 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
 ## Target Pengguna
 - Pelanggan: Mengakses web untuk melihat katalog, melakukan penyewaan, dan membayar sesi bermain.
 - Admin: Mengelola master data (Cabang, Playbox, Game, Event & Promo, Operator), memantau aktivitas sistem, serta melihat laporan dan statistik.
-- Operator: Memantau status Playbox di cabangnya, memulai sesi bermain, menerima notifikasi Telegram, serta melihat riwayat bermain.
+- Operator: Memantau status Playbox di cabangnya, memulai sesi bermain, menerima notifikasi Telegram, melihat data pelanggan di cabangnya, serta melihat riwayat bermain.
 - Owner / Mitra: Memantau laporan pendapatan operasional dan statistik bisnis.
 
 ## Fitur Utama
@@ -40,6 +40,10 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
 - Monitoring Playbox:
   - Admin memantau seluruh Playbox.
   - Operator memantau Playbox pada cabangnya.
+- Data Pelanggan:
+  - Admin dapat melihat seluruh pelanggan dari semua cabang.
+  - Operator hanya dapat melihat pelanggan yang pernah melakukan booking di cabang yang dikelola.
+  - Menampilkan total booking dan tanggal terakhir bermain sesuai hak akses.
 - Melihat Riwayat Bermain: Arsip riwayat penggunaan Playbox oleh pelanggan.
 - Notifikasi Telegram Operator:
   - Operator menerima notifikasi otomatis saat sesi bermain akan berakhir (5 menit sebelum selesai) dan ketika sesi bermain telah selesai.

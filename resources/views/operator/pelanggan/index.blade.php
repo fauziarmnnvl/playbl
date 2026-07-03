@@ -2,12 +2,12 @@
 
 @section('title', 'Data Pelanggan — BoxPlay.id')
 @section('page_title', 'Data Pelanggan')
-@section('page_description', 'Data pelanggan BoxPlay.id')
-@section('breadcrumb', 'Data Master / Data Pelanggan')
+@section('page_description', 'Data pelanggan di cabang Anda')
+@section('breadcrumb', 'Data / Data Pelanggan')
 
 @section('content')
     <div class="pelanggan-toolbar">
-        <form method="GET" action="{{ route('admin.pelanggan') }}" id="searchForm">
+        <form method="GET" action="{{ route('operator.pelanggan') }}" id="searchForm">
             <input type="text" name="search" class="pelanggan-search" id="searchInput" placeholder="Cari nama pelanggan atau nomor HP..." value="{{ request('search') }}" autocomplete="off">
         </form>
     </div>
@@ -49,19 +49,21 @@
                             </td>
                             <td>
                                 @php
-                                    $bookingCount = $pelanggan->transaksi_count ?? 0;
+                                    $bookingCount = $pelanggan->total_booking ?? 0;
                                     $badgeClass = 'badge-default';
+
                                     if ($bookingCount >= 5) {
                                         $badgeClass = 'badge-green';
                                     } elseif ($bookingCount >= 1) {
                                         $badgeClass = 'badge-blue';
                                     }
                                 @endphp
+
                                 <span class="badge {{ $badgeClass }}">{{ $bookingCount }} Booking</span>
                             </td>
                             <td>
-                                @if($pelanggan->transaksi_max_tgl_transaksi)
-                                    {{ \Carbon\Carbon::parse($pelanggan->transaksi_max_tgl_transaksi)->locale('id')->translatedFormat('d M Y') }}
+                                @if ($pelanggan->terakhir_bermain)
+                                    {{ \Carbon\Carbon::parse($pelanggan->terakhir_bermain)->locale('id')->translatedFormat('d M Y') }}
                                 @else
                                     —
                                 @endif
@@ -70,8 +72,8 @@
                     @endforeach
                 </tbody>
             </table>
-            
-            @if($pelangganList->hasPages())
+
+            @if ($pelangganList->hasPages())
                 <div class="pagination-wrapper">
                     {{ $pelangganList->links('pagination::bootstrap-5') }}
                 </div>
@@ -79,11 +81,17 @@
         </div>
     @else
         <div class="empty-state">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
             <h3>Belum Ada Data Pelanggan</h3>
-            <p>Data pelanggan akan terisi secara otomatis saat ada transaksi.</p>
-            @if(request('search'))
-                <a href="{{ route('admin.pelanggan') }}" class="btn btn-secondary mt-3">Reset Pencarian</a>
+            <p>Belum ada pelanggan yang melakukan booking di cabang Anda.</p>
+
+            @if (request('search'))
+                <a href="{{ route('operator.pelanggan') }}" class="btn btn-secondary mt-3">Reset Pencarian</a>
             @endif
         </div>
     @endif
@@ -134,7 +142,7 @@
 
             searchTimeout = setTimeout(() => {
                 searchForm.submit();
-            }, 500);
+            }, 300);
         });
     </script>
 @endsection
