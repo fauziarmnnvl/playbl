@@ -26,6 +26,18 @@
                 @enderror
             </div>
 
+            <div class="form-group">
+                <label for="deskripsi" class="form-label">
+                    Deskripsi Promo <span style="color:var(--error)">*</span>
+                </label>
+                <textarea name="deskripsi" id="deskripsi" class="form-input" rows="4"
+                        placeholder="Contoh: Diskon spesial untuk penyewaan minimal 3 jam di akhir pekan."
+                        required>{{ old('deskripsi') }}</textarea>
+                @error('deskripsi')
+                    <div class="form-error">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="form-row">
                 <div class="form-group form-half">
                     <label for="tipe_diskon" class="form-label">Tipe Diskon <span style="color:var(--error)">*</span></label>

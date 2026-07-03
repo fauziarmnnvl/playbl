@@ -21,8 +21,19 @@
             <div class="form-group">
                 <label for="nama_promo" class="form-label">Nama Promo <span style="color:var(--error)">*</span></label>
                 <input type="text" name="nama_promo" id="nama_promo" class="form-input"
-                       value="{{ old('nama_promo', $promo->nama_promo) }}" required>
+                        value="{{ old('nama_promo', $promo->nama_promo) }}" required>
                 @error('nama_promo')
+                    <div class="form-error">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="deskripsi" class="form-label">
+                    Deskripsi Promo <span style="color:var(--error)">*</span>
+                </label>
+                <textarea name="deskripsi" id="deskripsi" class="form-input" rows="4"
+                        required>{{ old('deskripsi', $promo->deskripsi) }}</textarea>
+                @error('deskripsi')
                     <div class="form-error">{{ $message }}</div>
                 @enderror
             </div>

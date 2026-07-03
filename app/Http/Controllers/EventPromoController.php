@@ -45,12 +45,13 @@ class EventPromoController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_promo'       => 'required|string|max:100',
-            'tipe_diskon'      => 'required|in:Nominal,Persentase',
-            'nilai_diskon'     => 'required|numeric|min:0',
-            'tanggal_mulai'    => 'required|date',
-            'tanggal_selesai'  => 'required|date|after_or_equal:tanggal_mulai',
-            'banner_promo'     => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'nama_promo' => 'required|string|max:100',
+            'deskripsi' => 'required|string|max:1000',
+            'tipe_diskon' => 'required|in:Nominal,Persentase',
+            'nilai_diskon' => 'required|numeric|min:0',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'banner_promo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         // Validasi tambahan: persentase max 100
@@ -89,12 +90,13 @@ class EventPromoController extends Controller
         $promo = EventPromo::findOrFail($id);
 
         $validated = $request->validate([
-            'nama_promo'       => 'required|string|max:100',
-            'tipe_diskon'      => 'required|in:Nominal,Persentase',
-            'nilai_diskon'     => 'required|numeric|min:0',
-            'tanggal_mulai'    => 'required|date',
-            'tanggal_selesai'  => 'required|date|after_or_equal:tanggal_mulai',
-            'banner_promo'     => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'nama_promo' => 'required|string|max:100',
+            'deskripsi' => 'required|string|max:1000',
+            'tipe_diskon' => 'required|in:Nominal,Persentase',
+            'nilai_diskon' => 'required|numeric|min:0',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'banner_promo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         // Validasi tambahan: persentase max 100
@@ -151,8 +153,8 @@ class EventPromoController extends Controller
 
     public function publicPromo()
     {
-        $promoList = EventPromo::where('tanggal_mulai', '<=', now())
-            ->where('tanggal_selesai', '>=', now())
+        $promoList = EventPromo::whereDate('tanggal_mulai', '<=', today())
+            ->whereDate('tanggal_selesai', '>=', today())
             ->orderBy('tanggal_selesai')
             ->get();
 
