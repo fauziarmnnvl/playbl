@@ -6,10 +6,11 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ## [Belum Dirilis]
 
-
 ### Added
 * Menambahkan dukungan QRIS berbeda untuk setiap cabang melalui kolom `qris` pada data Cabang.
 * Menambahkan penyimpanan path gambar QRIS pada tabel `cabang`.
+* Menambahkan deskripsi dinamis pada data Event & Promo.
+* Menambahkan dukungan upload banner promo melalui Laravel Storage.
 
 ### Changed
 * Halaman Pembayaran Booking Sesi Tetap kini menampilkan QRIS sesuai cabang yang dipilih pelanggan.
@@ -20,10 +21,19 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Mengurutkan daftar Playbox berdasarkan Cabang dan kode Playbox.
 * Mencegah pemilihan cabang berstatus Nonaktif saat menambahkan Playbox.
 * Menyempurnakan tampilan halaman Manajemen Playbox, Manajemen Game, Manajemen Cabang, Riwayat Aktivitas, dan beberapa section pada Landing Page.
+* Mengganti deskripsi promo yang sebelumnya hardcoded menjadi data dinamis dari database.
+* Menyempurnakan tampilan banner pada halaman Event & Promo pelanggan.
+* Menyesuaikan layout Promo Lainnya agar banner ditampilkan secara lebih proporsional.
+
+### Fixed
+* Memperbaiki banner promo yang tidak tampil pada halaman Manajemen Event & Promo.
+* Memperbaiki status promo aktif yang sebelumnya dapat ditampilkan sebagai Nonaktif meskipun periode promo belum berakhir.
+* Memperbaiki tampilan banner promo yang terpotong pada halaman Event & Promo pelanggan.
 
 ### Documentation
 * Memperbarui CHANGELOG sesuai implementasi QRIS dinamis berdasarkan cabang.
 * Memperbarui CHANGELOG sesuai implementasi migrasi media ke Laravel Storage.
+* Memperbarui CHANGELOG sesuai penyempurnaan data, status, dan tampilan banner Event & Promo.
 
 ## [0.3.0] - 3 Juli 2026
 
