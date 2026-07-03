@@ -2193,3 +2193,75 @@ body {
     background:#f8fafc;
     cursor:not-allowed;
 }
+
+/* ============================================
+    PROMO FORM MODAL
+============================================ */
+
+.promo-form-modal {
+    width: min(720px, calc(100% - 32px));
+    max-width: 720px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.promo-form-modal .modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.promo-form-modal .modal-header h3 {
+    margin: 0 0 4px;
+}
+
+.promo-form-modal .modal-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.modal-close {
+    border: 0;
+    background: transparent;
+    font-size: 28px;
+    line-height: 1;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #0f172a;
+}
+
+.promo-form-modal .modal-header {
+    text-align: left;
+}
+
+.promo-form-modal .modal-header h3,
+.promo-form-modal .modal-header p {
+    text-align: left;
+}
+
+.promo-form-modal .form-label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+.promo-form-modal .form-hint {
+    display: block;
+    margin-top: 6px;
+    text-align: left;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.promo-form-modal .form-group .form-error {
+    display: block;
+    margin-top: 6px;
+    text-align: left;
+    width: 100%;
+}

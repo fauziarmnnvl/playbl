@@ -106,6 +106,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     // Promo
     Route::resource('/promo', EventPromoController::class)
+        ->only(['index', 'store', 'update', 'destroy'])
         ->names('admin.promo');
 
     // Operator

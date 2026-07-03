@@ -32,12 +32,14 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menyesuaikan perhitungan Total Booking dan Terakhir Bermain pada halaman Data Pelanggan Operator berdasarkan transaksi di cabang Operator.
 * Menyesuaikan struktur sidebar Operator menjadi Menu Utama, Transaksi, Data, dan Laporan.
 * Mengarahkan pengguna yang sudah login ke halaman sesuai role saat mengakses kembali route `/login`.
+* Mengubah alur Tambah dan Edit Event & Promo dari halaman terpisah menjadi modal popup pada halaman daftar promo.
 
 ### Fixed
 * Memperbaiki banner promo yang tidak tampil pada halaman Manajemen Event & Promo.
 * Memperbaiki status promo aktif yang sebelumnya dapat ditampilkan sebagai Nonaktif meskipun periode promo belum berakhir.
 * Memperbaiki tampilan banner promo yang terpotong pada halaman Event & Promo pelanggan.
 * Memperbaiki redirect pengguna yang sudah login saat mengakses kembali halaman Login.
+* Memperbaiki penanganan validasi form Event & Promo agar modal Tambah atau Edit yang sesuai terbuka kembali ketika validasi gagal.
 
 ### Documentation
 * Memperbarui CHANGELOG sesuai implementasi QRIS dinamis berdasarkan cabang.
