@@ -47,11 +47,14 @@ class TransaksiSeeder extends Seeder
             // 6 hari lalu - Fleksibel
             [
                 'id_pelanggan' => $pelangganIds[2],
-                'id_playbox' => $playboxIds[8],
+                'id_playbox' => $playboxIds[0],
                 'id_promo' => $promoAktif[1] ?? null,
                 'jenis_sesi' => 'Fleksibel',
                 'durasi' => 0,
                 'total_harga' => 35550.00,
+                'bukti_pembayaran' => 'bukti-pembayaran/bukti-dummy.png',
+                'status_pembayaran' => 'Menunggu Verifikasi',
+                'waktu_pembayaran' => Carbon::now()->subMinutes(15),
                 'tgl_transaksi' => Carbon::now()->subDays(6)->setHour(16)->setMinute(0),
             ],
 

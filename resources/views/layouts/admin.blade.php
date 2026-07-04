@@ -57,10 +57,8 @@
                 <div class="sidebar-group">
                     <span class="sidebar-group-label">Transaksi</span>
 
-                    <a href="javascript:void(0)"
-                    class="sidebar-link"
-                    style="opacity: 0.5; cursor: not-allowed;"
-                    title="Fitur segera tersedia">
+                    <a href="{{ route('operator.verifikasi-pembayaran') }}"
+                        class="sidebar-link {{ request()->routeIs('operator.verifikasi-pembayaran') ? 'active' : '' }}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M9 11l3 3L22 4"/>
                             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
