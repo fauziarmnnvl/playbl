@@ -38,19 +38,11 @@ class GameController extends Controller
     }
 
     /**
-     * Tampilkan form tambah game baru.
-     */
-    public function create()
-    {
-        return view('admin.game.create');
-    }
-
-    /**
      * Simpan data game baru ke database.
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validated = $request->validateWithBag('createGame', [
             'judul_game'  => 'required|string|max:100',
             'kategori'    => 'nullable|string|max:50',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
@@ -70,23 +62,16 @@ class GameController extends Controller
     }
 
     /**
-     * Tampilkan form edit game.
-     */
-    public function edit($id)
-    {
-        $game = Game::findOrFail($id);
-
-        return view('admin.game.edit', compact('game'));
-    }
-
-    /**
      * Update data game di database.
      */
     public function update(Request $request, $id)
     {
         $game = Game::findOrFail($id);
 
-        $validated = $request->validate([
+        // Simpan ID untuk membuka kembali modal yang benar jika validasi gagal
+        $request->session()->flash('edit_game_id', $id);
+
+        $validated = $request->validateWithBag('editGame', [
             'judul_game'  => 'required|string|max:100',
             'kategori'    => 'nullable|string|max:50',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
@@ -111,10 +96,6 @@ class GameController extends Controller
             ->with('success', 'Data game berhasil diperbarui.');
     }
 
-    /**
-     * Hapus game dari database.
-     * BR-GM-02: Data game murni katalog, tidak ada pengecekan relasi transaksi.
-     */
     public function destroy($id)
     {
         $game = Game::findOrFail($id);
@@ -130,14 +111,6 @@ class GameController extends Controller
         return redirect()
             ->route('admin.game.index')
             ->with('success', 'Game berhasil dihapus.');
-    }
-
-    /**
-     * Show — redirect ke index.
-     */
-    public function show($id)
-    {
-        return redirect()->route('admin.game.index');
     }
 
     public function publicGames(Request $request)
