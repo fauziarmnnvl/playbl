@@ -519,6 +519,48 @@ Perubahan yang dilakukan meliputi:
 
 ---
 
+# Refactoring 13
+
+## Sebelum
+
+### Masalah
+
+Proses Tambah dan Edit pada beberapa halaman Manajemen Data masih menggunakan halaman terpisah sehingga pengguna harus berpindah halaman saat mengelola data.
+
+---
+
+## Perubahan
+
+Form Tambah dan Edit dipindahkan menjadi modal popup pada halaman utama.
+
+Perubahan diterapkan pada:
+
+- Manajemen Event & Promo
+- Manajemen Game
+- Manajemen Playbox
+- Manajemen Cabang
+- Manajemen Operator
+
+Halaman dan route Tambah serta Edit yang sudah tidak digunakan juga dihapus.
+
+---
+
+## Alasan
+
+- Mengurangi perpindahan halaman.
+- Menyederhanakan proses pengelolaan data.
+- Menyeragamkan interaksi pada halaman Manajemen Data.
+
+---
+
+## Dampak
+
+- Proses Tambah dan Edit dapat dilakukan langsung dari halaman utama.
+- Interaksi pengguna menjadi lebih cepat dan konsisten.
+- Struktur route dan file menjadi lebih sederhana.
+
+---
+
 # Kesimpulan
 
 Refactoring yang dilakukan selama pengembangan proyek berfokus pada peningkatan kualitas struktur kode, modularitas komponen, konsistensi antarmuka, serta kemudahan maintenance tanpa mengubah proses bisnis aplikasi. Dengan struktur yang lebih terorganisir, pengembangan fitur baru dan kolaborasi antar anggota tim dapat dilakukan dengan lebih mudah dan efisien.

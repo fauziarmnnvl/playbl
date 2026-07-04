@@ -39,6 +39,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menyesuaikan struktur sidebar Operator menjadi Menu Utama, Transaksi, Data, dan Laporan.
 * Mengarahkan pengguna yang sudah login ke halaman sesuai role saat mengakses kembali route `/login`.
 * Mengubah alur Tambah dan Edit Event & Promo dari halaman terpisah menjadi modal popup pada halaman daftar promo.
+* Mengubah alur Tambah dan Edit Manajemen Playbox, Game, Cabang, dan Operator dari halaman terpisah menjadi modal popup.
 * Menyesuaikan alur sesi fleksibel agar sesi dimulai setelah pembayaran awal disetujui Operator.
 * Menyesuaikan Monitoring Playbox agar Playbox langsung menampilkan sesi fleksibel aktif setelah pembayaran disetujui.
 * Menyesuaikan sidebar Operator dengan mengaktifkan akses menu Verifikasi Pembayaran.
