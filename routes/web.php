@@ -95,14 +95,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     // Playbox
     Route::resource('/playbox', PlayboxController::class)
+        ->only(['index', 'store', 'update', 'destroy'])
         ->names('admin.playbox');
 
     // Game
     Route::resource('/game', GameController::class)
+        ->only(['index', 'store', 'update', 'destroy'])
         ->names('admin.game');
 
     // Cabang
     Route::resource('/cabang', CabangController::class)
+        ->only(['index', 'store', 'update', 'destroy'])
         ->names('admin.cabang');
 
     // Promo
@@ -112,6 +115,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     // Operator
     Route::resource('/operator', OperatorController::class)
+        ->only(['index', 'store', 'update', 'destroy'])
         ->names('admin.operator');
 
     // Pelanggan
@@ -169,8 +173,6 @@ Route::middleware(['auth', 'role:operator'])->prefix('operator')->group(function
 });
 
     
-
-
 /*
 |--------------------------------------------------------------------------
 | User Profile
