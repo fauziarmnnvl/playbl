@@ -14,6 +14,12 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menambahkan fitur Data Pelanggan untuk Operator berdasarkan cabang yang dikelola.
 * Menambahkan pencarian otomatis Data Pelanggan berdasarkan nama dan nomor HP tanpa perlu menekan Enter.
 * Menambahkan notifikasi SweetAlert toast saat nomor HP pelanggan berhasil disalin.
+* Menambahkan fitur Verifikasi Pembayaran untuk Operator pada sesi fleksibel.
+* Menambahkan daftar pembayaran sesi fleksibel yang menunggu verifikasi berdasarkan cabang Operator.
+* Menambahkan modal untuk melihat bukti pembayaran pelanggan.
+* Menambahkan proses persetujuan dan penolakan pembayaran.
+* Menambahkan modal konfirmasi sebelum pembayaran disetujui atau ditolak.
+* Menambahkan status pembayaran serta waktu pembayaran dan waktu verifikasi pada transaksi.
 
 ### Changed
 * Halaman Pembayaran Booking Sesi Tetap kini menampilkan QRIS sesuai cabang yang dipilih pelanggan.
@@ -33,6 +39,9 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menyesuaikan struktur sidebar Operator menjadi Menu Utama, Transaksi, Data, dan Laporan.
 * Mengarahkan pengguna yang sudah login ke halaman sesuai role saat mengakses kembali route `/login`.
 * Mengubah alur Tambah dan Edit Event & Promo dari halaman terpisah menjadi modal popup pada halaman daftar promo.
+* Menyesuaikan alur sesi fleksibel agar sesi dimulai setelah pembayaran awal disetujui Operator.
+* Menyesuaikan Monitoring Playbox agar Playbox langsung menampilkan sesi fleksibel aktif setelah pembayaran disetujui.
+* Menyesuaikan sidebar Operator dengan mengaktifkan akses menu Verifikasi Pembayaran.
 
 ### Fixed
 * Memperbaiki banner promo yang tidak tampil pada halaman Manajemen Event & Promo.
@@ -47,6 +56,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbarui CHANGELOG sesuai penyempurnaan data, status, dan tampilan banner Event & Promo.
 * Memperbarui dokumentasi fitur Data Pelanggan sesuai implementasi akses Admin dan Operator.
 * Memperbarui README sesuai penambahan akses Data Pelanggan untuk Operator.
+* Memperbarui CHANGELOG sesuai implementasi fitur Verifikasi Pembayaran sesi fleksibel.
 
 ## [0.3.0] - 3 Juli 2026
 

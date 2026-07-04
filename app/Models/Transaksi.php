@@ -25,11 +25,18 @@ class Transaksi extends Model
         'durasi',
         'total_harga',
         'jenis_sesi',
+        'bukti_pembayaran',
+        'status_pembayaran',
+        'waktu_pembayaran',
+        'waktu_verifikasi',
         'tgl_transaksi',
     ];
+
     protected $casts = [
         'total_harga' => 'decimal:2',
         'tgl_transaksi' => 'datetime',
+        'waktu_pembayaran' => 'datetime',
+        'waktu_verifikasi' => 'datetime',
     ];
 
     public function cabang()
@@ -98,4 +105,9 @@ class Transaksi extends Model
 
     public const JENIS_SESI_TETAP = 'Tetap';
     public const JENIS_SESI_FLEKSIBEL = 'Fleksibel';
+
+    public const STATUS_BELUM_BAYAR = 'Belum Bayar';
+    public const STATUS_MENUNGGU_VERIFIKASI = 'Menunggu Verifikasi';
+    public const STATUS_DISETUJUI = 'Disetujui';
+    public const STATUS_DITOLAK = 'Ditolak';
 }

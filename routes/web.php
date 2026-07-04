@@ -15,6 +15,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\Operator\OperatorMonitoringController;
 use App\Http\Controllers\Operator\OperatorRiwayatController;
 use App\Http\Controllers\Operator\OperatorPelangganController;
+use App\Http\Controllers\Operator\OperatorVerifikasiPembayaranController;
 use App\Http\Controllers\BookingController; 
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -147,6 +148,16 @@ Route::middleware(['auth', 'role:operator'])->prefix('operator')->group(function
     // Monitoring Playbox (filtered by cabang_id)
     Route::get('/monitoring', [OperatorMonitoringController::class, 'index'])
         ->name('operator.monitoring');
+    
+    // Verifikasi Pembayaran Sesi Fleksibel
+    Route::get('/verifikasi-pembayaran', [OperatorVerifikasiPembayaranController::class, 'index'])
+        ->name('operator.verifikasi-pembayaran');
+
+    Route::patch('/verifikasi-pembayaran/{transaksi}/setujui', [OperatorVerifikasiPembayaranController::class, 'approve'])
+        ->name('operator.verifikasi-pembayaran.approve');
+
+    Route::patch('/verifikasi-pembayaran/{transaksi}/tolak', [OperatorVerifikasiPembayaranController::class, 'reject'])
+        ->name('operator.verifikasi-pembayaran.reject');
 
     // Data Pelanggan (filtered by cabang_id)
     Route::get('/pelanggan', [OperatorPelangganController::class, 'index'])
