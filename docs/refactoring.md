@@ -561,6 +561,49 @@ Halaman dan route Tambah serta Edit yang sudah tidak digunakan juga dihapus.
 
 ---
 
+# Refactoring 14
+
+## Sebelum
+
+### Masalah
+
+Setelah mengakhiri sesi fleksibel, proses pembayaran belum memiliki alur verifikasi yang lengkap pada sisi pelanggan sehingga pembayaran dapat dianggap selesai sebelum bukti pembayaran diperiksa oleh Operator.
+
+---
+
+## Perubahan
+
+Alur pembayaran akhir sesi fleksibel disesuaikan menjadi beberapa tahap berdasarkan status pembayaran.
+
+Perubahan yang dilakukan meliputi:
+
+- Menambahkan proses upload bukti pembayaran.
+- Menambahkan halaman Menunggu Verifikasi Pembayaran.
+- Menambahkan pengecekan status pembayaran secara otomatis.
+- Mengarahkan pelanggan ke halaman Pembayaran Selesai setelah pembayaran disetujui.
+- Menampilkan status penolakan apabila bukti pembayaran tidak dapat diverifikasi.
+- Menambahkan proses upload ulang bukti pembayaran yang ditolak.
+
+---
+
+## Alasan
+
+- Menyesuaikan alur pembayaran dengan proses verifikasi Operator.
+- Mencegah pembayaran dianggap selesai sebelum disetujui.
+- Mempermudah pelanggan mengetahui status pembayaran.
+- Mempermudah proses pengiriman ulang bukti pembayaran yang ditolak.
+
+---
+
+## Dampak
+
+- Alur pembayaran sesi fleksibel menjadi lebih jelas.
+- Status pembayaran pelanggan sesuai dengan hasil verifikasi Operator.
+- Pelanggan dapat memantau proses verifikasi secara otomatis.
+- Bukti pembayaran yang ditolak dapat dikirim ulang tanpa mengulangi proses booking.
+
+---
+
 # Kesimpulan
 
 Refactoring yang dilakukan selama pengembangan proyek berfokus pada peningkatan kualitas struktur kode, modularitas komponen, konsistensi antarmuka, serta kemudahan maintenance tanpa mengubah proses bisnis aplikasi. Dengan struktur yang lebih terorganisir, pengembangan fitur baru dan kolaborasi antar anggota tim dapat dilakukan dengan lebih mudah dan efisien.
