@@ -8,6 +8,7 @@ use App\Models\Pelanggan;
 use App\Models\Transaksi;
 use App\Models\SesiBermain;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -323,7 +324,7 @@ class BookingController extends Controller
         return redirect()->route('booking.pembayaran.flexible');
     }
 
-    public function pembayaranFlexible()
+    public function pembayaranFlexible(Request $request)
     {
         $booking = session('booking');
 
@@ -331,13 +332,31 @@ class BookingController extends Controller
             return redirect()->route('booking.info');
         }
 
+        $isRetry = false;
+
+        // Jika ada id_transaksi, periksa status untuk retry mode
+        if (isset($booking['id_transaksi'])) {
+            $transaksi = Transaksi::findOrFail($booking['id_transaksi']);
+
+            if ($request->boolean('retry')) {
+                // Retry hanya valid jika status Ditolak
+                if ($transaksi->status_pembayaran === Transaksi::STATUS_DITOLAK) {
+                    $isRetry = true;
+                } elseif ($transaksi->status_pembayaran === Transaksi::STATUS_MENUNGGU_VERIFIKASI) {
+                    return redirect()->route('booking.waiting-verification.flexible');
+                } elseif ($transaksi->status_pembayaran === Transaksi::STATUS_DISETUJUI) {
+                    return redirect()->route('booking.success.flexible');
+                }
+            }
+        }
+
         $booking['cabang'] = Cabang::find($booking['id_cabang']);
         $booking['playbox'] = Playbox::find($booking['id_playbox']);
 
-        return view('bookings.pembayaran-flexible', compact('booking'));
+        return view('bookings.pembayaran-flexible', compact('booking', 'isRetry'));
     }
 
-    public function storePembayaranFlexible()
+    public function storePembayaranFlexible(Request $request)
     {
         $booking = session('booking');
 
@@ -345,7 +364,88 @@ class BookingController extends Controller
             return redirect()->route('booking.info');
         }
 
-        return redirect()->route('booking.success.flexible');
+        $transaksi = Transaksi::findOrFail($booking['id_transaksi']);
+
+        // Cegah upload jika status tidak valid
+        if ($transaksi->status_pembayaran === Transaksi::STATUS_DISETUJUI) {
+            return redirect()->route('booking.success.flexible');
+        }
+
+        if ($transaksi->status_pembayaran === Transaksi::STATUS_MENUNGGU_VERIFIKASI) {
+            return redirect()->route('booking.waiting-verification.flexible');
+        }
+
+        $request->validate([
+            'bukti_pembayaran' => 'required|image|mimes:jpeg,jpg,png,webp|max:5120',
+        ], [
+            'bukti_pembayaran.required' => 'Bukti pembayaran wajib diunggah.',
+            'bukti_pembayaran.image' => 'File harus berupa gambar.',
+            'bukti_pembayaran.mimes' => 'Format file tidak didukung. Gunakan PNG, JPG, JPEG, atau WEBP.',
+            'bukti_pembayaran.max' => 'Ukuran file maksimal 5 MB.',
+        ]);
+
+        // Simpan file baru terlebih dahulu
+        $newPath = $request->file('bukti_pembayaran')->store('bukti-pembayaran', 'public');
+
+        // Simpan path file lama sebelum update
+        $oldPath = $transaksi->bukti_pembayaran;
+
+        // Update database
+        $transaksi->update([
+            'bukti_pembayaran' => $newPath,
+            'status_pembayaran' => Transaksi::STATUS_MENUNGGU_VERIFIKASI,
+            'waktu_pembayaran' => now(),
+            'waktu_verifikasi' => null,
+        ]);
+
+        // Hapus file lama setelah update berhasil
+        if ($oldPath && $oldPath !== $newPath && Storage::disk('public')->exists($oldPath)) {
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        return redirect()->route('booking.waiting-verification.flexible');
+    }
+
+    public function waitingVerificationFlexible()
+    {
+        $booking = session('booking');
+
+        if (!$booking || !isset($booking['id_transaksi']) || $booking['jenis_sesi'] != 'fleksibel') {
+            return redirect()->route('booking.info');
+        }
+
+        $transaksi = Transaksi::findOrFail($booking['id_transaksi']);
+
+        // Jika sudah disetujui, langsung ke halaman success
+        if ($transaksi->status_pembayaran === Transaksi::STATUS_DISETUJUI) {
+            return redirect()->route('booking.success.flexible');
+        }
+
+        $booking['cabang'] = Cabang::find($booking['id_cabang']);
+        $booking['playbox'] = Playbox::find($booking['id_playbox']);
+
+        return view('bookings.waiting-verification-flexible', compact('booking', 'transaksi'));
+    }
+
+    public function checkPaymentStatusFlexible()
+    {
+        $booking = session('booking');
+
+        if (!$booking || !isset($booking['id_transaksi']) || $booking['jenis_sesi'] != 'fleksibel') {
+            return response()->json(['status' => 'invalid'], 403);
+        }
+
+        $transaksi = Transaksi::findOrFail($booking['id_transaksi']);
+
+        $data = [
+            'status' => $transaksi->status_pembayaran,
+        ];
+
+        if ($transaksi->status_pembayaran === Transaksi::STATUS_DISETUJUI) {
+            $data['redirect_url'] = route('booking.success.flexible');
+        }
+
+        return response()->json($data);
     }
 
     public function successFlexible()
@@ -354,6 +454,13 @@ class BookingController extends Controller
 
         if (!$booking || !isset($booking['id_transaksi']) || $booking['jenis_sesi'] != 'fleksibel') {
             return redirect()->route('booking.info');
+        }
+
+        // Lindungi: hanya bisa diakses jika pembayaran sudah disetujui
+        $transaksi = Transaksi::findOrFail($booking['id_transaksi']);
+
+        if ($transaksi->status_pembayaran !== Transaksi::STATUS_DISETUJUI) {
+            return redirect()->route('booking.waiting-verification.flexible');
         }
 
         $booking['cabang'] = Cabang::find($booking['id_cabang']);

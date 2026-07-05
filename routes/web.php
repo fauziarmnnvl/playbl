@@ -71,6 +71,9 @@ Route::get('/booking/pembayaran-flexible', [BookingController::class, 'pembayara
 Route::get('/booking/success-flexible',[BookingController::class, 'successFlexible'])->name('booking.success.flexible');
 Route::post('/booking/pembayaran-flexible', [BookingController::class, 'storePembayaranFlexible'])->name('booking.storePembayaranFlexible');
 
+Route::get('/booking/waiting-verification-flexible', [BookingController::class, 'waitingVerificationFlexible'])->name('booking.waiting-verification.flexible');
+Route::get('/booking/check-payment-status-flexible', [BookingController::class, 'checkPaymentStatusFlexible'])->name('booking.check-payment-status.flexible');
+
 Route::get('/booking/success',[BookingController::class,'success'])->name('booking.success');
 Route::post('/booking/selesai',[BookingController::class,'selesai'])->name('booking.selesai');
 
