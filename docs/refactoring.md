@@ -604,6 +604,47 @@ Perubahan yang dilakukan meliputi:
 
 ---
 
+# Refactoring 15
+
+## Sebelum
+
+### Masalah
+
+Tampilan aplikasi belum sepenuhnya konsisten dan responsif pada berbagai ukuran layar. Beberapa komponen pada sisi pelanggan, alur booking, dan panel Admin masih memerlukan penyesuaian agar tetap nyaman digunakan pada perangkat mobile maupun desktop.
+
+---
+
+## Perubahan
+
+Dilakukan penyempurnaan antarmuka secara menyeluruh tanpa mengubah proses bisnis aplikasi.
+
+Perubahan yang dilakukan meliputi:
+
+- Menyesuaikan responsivitas Landing Page dan seluruh alur Booking.
+- Menyempurnakan carousel Koleksi Game agar tetap proporsional dan berjalan secara berulang.
+- Menyesuaikan layout, toolbar, pencarian, filter, tabel, pagination, dan tombol pada panel Admin.
+- Menyempurnakan tampilan grafik dan legend pada halaman Laporan & Statistik.
+- Menyesuaikan pengelolaan Cabang Nonaktif pada proses Booking dan Manajemen Operator.
+
+---
+
+## Alasan
+
+- Meningkatkan konsistensi antarmuka pada berbagai ukuran layar.
+- Mempermudah penggunaan aplikasi pada perangkat mobile dan desktop.
+- Menjaga data lama tetap dapat dikelola tanpa menyediakan Cabang Nonaktif untuk data baru.
+
+---
+
+## Dampak
+
+- Antarmuka menjadi lebih responsif dan konsisten.
+- Alur Booking lebih nyaman digunakan pada perangkat mobile.
+- Panel Admin menjadi lebih rapi dan mudah digunakan.
+- Cabang Nonaktif tidak tersedia untuk pemesanan atau penempatan Operator baru, sementara data lama tetap terjaga.
+
+---
+
 # Kesimpulan
 
 Refactoring yang dilakukan selama pengembangan proyek berfokus pada peningkatan kualitas struktur kode, modularitas komponen, konsistensi antarmuka, serta kemudahan maintenance tanpa mengubah proses bisnis aplikasi. Dengan struktur yang lebih terorganisir, pengembangan fitur baru dan kolaborasi antar anggota tim dapat dilakukan dengan lebih mudah dan efisien.
