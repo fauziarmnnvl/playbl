@@ -45,7 +45,7 @@ class BookingController extends Controller
     // cabang
     public function cabang()
     {
-        $cabangs = Cabang::all();
+        $cabangs = Cabang::where('status_buka', true)->get();
         return view('bookings.cabang', compact('cabangs'));
     }
     public function storeCabang(Request $request)
@@ -87,6 +87,20 @@ class BookingController extends Controller
             return redirect()->route('booking.cabang');
         }
 
+        // Validasi ulang: Cabang masih aktif di database
+        $cabang = Cabang::where('id_cabang', $booking['id_cabang'])->first();
+        if (!$cabang || !$cabang->status_buka) {
+            unset($booking['id_cabang']);
+            unset($booking['id_playbox']);
+            unset($booking['jenis_sesi']);
+            unset($booking['durasi']);
+            unset($booking['total_harga']);
+            session(['booking' => $booking]);
+            
+            return redirect()->route('booking.cabang')
+                ->withErrors(['branch' => 'Cabang yang sebelumnya dipilih sudah tidak tersedia. Silakan pilih cabang lain.']);
+        }
+
         $playboxes = Playbox::where('id_cabang', $booking['id_cabang'])
             ->orderBy('nama_playbox')
             ->get();
@@ -99,13 +113,21 @@ class BookingController extends Controller
         $request->validate(['playbox' => 'required',]);
 
         $booking = session('booking', []);
+        
+        $cabang = Cabang::where('id_cabang', $booking['id_cabang'])->first();
+        if (!$cabang || !$cabang->status_buka) {
+            return back()->withErrors([
+                'playbox' => 'Cabang saat ini tidak tersedia untuk pemesanan.'
+            ]);
+        }
+
         $playbox = Playbox::where('id_playbox', $request->playbox)
             ->where('id_cabang', $booking['id_cabang'])
             ->where('status_unit', 'Tersedia')
             ->first();
         if (!$playbox) {
             return back()->withErrors([
-                'playbox' => 'Playbox tidak tersedia.'
+                'playbox' => 'Playbox tidak tersedia atau bukan milik cabang ini.'
             ]);
         }
 
@@ -195,6 +217,11 @@ class BookingController extends Controller
 
         if (!$booking || $booking['jenis_sesi'] != 'fleksibel') {
             return redirect()->route('booking.info');
+        }
+
+        $guardError = $this->validateBookingFinalGuard($booking);
+        if ($guardError) {
+            return redirect()->route('booking.cabang')->withErrors(['branch' => $guardError]);
         }
 
         DB::transaction(function () use (&$booking) {
@@ -510,6 +537,11 @@ class BookingController extends Controller
 
         if(!$booking)
             return redirect()->route('booking.info');
+            
+        $guardError = $this->validateBookingFinalGuard($booking);
+        if ($guardError) {
+            return redirect()->route('booking.cabang')->withErrors(['branch' => $guardError]);
+        }
 
         DB::transaction(function() use(&$booking){
 
@@ -576,5 +608,34 @@ class BookingController extends Controller
         session()->forget('booking');
 
         return redirect()->route('home');
+    }
+    
+    /**
+     * Final Guard: Validasi cabang dan playbox tepat sebelum transaksi dibuat
+     */
+    private function validateBookingFinalGuard($booking)
+    {
+        if (!isset($booking['id_cabang']) || !isset($booking['id_playbox'])) {
+            return 'Data booking tidak lengkap.';
+        }
+
+        $cabang = Cabang::where('id_cabang', $booking['id_cabang'])->first();
+        if (!$cabang || !$cabang->status_buka) {
+            return 'Cabang yang Anda pilih sudah tidak tersedia atau dinonaktifkan.';
+        }
+
+        $playbox = Playbox::where('id_playbox', $booking['id_playbox'])
+            ->where('id_cabang', $booking['id_cabang'])
+            ->first();
+
+        if (!$playbox) {
+            return 'Playbox tidak ditemukan pada cabang ini.';
+        }
+
+        if ($playbox->status_unit !== 'Tersedia') {
+            return 'Playbox saat ini sedang tidak tersedia untuk dipesan.';
+        }
+
+        return null;
     }
 }

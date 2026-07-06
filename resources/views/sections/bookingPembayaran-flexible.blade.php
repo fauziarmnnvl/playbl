@@ -1,8 +1,8 @@
 <section class="min-h-screen flex flex-col items-center py-20 px-4">
 
     {{-- Title --}}
-    <div class="text-center py-12">
-        <h1 class="text-5xl font-bold text-white">
+    <div class="text-center py-10 md:py-12">
+        <h1 class="text-3xl md:text-5xl font-bold text-white">
             Book
             <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
                 Playbox
@@ -11,19 +11,19 @@
     </div>
 
     {{-- Progress --}}
-    <div class="w-full max-w-5xl mb-12">
+    <div class="w-full max-w-5xl mb-10 md:mb-12">
         <div class="relative flex justify-between items-center">
 
-            <div class="absolute top-5 left-0 w-full h-[3px] bg-[#08152D]"></div>
-            <div class="absolute top-5 left-0 w-full h-[3px] bg-gradient-to-r from-purple-500 to-blue-500"></div>
+            <div class="absolute top-4 md:top-5 left-0 w-full h-[3px] bg-[#08152D]"></div>
+            <div class="absolute top-4 md:top-5 left-0 w-full h-[3px] bg-gradient-to-r from-purple-500 to-blue-500"></div>
 
             @for($i = 1; $i <= 6; $i++)
                 <div class="relative z-10 flex flex-col items-center">
-                    <div class="w-11 h-11 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white flex items-center justify-center font-semibold">
+                    <div class="w-8 h-8 md:w-11 md:h-11 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white flex items-center justify-center font-semibold text-sm md:text-base">
                         {{ $i }}
                     </div>
 
-                    <span class="mt-3 text-sm text-slate-400">
+                    <span class="mt-2 md:mt-3 text-xs md:text-sm text-slate-400 hidden sm:block">
                         @switch($i)
                             @case(1) Info @break
                             @case(2) Cabang @break
@@ -44,18 +44,18 @@
     @endphp
 
     {{-- Card --}}
-    <div class="w-full max-w-3xl bg-[#041233] rounded-3xl border border-slate-800 p-8 shadow-xl">
+    <div class="w-full max-w-3xl bg-[#041233] rounded-3xl border border-slate-800 p-6 md:p-8 shadow-xl">
 
         {{-- ========== STATE 1 — PEMBAYARAN QRIS ========== --}}
         <div id="paymentStep" class="{{ $isUploadState ? 'hidden' : '' }}">
 
             <div class="text-center">
 
-                <h2 class="text-4xl font-bold text-white mb-3">
+                <h2 class="text-2xl md:text-4xl font-bold text-white mb-3">
                     Pembayaran QRIS
                 </h2>
 
-                <p class="text-slate-400 mb-10">
+                <p class="text-sm md:text-base text-slate-400 mb-8 md:mb-10">
                     Scan QR code di bawah menggunakan e-wallet pilihanmu.
                 </p>
 
@@ -69,7 +69,7 @@
                 </div>
 
                 {{-- Total --}}
-                <h3 class="text-5xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mt-8 mb-10">
+                <h3 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mt-8 mb-10">
                     Rp {{ number_format($booking['total_harga'], 0, ',', '.') }}
                 </h3>
 
@@ -116,16 +116,16 @@
             </div>
 
             {{-- Footer --}}
-            <div class="mt-8 border-t border-slate-800 pt-8 flex justify-between">
+            <div class="mt-8 border-t border-slate-800 pt-8 flex flex-col-reverse sm:flex-row justify-between gap-4">
 
                 <a href="{{ route('booking.session.flexible') }}"
-                   class="px-8 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition flex items-center gap-2">
+                   class="w-full sm:w-auto justify-center px-8 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition flex items-center gap-2">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
                     Kembali
                 </a>
 
                 <button type="button" onclick="showUploadStep()"
-                    class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition flex items-center gap-2">
+                    class="w-full sm:w-auto justify-center px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition flex items-center gap-2">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                     Saya Sudah Bayar
                 </button>
@@ -137,14 +137,14 @@
         <div id="uploadStep" class="{{ $isUploadState ? '' : 'hidden' }}">
 
             <div class="text-center mb-8">
-                <h2 class="text-4xl font-bold text-white mb-3">
+                <h2 class="text-2xl md:text-4xl font-bold text-white mb-3">
                     @if($isRetry ?? false)
                         Upload Ulang Bukti Pembayaran
                     @else
                         Upload Bukti Pembayaran
                     @endif
                 </h2>
-                <p class="text-slate-400">
+                <p class="text-sm md:text-base text-slate-400">
                     @if($isRetry ?? false)
                         Bukti pembayaran sebelumnya tidak dapat diverifikasi. Silakan unggah bukti pembayaran yang lebih jelas dan sesuai.
                     @else
@@ -245,24 +245,24 @@
                 </div>
 
                 {{-- Footer --}}
-                <div class="mt-8 border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between gap-4">
+                <div class="mt-8 border-t border-slate-800 pt-8 flex flex-col-reverse sm:flex-row justify-between gap-4">
 
                     @if($isRetry ?? false)
                         <a href="{{ route('booking.waiting-verification.flexible') }}"
-                            class="px-8 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition flex items-center justify-center gap-2">
+                            class="w-full sm:w-auto px-8 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
                             Kembali ke Status Verifikasi
                         </a>
                     @else
                         <button type="button" onclick="showPaymentStep()"
-                            class="px-8 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition flex items-center justify-center gap-2">
+                            class="w-full sm:w-auto px-8 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
                             Kembali ke QRIS
                         </button>
                     @endif
 
                     <button type="submit" id="submitBtn" disabled
-                        class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 hover:scale-105">
+                        class="w-full sm:w-auto px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 hover:scale-105">
                         <span id="submitText">
                             @if($isRetry ?? false)
                                 Kirim Ulang Bukti Pembayaran

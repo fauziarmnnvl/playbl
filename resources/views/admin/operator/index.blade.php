@@ -18,7 +18,8 @@
 
     @if ($operators->count() > 0)
         <div class="table-card">
-            <table class="admin-table">
+            <div class="table-responsive">
+                <table class="admin-table">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -69,6 +70,9 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
+            
+            {{-- User requested no pagination for Collection without hasPages, so just close the div --}}
         </div>
     @else
         <div class="empty-state">
@@ -136,8 +140,9 @@
                         <option value="">— Pilih Cabang —</option>
                         @foreach ($cabangs as $cabang)
                             <option value="{{ $cabang->id_cabang }}"
+                                {{ !$cabang->status_buka ? 'disabled' : '' }}
                                 {{ old('id_cabang') == $cabang->id_cabang ? 'selected' : '' }}>
-                                {{ $cabang->nama_cabang }}
+                                {{ $cabang->nama_cabang }}{{ !$cabang->status_buka ? ' (Nonaktif)' : '' }}
                             </option>
                         @endforeach
                     </select>
@@ -220,8 +225,9 @@
                     <select name="id_cabang" id="edit_id_cabang" class="form-select" required>
                         <option value="">— Pilih Cabang —</option>
                         @foreach ($cabangs as $cabang)
-                            <option value="{{ $cabang->id_cabang }}">
-                                {{ $cabang->nama_cabang }}
+                            <option value="{{ $cabang->id_cabang }}"
+                                {{ !$cabang->status_buka ? 'disabled' : '' }} data-inactive="{{ !$cabang->status_buka ? 'true' : 'false' }}">
+                                {{ $cabang->nama_cabang }}{{ !$cabang->status_buka ? ' (Nonaktif)' : '' }}
                             </option>
                         @endforeach
                     </select>
@@ -289,7 +295,26 @@
             document.getElementById('edit_username').value = operator.username;
             document.getElementById('edit_email').value = operator.email;
             document.getElementById('edit_password').value = '';
+
+            // Sembunyikan dan nonaktifkan kembali semua cabang nonaktif
+            const options = document.getElementById('edit_id_cabang').options;
+            for(let i=0; i<options.length; i++) {
+                if (options[i].getAttribute('data-inactive') === 'true') {
+                    options[i].disabled = true;
+                }
+            }
+
             document.getElementById('edit_id_cabang').value = operator.id_cabang;
+            
+            // Buka cabang nonaktif jika itu adalah cabang operator saat ini
+            const selectedIndex = document.getElementById('edit_id_cabang').selectedIndex;
+            if (selectedIndex >= 0) {
+                const selectedOption = document.getElementById('edit_id_cabang').options[selectedIndex];
+                if (selectedOption && selectedOption.getAttribute('data-inactive') === 'true') {
+                    selectedOption.disabled = false;
+                }
+            }
+
             document.getElementById('edit_telegram_id').value = operator.telegram_id ?? '';
 
             modal.classList.add('show');

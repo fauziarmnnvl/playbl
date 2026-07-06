@@ -2,12 +2,12 @@
 
     <div class="w-full max-w-md bg-[#041233]
                 rounded-3xl
-                p-10
+                p-6 md:p-10
                 text-center
                 shadow-[0_0_60px_rgba(37,99,235,0.15)]">
 
         {{-- Success Icon --}}
-        <div class="flex justify-center mb-8">
+        <div class="flex justify-center mb-6 md:mb-8">
 
             <div class="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center">
 
@@ -33,17 +33,17 @@
         </div>
 
         {{-- Title --}}
-        <h1 class="text-4xl font-bold text-white mb-4">
+        <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">
             Pembayaran Selesai
         </h1>
 
         {{-- Description --}}
-        <p class="text-slate-400 text-lg leading-relaxed mb-10">
+        <p class="text-slate-400 text-sm md:text-lg leading-relaxed mb-8 md:mb-10">
             Terima kasih telah bermain!
             Pembayaran berhasil dikonfirmasi.
         </p>
 
-        <div class="bg-[#08152D] border border-slate-700 rounded-2xl p-5 text-left mb-10">
+        <div class="bg-[#08152D] border border-slate-700 rounded-2xl p-5 text-left mb-8 md:mb-10">
 
             <h4 class="text-white font-semibold mb-3">
                 Ringkasan Sesi

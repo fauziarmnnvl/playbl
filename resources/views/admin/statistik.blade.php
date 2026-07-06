@@ -8,8 +8,8 @@
 @section('content')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="page-header" style="display:flex; justify-content:flex-end; margin-bottom:24px;">
-        <div style="display: flex; gap: 8px;">
+    <div class="page-header page-header-statistik" style="margin-bottom:24px;">
+        <div class="page-header-actions" style="display: flex; gap: 8px;">
             <a href="{{ route('admin.statistik.export-pdf', request()->all()) }}" class="btn btn-secondary" style="display: flex; align-items: center; gap: 6px;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                 Export PDF
@@ -22,19 +22,19 @@
     </div>
 
     {{-- FILTER PERIODE --}}
-    <div class="table-card" style="margin-bottom: 24px; padding: 20px;">
+    <div class="table-card filter-card-statistik" style="margin-bottom: 24px; padding: 20px;">
         <form method="GET" action="{{ route('admin.statistik') }}">
-            <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end;">
-                <div style="flex: 1; min-width: 200px;">
+            <div class="filter-statistik-grid">
+                <div class="filter-statistik-group">
                     <label style="display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.875rem; color: #475569;">Tanggal Awal</label>
                     <input type="date" name="start_date" value="{{ $startDate->format('Y-m-d') }}" style="width: 100%; height: 42px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0 12px; outline: none; font-family: inherit;">
                 </div>
-                <div style="flex: 1; min-width: 200px;">
+                <div class="filter-statistik-group">
                     <label style="display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.875rem; color: #475569;">Tanggal Akhir</label>
                     <input type="date" name="end_date" value="{{ $endDate->format('Y-m-d') }}" style="width: 100%; height: 42px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0 12px; outline: none; font-family: inherit;">
                 </div>
-                <div>
-                    <button type="submit" class="btn btn-primary" style="height: 42px; padding: 0 24px;">Tampilkan</button>
+                <div class="filter-statistik-action">
+                    <button type="submit" class="btn btn-primary" style="height: 42px; width: 100%; justify-content: center;">Tampilkan</button>
                 </div>
             </div>
         </form>
@@ -128,12 +128,12 @@
 
     {{-- CHART SECTION --}}
     {{-- BARIS 1 --}}
-    <div class="chart-row" style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px;">
+    <div class="chart-row-grid">
         <div class="table-card" style="padding:20px;">
             <h3 style="margin-bottom:16px;">
                 Pendapatan Berdasarkan Periode
             </h3>
-            <div style="height:350px;">
+            <div class="chart-container-box">
                 <canvas id="pendapatanChart"></canvas>
             </div>
         </div>
@@ -142,7 +142,7 @@
             <h3 style="margin-bottom:16px;">
                 Tren Penggunaan Sesi
             </h3>
-            <div style="height:350px;">
+            <div class="chart-container-box">
                 <canvas id="sesiChart"></canvas>
             </div>
         </div>
@@ -154,7 +154,7 @@
         <h3 style="margin-bottom:16px;">
             Distribusi Penggunaan Playbox
         </h3>
-        <div style="display:flex; align-items:center; justify-content:center; height:420px;">
+        <div class="chart-container-box donut-box">
             <canvas id="distribusiChart"></canvas>
         </div>
     </div>
@@ -243,7 +243,18 @@
                     maintainAspectRatio: false,
                     cutout: '70%',
                     plugins: {
-                        legend: { position: 'right', labels: {padding: 20, boxWidth: 18} }
+                        legend: {
+                            position: window.innerWidth < 768 ? 'bottom' : 'right',
+                            labels: {
+                                padding: window.innerWidth < 768 ? 12 : 20,
+                                boxWidth: window.innerWidth < 768 ? 12 : 18,
+                                boxHeight: window.innerWidth < 768 ? 12 : 18,
+                                usePointStyle: false,
+                                font: {
+                                    size: window.innerWidth < 768 ? 11 : 12
+                                }
+                            }
+                        }
                     }
                 }
             });

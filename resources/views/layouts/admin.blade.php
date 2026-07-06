@@ -16,6 +16,7 @@
 <body>
     <div class="admin-wrapper">
         {{-- ========== SIDEBAR ========== --}}
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
         <aside class="admin-sidebar" id="adminSidebar">
             <div class="sidebar-brand">
                 <img
@@ -243,8 +244,20 @@
     {{-- Sidebar toggle script --}}
     <script>
         document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.getElementById('adminSidebar').classList.toggle('collapsed');
-            document.querySelector('.admin-main').classList.toggle('expanded');
+            if (window.innerWidth < 1024) {
+                document.getElementById('adminSidebar').classList.add('show');
+                document.getElementById('sidebarOverlay').classList.add('show');
+                document.body.classList.add('sidebar-open');
+            } else {
+                document.getElementById('adminSidebar').classList.toggle('collapsed');
+                document.querySelector('.admin-main').classList.toggle('expanded');
+            }
+        });
+
+        document.getElementById('sidebarOverlay')?.addEventListener('click', function() {
+            document.getElementById('adminSidebar').classList.remove('show');
+            document.getElementById('sidebarOverlay').classList.remove('show');
+            document.body.classList.remove('sidebar-open');
         });
 
         // Auto-dismiss flash messages after 5 seconds

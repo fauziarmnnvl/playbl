@@ -10,35 +10,20 @@
     {{-- FILTER BAR --}}
     <div class="table-card" style="margin-bottom: 24px; padding: 20px;">
         <form method="GET" action="{{ route('admin.riwayat') }}" id="filterForm">
-            <div style="display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;">
-                <div style="display:flex; gap:16px; flex-wrap:wrap;">
+            <div class="filter-riwayat">
+                <div class="filter-riwayat-left">
                     <input
                         type="date"
                         name="tanggal"
                         value="{{ request('tanggal') }}"
                         onchange="document.getElementById('filterForm').submit()"
-                        style="
-                            width:170px;
-                            height:42px;
-                            border:1px solid #dbe2ea;
-                            border-radius:10px;
-                            padding:0 12px;
-                            outline:none;
-                        "
+                        class="form-input"
                     >
 
                     <select
                         name="playbox"
                         onchange="document.getElementById('filterForm').submit()"
-                        style="
-                            width:170px;
-                            height:42px;
-                            border:1px solid #dbe2ea;
-                            border-radius:10px;
-                            padding:0 12px;
-                            background:#fff;
-                            outline:none;
-                        "
+                        class="form-select"
                     >
                         <option value="">Semua Playbox</option>
 
@@ -51,29 +36,18 @@
                             </option>
                         @endforeach
                     </select>
-
                 </div>
 
-                <div>
-
+                <div class="filter-riwayat-right">
                     <input
                         type="text"
                         name="search"
                         value="{{ request('search') }}"
                         placeholder="Cari nama pelanggan..."
                         onkeydown="if(event.key==='Enter'){this.form.submit()}"
-                        style="
-                            width:240px;
-                            height:42px;
-                            border:1px solid #dbe2ea;
-                            border-radius:10px;
-                            padding:0 14px;
-                            outline:none;
-                        "
+                        class="form-input"
                     >
-
                 </div>
-
             </div>
 
             @if (request()->hasAny(['tanggal', 'playbox', 'search']))
@@ -89,7 +63,8 @@
     {{-- TABEL DATA --}}
     @if ($riwayatList->count() > 0)
         <div class="table-card">
-            <table class="admin-table">
+            <div class="table-responsive">
+                <table class="admin-table">
                 <thead>
                     <tr>
                         <th style="width: 50px;">No</th>
@@ -171,13 +146,13 @@
                     @endforeach
                 </tbody>
             </table>
-            
+            </div>
+        </div>    
             @if($riwayatList->hasPages())
                 <div class="pagination-wrapper">
                     {{ $riwayatList->links('pagination::bootstrap-5') }}
                 </div>
             @endif
-        </div>
     @else
         <div class="empty-state">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
