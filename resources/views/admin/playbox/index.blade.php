@@ -18,7 +18,8 @@
 
     @if ($playboxList->count() > 0)
         <div class="table-card">
-            <table class="admin-table">
+            <div class="table-responsive">
+                <table class="admin-table">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -69,6 +70,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
         </div>
         @if ($playboxList->hasPages())
             <div class="table-pagination">

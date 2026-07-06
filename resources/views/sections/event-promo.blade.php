@@ -1,4 +1,4 @@
-<section class="bg-[#16233B] min-h-screen py-24">
+<section class="bg-[#16233B] min-h-screen py-16 md:py-24">
     <div class="max-w-7xl mx-auto px-8">
         @php
             $featuredPromo = $promoList->first();
@@ -6,15 +6,15 @@
         @endphp
 
         <!-- Title -->
-        <div class="text-center mt-24">
-            <h2 class="text-5xl md:text-6xl font-bold text-white">
+        <div class="text-center mt-12 md:mt-24">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
                 Event &
                 <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
                     Promo
                 </span>
             </h2>
 
-            <p class="text-gray-400 mt-5 max-w-3xl mx-auto">
+            <p class="text-gray-400 mt-4 md:mt-5 max-w-3xl mx-auto text-sm md:text-base">
                 Jangan lewatkan penawaran menarik dari kami. Gunakan promo di bawah ini untuk
                 pengalaman gaming yang lebih hemat.
             </p>
@@ -34,12 +34,12 @@
                         </div>
 
                         <!-- Content -->
-                        <div class="p-10 flex flex-col justify-center">
-                            <h3 class="text-5xl font-bold text-white">
+                        <div class="p-6 md:p-10 flex flex-col justify-center">
+                            <h3 class="text-3xl md:text-5xl font-bold text-white">
                                 {{ $featuredPromo->nama_promo }}
                             </h3>
 
-                            <p class="text-gray-300 text-xl mt-5 max-w-3xl">
+                            <p class="text-gray-300 text-base md:text-xl mt-4 md:mt-5 max-w-3xl">
                                 {{ $featuredPromo->deskripsi }}
                             </p>
 
@@ -54,8 +54,8 @@
 
         @if($otherPromos->count())
             <!-- Promo Lainnya -->
-            <div class="mt-16">
-                <h3 class="text-4xl font-bold text-white mb-8">
+            <div class="mt-12 md:mt-16">
+                <h3 class="text-2xl md:text-4xl font-bold text-white mb-6 md:mb-8">
                     Promo Lainnya
                 </h3>
 
@@ -69,8 +69,8 @@
                                     class="w-full aspect-video object-cover">
                             </div>
 
-                            <div class="p-6">
-                                <h4 class="text-3xl font-bold text-white">
+                            <div class="p-5 md:p-6">
+                                <h4 class="text-2xl md:text-3xl font-bold text-white">
                                     {{ $promo->nama_promo }}
                                 </h4>
 

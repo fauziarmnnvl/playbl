@@ -83,16 +83,17 @@ Fitur ini digunakan untuk melakukan pemesanan Playbox dengan durasi bermain yang
 ### Alur
 
 1. Pelanggan mengisi informasi diri.
-2. Pelanggan memilih cabang.
-3. Pelanggan memilih Playbox yang tersedia.
-4. Pelanggan memilih durasi bermain.
-5. Pelanggan melakukan review booking.
-6. Pelanggan melakukan pembayaran menggunakan QRIS.
-7. Sistem menyimpan data booking dan menampilkan halaman Booking Berhasil yang berisi informasi booking.
-8. Pelanggan menunjukkan bukti booking dan bukti pembayaran kepada operator.
-9. Operator mencek data booking dan pembayaran.
-10. Operator menekan tombol Mulai Sesi pada dashboard monitoring.
-11. Sistem mengubah status Playbox menjadi Sedang Digunakan dan menghitung waktu bermain sesuai durasi yang dipilih.
+2. Sistem hanya menampilkan cabang yang berstatus Aktif.
+3. Pelanggan memilih cabang.
+4. Pelanggan memilih Playbox yang tersedia.
+5. Pelanggan memilih durasi bermain.
+6. Pelanggan melakukan review booking.
+7. Pelanggan melakukan pembayaran menggunakan QRIS.
+8. Sistem menyimpan data booking dan menampilkan halaman Booking Berhasil yang berisi informasi booking.
+9. Pelanggan menunjukkan bukti booking dan bukti pembayaran kepada operator.
+10. Operator mencek data booking dan pembayaran.
+11. Operator menekan tombol Mulai Sesi pada dashboard monitoring.
+12. Sistem mengubah status Playbox menjadi Sedang Digunakan dan menghitung waktu bermain sesuai durasi yang dipilih.
 
 ### Route & Controller
 
@@ -121,18 +122,19 @@ Fitur ini memungkinkan pelanggan melakukan booking tanpa menentukan durasi berma
 ### Alur
 
 1. Pelanggan mengisi informasi diri.
-2. Pelanggan memilih cabang.
-3. Pelanggan memilih Playbox yang tersedia.
-4. Pelanggan memilih durasi bermain (Sesi-flexible).
-5. Pelanggan melakukan review booking.
-6. Sistem menyimpan data booking.
-7. Pelanggan menekan tombol Mulai Bermain, kemudian sistem mulai menghitung durasi bermain hingga sesi selesai.
-8. Pelanggan mengakhiri sesi bermain, kemudian sistem menghitung total biaya berdasarkan durasi bermain serta menampilkan kode QRIS dan rincian pembayaran.
-9. Pelanggan melakukan pembayaran menggunakan QRIS.
-10. Sistem mencatat transaksi dengan status Menunggu Verifikasi Pembayaran.
-11. Operator memverifikasi pembayaran melalui halaman Monitoring Playbox.
-12. Operator menekan tombol Sudah Bayar.
-13. Sistem memperbarui status transaksi menjadi Lunas dan menampilkan halaman Pembayaran Selesai yang berisi informasi booking dan pembayaran.
+2. Sistem hanya menampilkan cabang yang berstatus Aktif.
+3. Pelanggan memilih cabang.
+4. Pelanggan memilih Playbox yang tersedia.
+5. Pelanggan memilih durasi bermain (Sesi-flexible).
+6. Pelanggan melakukan review booking.
+7. Sistem menyimpan data booking.
+8. Pelanggan menekan tombol Mulai Bermain, kemudian sistem mulai menghitung durasi bermain hingga sesi selesai.
+9. Pelanggan mengakhiri sesi bermain, kemudian sistem menghitung total biaya berdasarkan durasi bermain serta menampilkan kode QRIS dan rincian pembayaran.
+10. Pelanggan melakukan pembayaran menggunakan QRIS.
+11. Sistem mencatat transaksi dengan status Menunggu Verifikasi Pembayaran.
+12. Operator memverifikasi pembayaran melalui halaman Monitoring Playbox.
+13. Operator menekan tombol Sudah Bayar.
+14. Sistem memperbarui status transaksi menjadi Lunas dan menampilkan halaman Pembayaran Selesai yang berisi informasi booking dan pembayaran.
 
 ### Route & Controller
 
@@ -369,7 +371,9 @@ Fitur ini digunakan untuk mengelola akun operator yang bertugas pada setiap caba
 2. Admin membuka menu Manajemen Operator.
 3. Sistem menampilkan daftar operator.
 4. Admin dapat menambah, mengubah, maupun menghapus akun operator.
-5. Sistem menyimpan perubahan yang dilakukan.
+5. Saat menambahkan Operator, sistem hanya menampilkan Cabang yang berstatus Aktif.
+6. Operator yang telah terhubung dengan Cabang Nonaktif tetap ditampilkan agar data lama tetap dapat dikelola.
+7. Sistem menyimpan perubahan yang dilakukan.
 
 ### Route & Controller
 

@@ -1,27 +1,27 @@
 <section class="flex flex-col items-center pt-40 pb-8 px-4">
 
     {{-- Player Info --}}
-    <div class="w-full max-w-xl bg-[#041233] rounded-3xl px-8 py-6 mb-8 shadow-xl">
+    <div class="w-full max-w-xl bg-[#041233] rounded-3xl px-6 py-5 md:px-8 md:py-6 mb-6 md:mb-8 shadow-xl">
 
         <div class="flex justify-between items-center ">
 
             <div>
-                <p class="text-slate-400 text-sm mb-2">
+                <p class="text-slate-400 text-xs md:text-sm mb-1 md:mb-2">
                     Pemain
                 </p>
 
-                <h3 class="text-white text-2xl font-bold">
+                <h3 class="text-white text-xl md:text-2xl font-bold">
                     {{ $booking['nama'] }}
                 </h3>
             </div>
 
             <div class="text-right">
 
-                <p class="text-slate-400 text-sm mb-2">
+                <p class="text-slate-400 text-xs md:text-sm mb-1 md:mb-2">
                     Playbox
                 </p>
 
-                <span class="inline-flex items-center px-4 py-2 rounded-xl bg-blue-900/40 text-blue-400 font-semibold">
+                <span class="inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 rounded-xl bg-blue-900/40 text-blue-400 font-semibold text-sm md:text-base">
                     {{ $booking['playbox']->nama_playbox }}
                 </span>
             </div>
@@ -29,9 +29,9 @@
     </div>
 
     {{-- Timer Card --}}
-    <div class="w-full max-w-xl bg-[#041233] rounded-3xl p-10 text-center shadow-[0_0_80px_rgba(37,99,235,0.15)] mb-8">
+    <div class="w-full max-w-xl bg-[#041233] rounded-3xl p-6 md:p-10 text-center shadow-[0_0_80px_rgba(37,99,235,0.15)] mb-8">
 
-        <div class="flex items-center justify-center gap-2 text-blue-400 text-xl mb-8">
+        <div class="flex items-center justify-center gap-2 text-blue-400 text-lg md:text-xl mb-6 md:mb-8">
 
             <svg xmlns="http://www.w3.org/2000/svg"
                 class="w-6 h-6"
@@ -49,7 +49,7 @@
         </div>
 
         {{-- Timer --}}
-        <h1 class="text-7xl md:text-8xl font-bold text-white tracking-tight mb-10">
+        <h1 class="text-5xl sm:text-7xl md:text-8xl font-bold text-white tracking-tight mb-8 md:mb-10">
             <span id="timer">
                 00:00:00
             </span>
@@ -58,17 +58,17 @@
         <input type="hidden" id="waktuMulai" value="{{ optional($booking['sesi']->waktu_mulai)->timestamp }}">
 
         {{-- Billing --}}
-        <div class="bg-slate-800/30 border border-slate-700 rounded-3xl py-8 px-6">
+        <div class="bg-slate-800/30 border border-slate-700 rounded-3xl py-6 px-4 md:py-8 md:px-6">
 
-            <p class="text-slate-400 text-lg mb-3">
+            <p class="text-sm md:text-lg text-slate-400 mb-2 md:mb-3">
                 Estimasi Tagihan Sementara
             </p>
 
-            <h2 id="billing" class="text-5xl font-bold text-white mb-4">
+            <h2 id="billing" class="text-3xl md:text-5xl font-bold text-white mb-3 md:mb-4">
                 Rp 0
             </h2>
 
-            <p class="text-slate-500">
+            <p class="text-xs md:text-sm text-slate-500">
                 Tarif : Rp 395/menit
             </p>
 

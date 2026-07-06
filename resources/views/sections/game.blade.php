@@ -1,18 +1,18 @@
-<section class="bg-[#16233B] min-h-screen py-24">
+<section class="bg-[#16233B] min-h-screen py-16 md:py-24">
 
     <div class="max-w-7xl mx-auto px-8">
 
         <!-- Heading -->
-        <div class="text-center mt-24">
+        <div class="text-center mt-12 md:mt-24">
 
-            <h2 class="text-5xl md:text-6xl font-bold text-white">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
                 Semua
                 <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
                     Game
                 </span>
             </h2>
 
-            <p class="text-gray-400 mt-5 max-w-3xl mx-auto">
+            <p class="text-gray-400 mt-4 md:mt-5 max-w-3xl mx-auto text-sm md:text-base">
                 Jelajahi koleksi game kami. Dari kompetisi sengit hingga petualangan santai,
                 temukan game favoritmu untuk dimainkan bareng teman.
             </p>
@@ -86,24 +86,24 @@
         </form>
 
         <!-- Games Grid -->
-        <div class="grid md:grid-cols-3 gap-8 mt-12">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mt-12">
             @forelse ($games as $game)
                 <div class="group">
-                    <div class="overflow-hidden rounded-3xl">
+                    <div class="overflow-hidden rounded-2xl md:rounded-3xl bg-[#0B1730]">
                         <img src="{{ $game->cover_image ? Storage::url($game->cover_image) : asset('images/no-image.png') }}"
-                            alt="{{ $game->judul_game }}" class="w-full h-[320px] object-cover group-hover:scale-105 transition duration-300">
+                            alt="{{ $game->judul_game }}" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition duration-300">
                     </div>
                     <div class="mt-3">
-                        <span class="text-xs px-2 py-1 rounded-full bg-blue-500 text-white hover:scale-105 transition">
+                        <span class="text-[10px] md:text-xs px-2 py-1 rounded-full bg-blue-500 text-white hover:scale-105 transition inline-block">
                             {{ $game->kategori }}
                         </span>
-                        <h3 class="text-white font-semibold mt-2">
+                        <h3 class="text-white font-semibold mt-2 text-sm md:text-base leading-tight md:leading-normal">
                             {{ $game->judul_game }}
                         </h3>
                     </div>
                 </div>
             @empty
-                <div class="col-span-3 text-center py-16">
+                <div class="col-span-2 sm:col-span-3 md:col-span-4 text-center py-16">
                     <p class="text-gray-400">
                         Belum ada game tersedia.
                     </p>

@@ -1,4 +1,4 @@
-<section class="relative overflow-hidden py-24">
+<section class="relative overflow-hidden py-16 md:py-24">
 
     <div
     class="absolute inset-0"
@@ -29,11 +29,14 @@
 
     <div
 class="absolute
-left-[-250px]
+left-[-150px]
+md:left-[-250px]
 top-1/2
 -translate-y-1/2
-w-[760px]
-h-[760px]
+w-[400px]
+h-[400px]
+md:w-[760px]
+md:h-[760px]
 rounded-full"
 style="
 background:
@@ -44,17 +47,22 @@ rgba(124,58,237,.18) 35%,
 rgba(124,58,237,.08) 65%,
 transparent 100%
 );
+filter:blur(100px);
+/* md:filter:blur(185px) not supported directly in style, so keeping an average blur or just relying on standard filter. Let's keep 185px as it was, it scales okay. Actually Tailwind blur is better but it uses inline style here. */
 filter:blur(185px);
 ">
 </div>
 
 <div
 class="absolute
-left-[180px]
+left-[50px]
+md:left-[180px]
 top-[52%]
 -translate-y-1/2
-w-[260px]
-h-[260px]
+w-[150px]
+h-[150px]
+md:w-[260px]
+md:h-[260px]
 rounded-full"
 style="
 background:
@@ -70,11 +78,14 @@ filter:blur(90px);
 
     <div
 class="absolute
-left-[-340px]
+left-[-200px]
+md:left-[-340px]
 top-[45%]
 -translate-y-1/2
-w-[980px]
-h-[980px]
+w-[500px]
+h-[500px]
+md:w-[980px]
+md:h-[980px]
 rounded-full"
 style="
 background:
@@ -91,11 +102,14 @@ filter:blur(240px);
 
     <div
     class="absolute
-    right-[-180px]
+    right-[-100px]
+    md:right-[-180px]
     top-1/2
     -translate-y-1/2
-    w-[650px]
-    h-[650px]
+    w-[300px]
+    h-[300px]
+    md:w-[650px]
+    md:h-[650px]
     rounded-full"
     style="
     background:
@@ -117,15 +131,16 @@ filter:blur(240px);
     ">
     </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-10">
+    <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-10">
 
-        <div class="grid md:grid-cols-2 gap-20 items-center">
+        <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-center text-center md:text-left">
 
             <div>
 
                 <h2
                     class="
-                    text-[56px]
+                    text-4xl
+                    sm:text-[48px]
                     md:text-[64px]
                     font-extrabold
                     leading-[0.9]
@@ -141,9 +156,12 @@ filter:blur(240px);
                     class="
                     mt-8
                     text-gray-300
-                    text-lg
+                    text-base
+                    md:text-lg
                     leading-relaxed
-                    max-w-md">
+                    max-w-md
+                    mx-auto
+                    md:mx-0">
 
                     BOXPLAY.ID menghadirkan cara baru menikmati PlayStation langsung dari cafe favoritmu.
 
@@ -164,8 +182,10 @@ filter:blur(240px);
                 <!-- Glow belakang gambar -->
                 <div
                 class="absolute
-                w-[500px]
-                h-[500px]
+                w-[300px]
+                h-[300px]
+                md:w-[500px]
+                md:h-[500px]
                 rounded-full
                 left-1/2
                 top-1/2
@@ -189,12 +209,17 @@ filter:blur(240px);
                     class="
                     overflow-hidden
                     rounded-[24px]
-                    shadow-[0_25px_80px_rgba(0,0,0,.35)]">
+                    shadow-[0_25px_80px_rgba(0,0,0,.35)]
+                    w-full
+                    max-w-[460px]
+                    aspect-[46/41]
+                    md:w-[460px]
+                    md:h-[410px]">
 
                     <img
                         src="{{ asset('images/cta.png') }}"
                         alt="CTA BOXPLAY"
-                        class="w-[460px] h-[410px] object-cover">
+                        class="w-full h-full object-cover">
 
                 </div>
 

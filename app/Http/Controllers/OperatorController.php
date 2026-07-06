@@ -34,6 +34,13 @@ class OperatorController extends Controller
             'telegram_id' => 'nullable|string|max:50',
         ]);
 
+        $cabang = Cabang::find($validated['id_cabang']);
+        if (!$cabang || !$cabang->status_buka) {
+            return back()
+                ->withErrors(['id_cabang' => 'Cabang yang dipilih sedang nonaktif dan tidak dapat digunakan untuk penempatan operator.'], 'createOperator')
+                ->withInput();
+        }
+
         User::create([
             'nama'      => $validated['nama'],
             'username'  => $validated['username'],
@@ -68,6 +75,16 @@ class OperatorController extends Controller
             'id_cabang'   => 'required|exists:cabang,id_cabang',
             'telegram_id' => 'nullable|string|max:50',
         ]);
+
+        // Cek cabang pindahan
+        if ($validated['id_cabang'] != $operator->id_cabang) {
+            $cabangBaru = Cabang::find($validated['id_cabang']);
+            if (!$cabangBaru || !$cabangBaru->status_buka) {
+                return back()
+                    ->withErrors(['id_cabang' => 'Cabang tujuan saat ini sedang tidak aktif.'], 'editOperator')
+                    ->withInput();
+            }
+        }
 
         $data = [
             'nama'      => $validated['nama'],

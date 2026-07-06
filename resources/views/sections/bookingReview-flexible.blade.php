@@ -1,8 +1,8 @@
 <section class="min-h-screen flex flex-col items-center py-20 px-4">
 
     {{-- Title --}}
-    <div class="text-center py-12">
-        <h1 class="text-5xl font-bold text-white">
+    <div class="text-center py-10 md:py-12">
+        <h1 class="text-3xl md:text-5xl font-bold text-white">
             Book
             <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
                 Playbox
@@ -11,21 +11,21 @@
     </div>
 
     {{-- Progress --}}
-    <div class="w-full max-w-5xl mb-12">
+    <div class="w-full max-w-5xl mb-10 md:mb-12">
         <div class="relative flex justify-between items-center">
 
-            <div class="absolute top-5 left-0 w-full h-[3px] bg-[#08152D]"></div>
+            <div class="absolute top-4 md:top-5 left-0 w-full h-[3px] bg-[#08152D]"></div>
 
-            <div class="absolute top-5 left-0 w-[80%] h-[3px] bg-gradient-to-r from-purple-500 to-blue-500"></div>
+            <div class="absolute top-4 md:top-5 left-0 w-[80%] h-[3px] bg-gradient-to-r from-purple-500 to-blue-500"></div>
 
             @for($i = 1; $i <= 6; $i++)
                 <div class="relative z-10 flex flex-col items-center">
 
-                    <div class="w-11 h-11 rounded-full {{ $i <= 5 ? 'bg-gradient-to-r from-purple-500 to-blue-500' : 'bg-[#08152D]' }} text-white flex items-center justify-center font-semibold">
+                    <div class="w-8 h-8 md:w-11 md:h-11 rounded-full {{ $i <= 5 ? 'bg-gradient-to-r from-purple-500 to-blue-500' : 'bg-[#08152D]' }} text-white flex items-center justify-center font-semibold text-sm md:text-base">
                         {{ $i }}
                     </div>
 
-                    <span class="mt-3 text-sm text-slate-400">
+                    <span class="mt-2 md:mt-3 text-xs md:text-sm text-slate-400 hidden sm:block">
                         @switch($i)
                             @case(1) Info @break
                             @case(2) Cabang @break
@@ -43,10 +43,10 @@
     </div>
 
     {{-- Card --}}
-    <div class="w-full max-w-3xl bg-[#041233] rounded-3xl border border-slate-800 p-10 shadow-xl">
+    <div class="w-full max-w-3xl bg-[#041233] rounded-3xl border border-slate-800 p-6 md:p-10 shadow-xl">
 
         {{-- Header --}}
-        <h2 class="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8 flex items-center gap-3">
 
             <svg xmlns="http://www.w3.org/2000/svg"
                 class="w-7 h-7 text-blue-500"
@@ -103,32 +103,32 @@
         </div>
 
         {{-- Flexible Box --}}
-        <div class="border border-blue-500/50 bg-blue-900/20 rounded-2xl p-10 text-center mb-8">
-            <div class="text-5xl text-blue-400 mb-5">
+        <div class="border border-blue-500/50 bg-blue-900/20 rounded-2xl p-6 md:p-10 text-center mb-8">
+            <div class="text-4xl md:text-5xl text-blue-400 mb-4 md:mb-5">
                 ∞
             </div>
 
-            <h3 class="text-white text-2xl font-bold mb-3">
+            <h3 class="text-white text-xl md:text-2xl font-bold mb-3">
                 Mulai Sesi Fleksibel
             </h3>
 
-            <p class="text-slate-400 max-w-lg mx-auto">
+            <p class="text-sm md:text-base text-slate-400 max-w-lg mx-auto">
                 Kamu tidak perlu melakukan pembayaran saat booking.
                 Tagihan akan dihitung berdasarkan lama bermain setelah sesi selesai.
             </p>
         </div>
 
         {{-- Footer --}}
-        <div class="border-t border-slate-800 pt-8 flex justify-between">
+        <div class="border-t border-slate-800 pt-8 flex flex-col-reverse sm:flex-row justify-between gap-4">
 
             <a href="{{ route('booking.durasi') }}"
-                class="px-8 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
+                class="w-full sm:w-auto text-center px-8 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
                 ← Kembali
             </a>
 
-            <form method="POST" action="{{ route('booking.storeBookingFlexible') }}">
+            <form method="POST" action="{{ route('booking.storeBookingFlexible') }}" class="w-full sm:w-auto">
                 @csrf
-                <button type="submit" class="px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
+                <button type="submit" class="w-full px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg hover:scale-105 transition">
                     Buat Booking →
                 </button>
             </form>

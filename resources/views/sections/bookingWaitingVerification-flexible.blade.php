@@ -2,7 +2,7 @@
 
     <div class="w-full max-w-xl bg-[#041233]
                 rounded-3xl
-                p-10
+                p-6 md:p-10
                 text-center
                 shadow-[0_0_60px_rgba(37,99,235,0.15)]
                 border border-slate-800">
@@ -33,7 +33,7 @@
             </div>
 
             {{-- Title --}}
-            <h1 class="text-3xl sm:text-4xl font-bold text-white mb-4">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
                 Menunggu Verifikasi Pembayaran
             </h1>
 
@@ -81,7 +81,7 @@
 
             {{-- Status Badge --}}
             <div class="bg-[#08152D] border border-slate-700 rounded-2xl p-5 mb-8">
-                <div class="flex items-center justify-between">
+                <div class="flex flex-col sm:flex-row items-center sm:justify-between gap-3 sm:gap-0">
                     <span class="text-slate-400 text-sm">Status Pembayaran</span>
                     <span id="statusBadge" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm font-medium">
                         <svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -130,7 +130,7 @@
             </div>
 
             {{-- Title --}}
-            <h1 class="text-3xl sm:text-4xl font-bold text-white mb-4">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
                 Bukti Pembayaran Ditolak
             </h1>
 
@@ -141,7 +141,7 @@
 
             {{-- Status Badge --}}
             <div class="bg-[#08152D] border border-slate-700 rounded-2xl p-5 mb-10">
-                <div class="flex items-center justify-between">
+                <div class="flex flex-col sm:flex-row items-center sm:justify-between gap-3 sm:gap-0">
                     <span class="text-slate-400 text-sm">Status Pembayaran</span>
                     <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-sm font-medium">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

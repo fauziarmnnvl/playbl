@@ -26,6 +26,12 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menambahkan fitur upload ulang bukti pembayaran apabila bukti ditolak Operator.
 
 ### Changed
+* Menyempurnakan responsivitas Landing Page dan seluruh alur Booking pada berbagai ukuran layar.
+* Menyempurnakan responsivitas panel Admin, termasuk layout, toolbar, pencarian, filter, tabel, pagination, dan tombol aksi.
+* Menyempurnakan carousel Koleksi Game agar tampilan cover lebih proporsional dan perulangan carousel berjalan dengan baik.
+* Menyempurnakan tampilan grafik dan legend pada halaman Laporan & Statistik.
+* Menyesuaikan proses Booking agar hanya menampilkan cabang yang berstatus Aktif.
+* Menyesuaikan Manajemen Operator agar hanya menyediakan cabang Aktif untuk Operator baru tanpa menghilangkan data Operator pada cabang Nonaktif.
 * Halaman Pembayaran Booking Sesi Tetap kini menampilkan QRIS sesuai cabang yang dipilih pelanggan.
 * Halaman Pembayaran Booking Sesi Fleksibel kini menampilkan QRIS sesuai cabang tempat pelanggan bermain.
 * Memigrasikan pengelolaan media Cabang, Game, dan Event & Promo dari `public/images` ke Laravel Storage.
@@ -52,6 +58,8 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menyesuaikan alur bukti pembayaran yang ditolak agar pelanggan dapat mengunggah ulang bukti tanpa mengulangi proses pembayaran.
 
 ### Fixed
+* Memperbaiki tampilan beberapa komponen yang tidak proporsional pada perangkat mobile.
+* Memperbaiki tampilan pencarian, filter, jenis sesi, dan informasi cabang pada beberapa halaman Admin.
 * Memperbaiki banner promo yang tidak tampil pada halaman Manajemen Event & Promo.
 * Memperbaiki status promo aktif yang sebelumnya dapat ditampilkan sebagai Nonaktif meskipun periode promo belum berakhir.
 * Memperbaiki tampilan banner promo yang terpotong pada halaman Event & Promo pelanggan.
@@ -59,6 +67,8 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbaiki penanganan validasi form Event & Promo agar modal Tambah atau Edit yang sesuai terbuka kembali ketika validasi gagal.
 
 ### Documentation
+* Memperbarui dokumentasi fitur sesuai penanganan cabang Nonaktif pada Booking dan Manajemen Operator.
+* Memperbarui dokumentasi refactoring sesuai penyempurnaan responsivitas antarmuka aplikasi.
 * Memperbarui CHANGELOG sesuai implementasi QRIS dinamis berdasarkan cabang.
 * Memperbarui CHANGELOG sesuai implementasi migrasi media ke Laravel Storage.
 * Memperbarui CHANGELOG sesuai penyempurnaan data, status, dan tampilan banner Event & Promo.
