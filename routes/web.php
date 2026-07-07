@@ -160,6 +160,12 @@ Route::middleware(['auth', 'role:operator'])->prefix('operator')->group(function
     Route::get('/verifikasi-pembayaran', [OperatorVerifikasiPembayaranController::class, 'index'])
         ->name('operator.verifikasi-pembayaran');
 
+    Route::get('/verifikasi-pembayaran/check', [OperatorVerifikasiPembayaranController::class, 'check'])
+        ->name('operator.verifikasi-pembayaran.check');
+
+    Route::get('/verifikasi-pembayaran/table', [OperatorVerifikasiPembayaranController::class, 'table'])
+        ->name('operator.verifikasi-pembayaran.table');
+
     Route::patch('/verifikasi-pembayaran/{transaksi}/setujui', [OperatorVerifikasiPembayaranController::class, 'approve'])
         ->name('operator.verifikasi-pembayaran.approve');
 

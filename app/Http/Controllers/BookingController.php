@@ -7,6 +7,7 @@ use App\Models\Playbox;
 use App\Models\Pelanggan;
 use App\Models\Transaksi;
 use App\Models\SesiBermain;
+use App\Services\PaymentNotificationService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -383,7 +384,7 @@ class BookingController extends Controller
         return view('bookings.pembayaran-flexible', compact('booking', 'isRetry'));
     }
 
-    public function storePembayaranFlexible(Request $request)
+    public function storePembayaranFlexible(Request $request, PaymentNotificationService $paymentNotification)
     {
         $booking = session('booking');
 
@@ -424,6 +425,9 @@ class BookingController extends Controller
             'waktu_pembayaran' => now(),
             'waktu_verifikasi' => null,
         ]);
+
+        // Kirim notifikasi Telegram ke operator
+        $paymentNotification->notifyNewPayment($transaksi);
 
         // Hapus file lama setelah update berhasil
         if ($oldPath && $oldPath !== $newPath && Storage::disk('public')->exists($oldPath)) {

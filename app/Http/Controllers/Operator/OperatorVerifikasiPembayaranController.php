@@ -26,6 +26,48 @@ class OperatorVerifikasiPembayaranController extends Controller
         return view('operator.verifikasi-pembayaran.index', compact('transaksiList'));
     }
 
+    public function check()
+    {
+        $operator = Auth::user();
+
+        // Cari transaksi Menunggu Verifikasi paling baru (berdasarkan waktu pembayaran)
+        $latest = Transaksi::where('id_cabang', $operator->id_cabang)
+            ->where('jenis_sesi', Transaksi::JENIS_SESI_FLEKSIBEL)
+            ->where('status_pembayaran', Transaksi::STATUS_MENUNGGU_VERIFIKASI)
+            ->orderByDesc('waktu_pembayaran')
+            ->first();
+
+        // Hitung total menunggu verifikasi
+        $count = Transaksi::where('id_cabang', $operator->id_cabang)
+            ->where('jenis_sesi', Transaksi::JENIS_SESI_FLEKSIBEL)
+            ->where('status_pembayaran', Transaksi::STATUS_MENUNGGU_VERIFIKASI)
+            ->count();
+
+        return response()->json([
+            'count' => $count,
+            'latest_id' => $latest ? $latest->id_transaksi : null,
+            'latest_payment_at' => $latest ? $latest->waktu_pembayaran : null
+        ]);
+    }
+
+    public function table()
+    {
+        $operator = Auth::user();
+
+        $transaksiList = Transaksi::with([
+            'pelanggan',
+            'playbox',
+            'sesiBermain',
+        ])
+            ->where('id_cabang', $operator->id_cabang)
+            ->where('jenis_sesi', Transaksi::JENIS_SESI_FLEKSIBEL)
+            ->where('status_pembayaran', Transaksi::STATUS_MENUNGGU_VERIFIKASI)
+            ->orderByDesc('waktu_pembayaran')
+            ->get();
+
+        return view('operator.verifikasi-pembayaran.table', compact('transaksiList'));
+    }
+
     public function approve(Transaksi $transaksi)
     {
         $operator = auth()->user();
