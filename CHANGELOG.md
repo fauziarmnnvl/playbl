@@ -24,6 +24,8 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menambahkan halaman Menunggu Verifikasi Pembayaran pada sisi pelanggan.
 * Menambahkan pengecekan status pembayaran secara otomatis setelah bukti dikirim.
 * Menambahkan fitur upload ulang bukti pembayaran apabila bukti ditolak Operator.
+* Menambahkan notifikasi Telegram kepada Operator saat pembayaran baru masuk.
+* Menambahkan pembaruan otomatis daftar Verifikasi Pembayaran tanpa refresh manual.
 
 ### Changed
 * Mengarahkan pengguna ke halaman Login setelah proses logout berhasil.
@@ -82,6 +84,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbarui CHANGELOG sesuai implementasi fitur Verifikasi Pembayaran sesi fleksibel.
 * Memperbarui CHANGELOG sesuai implementasi alur pembayaran dan verifikasi akhir sesi fleksibel.
 * Memperbarui dokumentasi refactoring sesuai penyempurnaan alur pembayaran sesi fleksibel.
+* Memperbarui dokumentasi fitur Verifikasi Pembayaran sesuai implementasi notifikasi dan pembaruan otomatis.
 
 ## [0.3.0] - 3 Juli 2026
 

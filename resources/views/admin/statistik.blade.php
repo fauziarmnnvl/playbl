@@ -22,19 +22,77 @@
     </div>
 
     {{-- FILTER PERIODE --}}
-    <div class="table-card filter-card-statistik" style="margin-bottom: 24px; padding: 20px;">
+    <div class="table-card filter-card-statistik" style="margin-bottom:24px;padding:20px;">
         <form method="GET" action="{{ route('admin.statistik') }}">
-            <div class="filter-statistik-grid">
-                <div class="filter-statistik-group">
-                    <label style="display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.875rem; color: #475569;">Tanggal Awal</label>
-                    <input type="date" name="start_date" value="{{ $startDate->format('Y-m-d') }}" style="width: 100%; height: 42px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0 12px; outline: none; font-family: inherit;">
+            <div style="margin-bottom:20px;">
+                <label style="display:block;margin-bottom:8px;font-weight:500;font-size:.875rem;color:#475569;">
+                    Mode Periode
+                </label>
+
+                <div style="display:inline-flex;padding:4px;background:#f1f5f9;border-radius:10px;">
+                    <button type="button" class="period-mode-btn" data-mode="harian">
+                        Harian
+                    </button>
+                    <button type="button" class="period-mode-btn" data-mode="bulanan">
+                        Bulanan
+                    </button>
                 </div>
+            </div>
+
+            <input type="hidden" name="period_mode" id="periodMode"
+                value="{{ request('period_mode','harian') }}">
+
+            <div id="filterHarian" class="filter-statistik-grid">
                 <div class="filter-statistik-group">
-                    <label style="display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.875rem; color: #475569;">Tanggal Akhir</label>
-                    <input type="date" name="end_date" value="{{ $endDate->format('Y-m-d') }}" style="width: 100%; height: 42px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0 12px; outline: none; font-family: inherit;">
+                    <label style="display:block;margin-bottom:8px;font-weight:500;font-size:.875rem;color:#475569;">
+                        Tanggal Awal
+                    </label>
+                    <input type="date" name="start_date"
+                        value="{{ request('start_date',$startDate->format('Y-m-d')) }}"
+                        class="period-input">
                 </div>
+
+                <div class="filter-statistik-group">
+                    <label style="display:block;margin-bottom:8px;font-weight:500;font-size:.875rem;color:#475569;">
+                        Tanggal Akhir
+                    </label>
+                    <input type="date" name="end_date"
+                        value="{{ request('end_date',$endDate->format('Y-m-d')) }}"
+                        class="period-input">
+                </div>
+
                 <div class="filter-statistik-action">
-                    <button type="submit" class="btn btn-primary" style="height: 42px; width: 100%; justify-content: center;">Tampilkan</button>
+                    <button type="submit" class="btn btn-primary"
+                        style="height:42px;width:100%;justify-content:center;">
+                        Tampilkan
+                    </button>
+                </div>
+            </div>
+
+            <div id="filterBulanan" class="filter-statistik-grid" style="display:none;">
+                <div class="filter-statistik-group">
+                    <label style="display:block;margin-bottom:8px;font-weight:500;font-size:.875rem;color:#475569;">
+                        Bulan Awal
+                    </label>
+                    <input type="month" name="start_month"
+                        value="{{ request('start_month',$startDate->format('Y-m')) }}"
+                        class="period-input">
+                </div>
+
+                <div class="filter-statistik-group">
+                    <label style="display:block;margin-bottom:8px;font-weight:500;font-size:.875rem;color:#475569;">
+                        Bulan Akhir
+                    </label>
+                    <input type="month" name="end_month"
+                        value="{{ request('end_month',$endDate->format('Y-m')) }}"
+                        class="period-input">
+                </div>
+
+                <div class="filter-statistik-action">
+                    <button type="submit" class="btn btn-primary"
+                        style="height:42px;width:100%;justify-content:center;">
+                        Tampilkan
+                    </button>
                 </div>
             </div>
         </form>
@@ -161,104 +219,160 @@
 
     {{-- CHART SCRIPTS --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // 1. Pendapatan Chart (Bar Chart)
-            const ctxPendapatan = document.getElementById('pendapatanChart').getContext('2d');
-            new Chart(ctxPendapatan, {
-                type: 'bar',
-                data: {
-                    labels: @json($pendapatanChart['labels']),
-                    datasets: [{
-                        label: 'Pendapatan (Rp)',
-                        data: @json($pendapatanChart['values']),
-                        backgroundColor: '#10b981',
-                        borderRadius: 4,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
-                                }
-                            }
-                        }
-                    }
-                }
-            });
+    document.addEventListener('DOMContentLoaded',function(){
+        // FILTER PERIODE
+        const modeInput=document.getElementById('periodMode');
+        const harianFilter=document.getElementById('filterHarian');
+        const bulananFilter=document.getElementById('filterBulanan');
+        const buttons=document.querySelectorAll('.period-mode-btn');
+        const harianInputs=harianFilter.querySelectorAll('input');
+        const bulananInputs=bulananFilter.querySelectorAll('input');
 
-            // 2. Tren Penggunaan Sesi (Line Chart)
-            const ctxSesi = document.getElementById('sesiChart').getContext('2d');
-            new Chart(ctxSesi, {
-                type: 'line',
-                data: {
-                    labels: @json($sesiChart['labels']),
-                    datasets: [{
-                        label: 'Jumlah Sesi',
-                        data: @json($sesiChart['values']),
-                        borderColor: '#8b5cf6',
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: { beginAtZero: true, ticks:{stepSize: 1} }
-                    }
-                }
-            });
+        function setPeriodMode(mode){
+            const isHarian=mode==='harian';
 
-            // 3. Distribusi Penggunaan Playbox (Doughnut Chart)
-            const ctxDistribusi = document.getElementById('distribusiChart').getContext('2d');
-            new Chart(ctxDistribusi, {
-                type: 'doughnut',
-                data: {
-                    labels: @json($distribusiPlaybox['labels']),
-                    datasets: [{
-                        data: @json($distribusiPlaybox['values']),
-                        backgroundColor: [
-                            '#3b82f6', '#10b981', '#f59e0b', '#ef4444', 
-                            '#8b5cf6', '#06b6d4', '#f97316', '#64748b'
-                        ],
-                        borderWidth: 1,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '70%',
-                    plugins: {
-                        legend: {
-                            position: window.innerWidth < 768 ? 'bottom' : 'right',
-                            labels: {
-                                padding: window.innerWidth < 768 ? 12 : 20,
-                                boxWidth: window.innerWidth < 768 ? 12 : 18,
-                                boxHeight: window.innerWidth < 768 ? 12 : 18,
-                                usePointStyle: false,
-                                font: {
-                                    size: window.innerWidth < 768 ? 11 : 12
-                                }
-                            }
-                        }
-                    }
-                }
-            });
+            modeInput.value=mode;
+            harianFilter.style.display=isHarian?'grid':'none';
+            bulananFilter.style.display=isHarian?'none':'grid';
 
+            harianInputs.forEach(input=>input.disabled=!isHarian);
+            bulananInputs.forEach(input=>input.disabled=isHarian);
+
+            buttons.forEach(button=>{
+                button.classList.toggle('active',button.dataset.mode===mode);
+            });
+        }
+
+        buttons.forEach(button=>{
+            button.addEventListener('click',function(){
+                setPeriodMode(this.dataset.mode);
+            });
         });
+
+        setPeriodMode(modeInput.value);
+
+        // MODE CHART
+        const isBulanan=@json($periodMode === 'bulanan');
+
+        // PENDAPATAN CHART
+        const ctxPendapatan=document.getElementById('pendapatanChart').getContext('2d');
+
+        new Chart(ctxPendapatan,{
+            type:'bar',
+            data:{
+                labels:@json($pendapatanChart['labels']),
+                datasets:[{
+                    label:'Pendapatan (Rp)',
+                    data:@json($pendapatanChart['values']),
+                    backgroundColor:'#10b981',
+                    borderRadius:isBulanan?8:6,
+                    borderSkipped:false,
+                    maxBarThickness:isBulanan?90:undefined,
+                    categoryPercentage:isBulanan?.65:.8,
+                    barPercentage:isBulanan?.75:.9
+                }]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false,
+                plugins:{
+                    legend:{display:false}
+                },
+                scales:{
+                    y:{
+                        beginAtZero:true,
+                        ticks:{
+                            callback:function(value){
+                                return 'Rp '+new Intl.NumberFormat('id-ID').format(value);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // TREN PENGGUNAAN SESI
+        const ctxSesi=document.getElementById('sesiChart').getContext('2d');
+
+        new Chart(ctxSesi,{
+            type:isBulanan?'bar':'line',
+            data:{
+                labels:@json($sesiChart['labels']),
+                datasets:[{
+                    label:'Jumlah Sesi',
+                    data:@json($sesiChart['values']),
+                    borderColor:'#8b5cf6',
+                    backgroundColor:isBulanan?'#8b5cf6':'rgba(139,92,246,.1)',
+                    borderWidth:isBulanan?0:2,
+                    borderRadius:isBulanan?8:0,
+                    borderSkipped:false,
+                    maxBarThickness:isBulanan?90:undefined,
+                    categoryPercentage:isBulanan?.65:undefined,
+                    barPercentage:isBulanan?.75:undefined,
+                    tension:.3,
+                    fill:!isBulanan
+                }]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false,
+                plugins:{
+                    legend:{display:false}
+                },
+                scales:{
+                    y:{
+                        beginAtZero:true,
+                        ticks:{
+                            stepSize:1,
+                            precision:0
+                        }
+                    }
+                }
+            }
+        });
+
+        // DISTRIBUSI PENGGUNAAN PLAYBOX
+        const ctxDistribusi=document.getElementById('distribusiChart').getContext('2d');
+
+        new Chart(ctxDistribusi,{
+            type:'doughnut',
+            data:{
+                labels:@json($distribusiPlaybox['labels']),
+                datasets:[{
+                    data:@json($distribusiPlaybox['values']),
+                    backgroundColor:[
+                        '#3b82f6',
+                        '#10b981',
+                        '#f59e0b',
+                        '#ef4444',
+                        '#8b5cf6',
+                        '#06b6d4',
+                        '#f97316',
+                        '#64748b'
+                    ],
+                    borderWidth:1
+                }]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false,
+                cutout:'70%',
+                plugins:{
+                    legend:{
+                        position:window.innerWidth<768?'bottom':'right',
+                        labels:{
+                            padding:window.innerWidth<768?12:20,
+                            boxWidth:window.innerWidth<768?12:18,
+                            boxHeight:window.innerWidth<768?12:18,
+                            usePointStyle:false,
+                            font:{
+                                size:window.innerWidth<768?11:12
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
     </script>
 @endsection
