@@ -114,6 +114,9 @@
                                         'foto' => $cabang->foto_cabang
                                             ? Storage::url($cabang->foto_cabang)
                                             : null,
+                                        'qris' => $cabang->qris
+                                            ? Storage::url($cabang->qris)
+                                            : null,
                                     ];
                                 @endphp
 
@@ -223,6 +226,19 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="createQrisInput" class="form-label">QRIS Pembayaran</label>
+                    <input type="file" name="qris" id="createQrisInput" class="form-input" accept=".jpg,.jpeg,.png,.webp">
+                    <small style="color:#64748b">JPG, PNG, WEBP maksimal 2 MB</small>
+                    @error('qris', 'createCabang')
+                        <div class="form-error">{{ $message }}</div>
+                    @enderror
+
+                    <div id="createQrisPreview" style="display:none; margin-top:12px;">
+                        <img id="createQrisImg" alt="Preview QRIS" style="max-width:220px; width:100%; height:auto; object-fit:contain; border-radius:12px;">
+                    </div>
+                </div>
+
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeCreateCabangModal()">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan Cabang</button>
@@ -312,6 +328,19 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="editQrisInput" class="form-label">Ganti QRIS Pembayaran</label>
+                    <input type="file" name="qris" id="editQrisInput" class="form-input" accept=".jpg,.jpeg,.png,.webp">
+                    <small class="form-hint">Kosongkan jika tidak ingin mengganti QRIS</small>
+                    @error('qris', 'editCabang')
+                        <div class="form-error">{{ $message }}</div>
+                    @enderror
+
+                    <div id="editQrisPreview" style="display:none; margin-top:12px;">
+                        <img id="editQrisImg" alt="Preview QRIS" style="max-width:220px; width:100%; height:auto; object-fit:contain; border-radius:12px;">
+                    </div>
+                </div>
+
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeEditCabangModal()">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
@@ -367,6 +396,25 @@
             }
         });
 
+        const createQrisInput = document.getElementById('createQrisInput');
+        createQrisInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(ev) {
+                    document.getElementById('createQrisImg').src = ev.target.result;
+                    document.getElementById('createQrisPreview').style.display = 'block';
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('createQrisPreview').style.display = 'none';
+                document.getElementById('createQrisImg').src = '';
+            }
+        });
+
         // Edit Cabang Modal
         function openEditCabangModal(cabang) {
             const modal = document.getElementById('editCabangModal');
@@ -393,6 +441,19 @@
                 image.src = '';
                 preview.style.display = 'none';
             }
+            const qrisPreview = document.getElementById('editQrisPreview');
+            const qrisImage = document.getElementById('editQrisImg');
+            const qrisInput = document.getElementById('editQrisInput');
+
+            qrisInput.value = '';
+
+            if (cabang.qris) {
+                qrisImage.src = cabang.qris;
+                qrisPreview.style.display = 'block';
+            } else {
+                qrisImage.src = '';
+                qrisPreview.style.display = 'none';
+            }
 
             modal.classList.add('show');
         }
@@ -408,6 +469,19 @@
             reader.onload = function(ev) {
                 document.getElementById('editFotoCabangImg').src = ev.target.result;
                 document.getElementById('editFotoCabangPreview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        });
+
+        const editQrisInput = document.getElementById('editQrisInput');
+        editQrisInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('editQrisImg').src = ev.target.result;
+                document.getElementById('editQrisPreview').style.display = 'block';
             };
             reader.readAsDataURL(file);
         });

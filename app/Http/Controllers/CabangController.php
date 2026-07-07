@@ -38,12 +38,19 @@ class CabangController extends Controller
             'link_maps'       => 'nullable|url|max:255',
             'status_buka'     => 'required|boolean',
             'foto_cabang'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'qris' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         if ($request->hasFile('foto_cabang')) {
             $validated['foto_cabang'] = $request
                 ->file('foto_cabang')
                 ->store('cabang', 'public');
+        }
+
+        if ($request->hasFile('qris')) {
+            $validated['qris'] = $request
+                ->file('qris')
+                ->store('qris', 'public');
         }
 
         Cabang::create($validated);
@@ -71,10 +78,10 @@ class CabangController extends Controller
             'link_maps'       => 'nullable|url|max:255',
             'status_buka'     => 'required|boolean',
             'foto_cabang'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'qris' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         if ($request->hasFile('foto_cabang')) {
-
             if ($cabang->foto_cabang &&
                 Storage::disk('public')->exists($cabang->foto_cabang)) {
 
@@ -84,6 +91,16 @@ class CabangController extends Controller
             $validated['foto_cabang'] = $request
                 ->file('foto_cabang')
                 ->store('cabang', 'public');
+        }
+
+        if ($request->hasFile('qris')) {
+            if ($cabang->qris && Storage::disk('public')->exists($cabang->qris)) {
+                Storage::disk('public')->delete($cabang->qris);
+            }
+
+            $validated['qris'] = $request
+                ->file('qris')
+                ->store('qris', 'public');
         }
 
         $cabang->update($validated);
@@ -105,6 +122,10 @@ class CabangController extends Controller
 
         if ($cabang->foto_cabang && Storage::disk('public')->exists($cabang->foto_cabang)) {
             Storage::disk('public')->delete($cabang->foto_cabang);
+        }
+
+        if ($cabang->qris && Storage::disk('public')->exists($cabang->qris)) {
+            Storage::disk('public')->delete($cabang->qris);
         }
 
         $cabang->delete();
