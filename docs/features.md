@@ -133,10 +133,10 @@ Fitur ini memungkinkan pelanggan melakukan booking tanpa menentukan durasi berma
 8. Pelanggan menekan tombol Mulai Bermain, kemudian sistem mulai menghitung durasi bermain hingga sesi selesai.
 9. Pelanggan mengakhiri sesi bermain, kemudian sistem menghitung total biaya berdasarkan durasi bermain serta menampilkan kode QRIS dan rincian pembayaran.
 10. Pelanggan melakukan pembayaran menggunakan QRIS.
-11. Sistem mencatat transaksi dengan status Menunggu Verifikasi Pembayaran.
-12. Operator memverifikasi pembayaran melalui halaman Monitoring Playbox.
-13. Operator menekan tombol Sudah Bayar.
-14. Sistem memperbarui status transaksi menjadi Lunas dan menampilkan halaman Pembayaran Selesai yang berisi informasi booking dan pembayaran.
+11. Sistem mencatat transaksi dengan status Menunggu Verifikasi Pembayaran dan mengirim notifikasi Telegram kepada Operator.
+12. Pembayaran baru muncul otomatis pada halaman Verifikasi Pembayaran Operator tanpa refresh manual.
+13. Operator memeriksa bukti pembayaran, kemudian menyetujui atau menolak pembayaran.
+14. Sistem memperbarui status pembayaran sesuai hasil verifikasi.
 
 ### Route & Controller
 
@@ -437,7 +437,36 @@ Fitur Data Pelanggan digunakan untuk menampilkan informasi pelanggan yang pernah
 
 ---
 
-## 13. Riwayat Bermain
+## 13. Verifikasi Pembayaran
+
+### Tujuan
+
+Fitur ini digunakan Operator untuk memeriksa dan memverifikasi bukti pembayaran pelanggan.
+
+### Aktor
+
+- Operator
+
+### Alur
+
+1. Pelanggan mengunggah bukti pembayaran.
+2. Sistem mengirim notifikasi Telegram kepada Operator sesuai cabang.
+3. Daftar pembayaran diperbarui secara otomatis tanpa refresh manual.
+4. Operator dapat menyetujui atau menolak pembayaran.
+
+### Route & Controller
+
+| Method | Route | Controller |
+| :----: | :---- | :--------- |
+| GET | `/operator/verifikasi-pembayaran` | `OperatorVerifikasiPembayaranController@index` |
+
+### Dokumentasi Tampilan
+
+> Screenshot halaman Verifikasi Pembayaran akan ditambahkan pada tahap akhir pengembangan sebagai dokumentasi antarmuka sistem.
+
+---
+
+## 14. Riwayat Bermain
 
 ### Tujuan
 
@@ -468,7 +497,7 @@ Riwayat Bermain digunakan untuk menampilkan seluruh riwayat sesi bermain yang te
 
 ---
 
-## 14. Laporan & Statistik
+## 15. Laporan & Statistik
 
 ### Tujuan
 
@@ -497,7 +526,7 @@ Fitur ini menyediakan laporan dan statistik penggunaan Playbox sebagai bahan eva
 
 ---
 
-## 15. Riwayat Aktivitas
+## 16. Riwayat Aktivitas
 
 ### Tujuan
 
@@ -540,6 +569,7 @@ Riwayat Aktivitas digunakan untuk mencatat aktivitas penting yang dilakukan peng
 | 10 | Manajemen Event & Promo | Admin |
 | 11 | Manajemen Operator | Admin |
 | 12 | Data Pelanggan | Admin, Operator |
-| 13 | Riwayat Bermain | Admin, Operator |
-| 14 | Laporan & Statistik | Admin |
-| 15 | Riwayat Aktivitas | Admin |
+| 13 | Verifikasi Pembayaran | Operator |
+| 14 | Riwayat Bermain | Admin, Operator |
+| 15 | Laporan & Statistik | Admin |
+| 16 | Riwayat Aktivitas | Admin |
