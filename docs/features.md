@@ -23,6 +23,7 @@ Login digunakan untuk mengautentikasi pengguna sebelum mengakses sistem. Setelah
 4. Jika data valid, Admin diarahkan ke Dashboard Admin.
 5. Jika data valid, Operator diarahkan ke halaman Monitoring Playbox.
 6. Jika pengguna yang sudah login mengakses kembali route `/login`, sistem akan mengarahkan pengguna ke halaman sesuai role yang dimiliki.
+7. Saat pengguna melakukan logout, sistem mengakhiri sesi autentikasi dan mengarahkan pengguna kembali ke halaman Login.
 
 ### Route & Controller
 
@@ -30,6 +31,7 @@ Login digunakan untuk mengautentikasi pengguna sebelum mengakses sistem. Setelah
 | :----: | :---- | :--------- |
 | GET | `/login` | `AuthenticatedSessionController@create` |
 | POST | `/login` | `AuthenticatedSessionController@store` |
+| POST | `/logout` | `AuthenticatedSessionController@destroy` |
 
 ### Dokumentasi Tampilan
 
@@ -338,7 +340,8 @@ Fitur ini digunakan untuk mengelola informasi event dan promo yang ditampilkan p
 6. Admin dapat mengunggah banner promo yang disimpan menggunakan Laravel Storage.
 7. Sistem menampilkan banner promo secara proporsional pada panel Admin dan halaman pelanggan.
 8. Deskripsi promo yang ditampilkan pada halaman pelanggan diambil secara dinamis dari database.
-9. Perubahan data Event & Promo akan langsung ditampilkan pada website pelanggan.
+9. Jika tidak ada promo yang tersedia, halaman pelanggan menampilkan empty state agar halaman tidak terlihat kosong.
+10. Perubahan data Event & Promo akan langsung ditampilkan pada website pelanggan.
 
 ### Route & Controller
 

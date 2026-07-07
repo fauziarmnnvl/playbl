@@ -26,6 +26,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menambahkan fitur upload ulang bukti pembayaran apabila bukti ditolak Operator.
 
 ### Changed
+* Mengarahkan pengguna ke halaman Login setelah proses logout berhasil.
 * Menyempurnakan responsivitas Landing Page dan seluruh alur Booking pada berbagai ukuran layar.
 * Menyempurnakan responsivitas panel Admin, termasuk layout, toolbar, pencarian, filter, tabel, pagination, dan tombol aksi.
 * Menyempurnakan carousel Koleksi Game agar tampilan cover lebih proporsional dan perulangan carousel berjalan dengan baik.
@@ -58,6 +59,8 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menyesuaikan alur bukti pembayaran yang ditolak agar pelanggan dapat mengunggah ulang bukti tanpa mengulangi proses pembayaran.
 
 ### Fixed
+* Memperbaiki jarak antara topbar dan area konten pada beberapa halaman panel Admin agar lebih konsisten.
+* Memperbaiki halaman Event & Promo yang sebelumnya terlihat kosong saat tidak ada promo dengan menambahkan empty state.
 * Memperbaiki tampilan beberapa komponen yang tidak proporsional pada perangkat mobile.
 * Memperbaiki tampilan pencarian, filter, jenis sesi, dan informasi cabang pada beberapa halaman Admin.
 * Memperbaiki banner promo yang tidak tampil pada halaman Manajemen Event & Promo.
@@ -67,6 +70,8 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbaiki penanganan validasi form Event & Promo agar modal Tambah atau Edit yang sesuai terbuka kembali ketika validasi gagal.
 
 ### Documentation
+* Memperbarui dokumentasi fitur Login sesuai alur redirect setelah logout.
+* Memperbarui dokumentasi fitur Event & Promo sesuai penanganan kondisi saat promo tidak tersedia.
 * Memperbarui dokumentasi fitur sesuai penanganan cabang Nonaktif pada Booking dan Manajemen Operator.
 * Memperbarui dokumentasi refactoring sesuai penyempurnaan responsivitas antarmuka aplikasi.
 * Memperbarui CHANGELOG sesuai implementasi QRIS dinamis berdasarkan cabang.
