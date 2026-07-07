@@ -960,7 +960,6 @@ body {
     background:#fff;
     border:1px solid #e2e8f0;
     border-radius:16px;
-    margin-top:20px;
     margin-bottom:24px;
 }
 
@@ -1135,7 +1134,6 @@ body {
 .playbox-toolbar{
     display:flex;
     justify-content:flex-end;
-    margin-top:20px;
     margin-bottom:24px;
 }
 
