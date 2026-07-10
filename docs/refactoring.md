@@ -645,6 +645,36 @@ Perubahan yang dilakukan meliputi:
 
 ---
 
+# Refactoring 16
+
+## Sebelum
+
+### Masalah
+
+Logika perhitungan promo berpotensi digunakan pada lebih dari satu proses sehingga dapat menyebabkan duplikasi kode.
+
+---
+
+## Perubahan
+
+Perhitungan promo dipusatkan ke dalam `PromoCalculationService` dan digunakan kembali pada Monitoring Playbox serta proses penyelesaian sesi fleksibel.
+
+---
+
+## Alasan
+
+- Menghindari duplikasi logika perhitungan.
+- Meningkatkan konsistensi hasil perhitungan promo.
+
+---
+
+## Dampak
+
+- Business logic lebih terstruktur.
+- Perawatan dan pengembangan fitur promo menjadi lebih mudah.
+
+---
+
 # Kesimpulan
 
 Refactoring yang dilakukan selama pengembangan proyek berfokus pada peningkatan kualitas struktur kode, modularitas komponen, konsistensi antarmuka, serta kemudahan maintenance tanpa mengubah proses bisnis aplikasi. Dengan struktur yang lebih terorganisir, pengembangan fitur baru dan kolaborasi antar anggota tim dapat dilakukan dengan lebih mudah dan efisien.

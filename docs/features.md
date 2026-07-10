@@ -94,8 +94,10 @@ Fitur ini digunakan untuk melakukan pemesanan Playbox dengan durasi bermain yang
 8. Sistem menyimpan data booking dan menampilkan halaman Booking Berhasil yang berisi informasi booking.
 9. Pelanggan menunjukkan bukti booking dan bukti pembayaran kepada operator.
 10. Operator mencek data booking dan pembayaran.
-11. Operator menekan tombol Mulai Sesi pada dashboard monitoring.
-12. Sistem mengubah status Playbox menjadi Sedang Digunakan dan menghitung waktu bermain sesuai durasi yang dipilih.
+11. Operator menekan tombol Mulai Sesi pada halaman Monitoring Playbox.
+12. Operator dapat menerapkan promo apabila transaksi memenuhi syarat.
+13. Sistem menyimpan promo yang dipilih dan menghitung total pembayaran setelah potongan.
+14. Sistem mengubah status Playbox menjadi Sedang Digunakan dan menghitung waktu bermain sesuai durasi yang dipilih.
 
 ### Route & Controller
 
@@ -131,12 +133,14 @@ Fitur ini memungkinkan pelanggan melakukan booking tanpa menentukan durasi berma
 6. Pelanggan melakukan review booking.
 7. Sistem menyimpan data booking.
 8. Pelanggan menekan tombol Mulai Bermain, kemudian sistem mulai menghitung durasi bermain hingga sesi selesai.
-9. Pelanggan mengakhiri sesi bermain, kemudian sistem menghitung total biaya berdasarkan durasi bermain serta menampilkan kode QRIS dan rincian pembayaran.
-10. Pelanggan melakukan pembayaran menggunakan QRIS.
-11. Sistem mencatat transaksi dengan status Menunggu Verifikasi Pembayaran dan mengirim notifikasi Telegram kepada Operator.
-12. Pembayaran baru muncul otomatis pada halaman Verifikasi Pembayaran Operator tanpa refresh manual.
-13. Operator memeriksa bukti pembayaran, kemudian menyetujui atau menolak pembayaran.
-14. Sistem memperbarui status pembayaran sesuai hasil verifikasi.
+9. Operator dapat menerapkan promo selama sesi berlangsung apabila transaksi memenuhi syarat.
+10. Pelanggan mengakhiri sesi bermain, kemudian sistem menghitung total biaya berdasarkan durasi bermain.
+11. Jika transaksi menggunakan promo, sistem menghitung potongan harga sebelum total pembayaran disimpan.
+12. Pelanggan melakukan pembayaran menggunakan QRIS.
+13. Sistem mencatat transaksi dengan status Menunggu Verifikasi Pembayaran dan mengirim notifikasi Telegram kepada Operator.
+14. Pembayaran baru muncul otomatis pada halaman Verifikasi Pembayaran Operator tanpa refresh manual.
+15. Operator memeriksa bukti pembayaran, kemudian menyetujui atau menolak pembayaran.
+16. Sistem memperbarui status pembayaran sesuai hasil verifikasi.
 
 ### Route & Controller
 
@@ -196,10 +200,11 @@ Monitoring Playbox digunakan untuk memantau kondisi setiap Playbox secara real-t
 2. Admin atau Operator membuka halaman Monitoring Playbox.
 3. Sistem menampilkan daftar Playbox sesuai hak akses.
 4. Operator dapat memulai sesi bermain untuk booking sesi tetap sesuai hak akses masing-masing operator.
-5. Sistem memperbarui status Playbox secara real-time selama sesi berlangsung.
-6. Setelah pelanggan mengakhiri sesi bermain, sistem menampilkan status Menunggu Verifikasi Pembayaran pada sesi flexible.
-7. Operator memverifikasi pembayaran dengan menekan tombol Sudah Bayar.
-8. Sistem mengubah status transaksi menjadi Lunas dan status Playbox kembali menjadi Tersedia.
+5. Operator dapat menerapkan promo pada transaksi yang memenuhi syarat.
+6. Sistem memperbarui status Playbox secara real-time selama sesi berlangsung.
+7. Setelah pelanggan mengakhiri sesi bermain, sistem menampilkan status Menunggu Verifikasi Pembayaran pada sesi fleksibel.
+8. Operator memverifikasi pembayaran dengan menekan tombol Sudah Bayar.
+9. Sistem mengubah status transaksi menjadi Lunas dan status Playbox kembali menjadi Tersedia.
 
 ### Route & Controller
 
@@ -512,7 +517,8 @@ Fitur ini menyediakan laporan dan statistik penggunaan Playbox sebagai bahan eva
 1. Admin berhasil login.
 2. Admin membuka menu Laporan & Statistik.
 3. Sistem menampilkan grafik penggunaan dan statistik pendapatan.
-4. Admin dapat mengunduh laporan sesuai kebutuhan.
+4. Admin dapat mengunduh laporan dalam format PDF dan Excel.
+5. Laporan menampilkan informasi promo, potongan harga, harga sebelum diskon, dan total pembayaran transaksi.
 
 ### Route & Controller
 

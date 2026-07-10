@@ -40,6 +40,10 @@ Dokumentasi proyek disusun agar aplikasi mudah dipasang, dipelihara, dikembangka
 - Monitoring Playbox:
   - Admin memantau seluruh Playbox.
   - Operator memantau Playbox pada cabangnya.
+- Manajemen Promo pada Monitoring Playbox:
+  - Operator dapat menerapkan promo pada transaksi yang sedang berlangsung.
+  - Mendukung promo nominal maupun persentase.
+  - Perhitungan promo dilakukan secara otomatis sesuai jenis sesi.
 - Data Pelanggan:
   - Admin dapat melihat seluruh pelanggan dari semua cabang.
   - Operator hanya dapat melihat pelanggan yang pernah melakukan booking di cabang yang dikelola.
