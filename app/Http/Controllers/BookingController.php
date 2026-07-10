@@ -7,7 +7,9 @@ use App\Models\Playbox;
 use App\Models\Pelanggan;
 use App\Models\Transaksi;
 use App\Models\SesiBermain;
+use App\Models\EventPromo;
 use App\Services\PaymentNotificationService;
+use App\Services\PromoCalculationService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -296,7 +298,7 @@ class BookingController extends Controller
         return redirect()->route('booking.session.flexible');
     }
 
-    public function selesaiSesi()
+    public function selesaiSesi(PromoCalculationService $promoCalculationService)
     {
         $booking = session('booking');
 
@@ -326,12 +328,27 @@ class BookingController extends Controller
                 'status_sesi' => 'Selesai'
             ]);
 
+            $transaksi = Transaksi::find($booking['id_transaksi']);
+            
+            $nilaiPotongan = 0;
+            $totalHargaAkhir = $totalHarga;
+
+            if ($transaksi && $transaksi->id_promo !== null) {
+                $promo = EventPromo::find($transaksi->id_promo);
+                if ($promo) {
+                    $hasil = $promoCalculationService->calculate((float) $totalHarga, $promo);
+                    $nilaiPotongan = $hasil['nilai_potongan'];
+                    $totalHargaAkhir = $hasil['total_harga'];
+                }
+            }
+
             Transaksi::where(
                 'id_transaksi',
                 $booking['id_transaksi']
             )->update([
                 'durasi' => $durasiMenit,
-                'total_harga' => $totalHarga
+                'nilai_potongan' => $nilaiPotongan,
+                'total_harga' => $totalHargaAkhir
             ]);
 
             Playbox::where(
@@ -342,7 +359,7 @@ class BookingController extends Controller
             ]);
 
             $booking['durasi'] = $durasiMenit;
-            $booking['total_harga'] = $totalHarga;
+            $booking['total_harga'] = $totalHargaAkhir;
 
             session([
                 'booking' => $booking

@@ -26,6 +26,9 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menambahkan fitur upload ulang bukti pembayaran apabila bukti ditolak Operator.
 * Menambahkan notifikasi Telegram kepada Operator saat pembayaran baru masuk.
 * Menambahkan pembaruan otomatis daftar Verifikasi Pembayaran tanpa refresh manual.
+* Menambahkan fitur penerapan promo oleh Operator pada Monitoring Playbox.
+* Menambahkan PromoCalculationService sebagai pusat perhitungan diskon promo.
+* Menambahkan penyimpanan nilai potongan promo pada tabel transaksi.
 
 ### Changed
 * Mengarahkan pengguna ke halaman Login setelah proses logout berhasil.
@@ -59,6 +62,8 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Menyesuaikan alur penyelesaian sesi fleksibel agar pembayaran selesai setelah disetujui Operator.
 * Menyesuaikan halaman pembayaran fleksibel menjadi alur QRIS dan upload bukti pembayaran.
 * Menyesuaikan alur bukti pembayaran yang ditolak agar pelanggan dapat mengunggah ulang bukti tanpa mengulangi proses pembayaran.
+* Menyesuaikan perhitungan harga sesi fleksibel agar mendukung promo pada saat sesi selesai.
+* Menyesuaikan laporan PDF dan Excel agar menampilkan informasi promo, potongan, dan harga sebelum diskon.
 
 ### Fixed
 * Memperbaiki jarak antara topbar dan area konten pada beberapa halaman panel Admin agar lebih konsisten.
@@ -70,6 +75,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 * Memperbaiki tampilan banner promo yang terpotong pada halaman Event & Promo pelanggan.
 * Memperbaiki redirect pengguna yang sudah login saat mengakses kembali halaman Login.
 * Memperbaiki penanganan validasi form Event & Promo agar modal Tambah atau Edit yang sesuai terbuka kembali ketika validasi gagal.
+* Memperbaiki pencatatan Riwayat Penggunaan setelah pembayaran sesi fleksibel disetujui sehingga laporan pendapatan menjadi lebih akurat.
 
 ### Documentation
 * Memperbarui dokumentasi fitur Login sesuai alur redirect setelah logout.

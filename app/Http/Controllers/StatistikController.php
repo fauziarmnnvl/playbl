@@ -172,13 +172,19 @@ class StatistikController extends Controller
     {
         list($startDate, $endDate) = $this->getFilterDates($request);
 
-        $transaksi = Transaksi::with(['pelanggan', 'playbox.cabang', 'cabang'])
+        $transaksi = Transaksi::with([
+            'pelanggan', 
+            'playbox.cabang', 
+            'cabang',
+            'eventPromo'
+        ])
             ->whereBetween('tgl_transaksi', [$startDate, $endDate])
             ->orderBy('tgl_transaksi', 'desc')
             ->get();
 
         $totalPendapatan = $transaksi->sum('total_harga');
         $totalTransaksi = $transaksi->count();
+        $totalDiskon = $transaksi->sum('nilai_potongan');
 
         $totalSesi = SesiBermain::whereBetween('waktu_mulai', [$startDate, $endDate])
             ->count();
@@ -234,6 +240,7 @@ class StatistikController extends Controller
             'jenisSesiTerpopuler',
             'ringkasanCabang',
             'cabangTerlaris',
+            'totalDiskon',
             'transaksi'
         ));
 

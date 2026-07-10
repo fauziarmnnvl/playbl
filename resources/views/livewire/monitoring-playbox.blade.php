@@ -10,6 +10,7 @@
                 $pelanggan = $trxAktif?->pelanggan;
                 $jenisSesi = $trxAktif?->jenis_sesi ?? 'Tetap';
                 $isBerjalan = $sesi && $sesi->status_sesi === 'Berjalan';
+                $isExpired = $isBerjalan && $sesi->waktu_selesai && now()->greaterThanOrEqualTo($sesi->waktu_selesai);
 
                 // Card color class
                 $cardClass = match($status) {
@@ -58,10 +59,16 @@
                                 </p>
                             @endif
                             @if($status == 'Digunakan')
-                            <span class="playbox-badge {{ $jenisSesi === 'Fleksibel' ? 'playbox-badge--flex' : '' }}">
-                                Sedang Digunakan
-                            </span>
-                        @endif
+                                @if($isExpired)
+                                    <span class="playbox-badge" style="background-color: #fee2e2; color: #dc2626; border: 1px solid #f87171;">
+                                        Sesi Berakhir
+                                    </span>
+                                @else
+                                    <span class="playbox-badge {{ $jenisSesi === 'Fleksibel' ? 'playbox-badge--flex' : '' }}">
+                                        Sedang Digunakan
+                                    </span>
+                                @endif
+                            @endif
                         </div>
                     </div>
 
@@ -135,6 +142,12 @@
                                     </span>
                                 </div>
                             </div>
+                            
+                            @if($isExpired)
+                            <p style="font-size: 12px; color: #6b7280; margin-top: 8px;">
+                                Menunggu proses otomatis...
+                            </p>
+                            @endif
 
 
                             {{-- Estimasi Biaya --}}
@@ -183,6 +196,36 @@
                                         data-rate="395">
                                     Rp {{ number_format($biayaRealtime, 0, ',', '.') }}
                                 </strong>
+                            </div>
+                        @endif
+
+                        {{-- AREA PROMO --}}
+                        @if ($trxAktif->id_promo === null)
+                            <div class="mon-card__promo-action" style="margin-top:12px; border-top:1px dashed #e2e8f0; padding-top:12px;">
+                                <button wire:click="openPromoModal({{ $trxAktif->id_transaksi }})" wire:loading.attr="disabled" style="width:100%; display:flex; align-items:center; justify-content:center; gap:6px; font-size:13px; padding:6px 12px; color:#475569; border:1px solid #cbd5e1; background:#f8fafc; border-radius:6px; cursor:pointer;">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                                        <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                                    </svg>
+                                    Terapkan Promo
+                                </button>
+                            </div>
+                        @else
+                            <div class="mon-card__promo-info" style="margin-top:12px; border-top:1px dashed #e2e8f0; padding-top:12px; font-size:13px;">
+                                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                    <span style="color:#64748b;">Promo</span>
+                                    <strong style="color:#0f172a;">{{ $trxAktif->eventPromo?->nama_promo ?? '-' }}</strong>
+                                </div>
+                                <div style="display:flex; justify-content:space-between;">
+                                    <span style="color:#64748b;">Potongan</span>
+                                    <strong style="color:#10b981;">
+                                        @if ($jenisSesi === 'Fleksibel' && $trxAktif->nilai_potongan == 0)
+                                            Dihitung saat sesi selesai
+                                        @else
+                                            - Rp{{ number_format($trxAktif->nilai_potongan, 0, ',', '.') }}
+                                        @endif
+                                    </strong>
+                                </div>
                             </div>
                         @endif
 
@@ -245,6 +288,74 @@
             </div>
         @endforeach
     </div>
+
+    {{-- MODAL PROMO --}}
+    @if ($showPromoModal)
+    <div class="promo-modal-overlay" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:9999; display:flex; align-items:center; justify-content:center; padding:20px;">
+        <div class="promo-modal-content" style="background:#fff; border-radius:12px; width:100%; max-width:450px; max-height:90vh; display:flex; flex-direction:column; box-shadow:0 10px 25px rgba(0,0,0,0.1);" role="dialog" aria-modal="true">
+            {{-- Header --}}
+            <div style="padding:16px 20px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="margin:0; font-size:16px; font-weight:600; color:#0f172a;">Terapkan Promo</h3>
+                <button wire:click="closePromoModal" style="background:none; border:none; cursor:pointer; color:#64748b; padding:4px;">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            {{-- Body --}}
+            <div style="padding:20px; overflow-y:auto; flex:1;">
+                <p style="margin:0 0 16px 0; font-size:14px; color:#475569; line-height:1.5;">
+                    Pilih promo setelah memastikan pelanggan telah memenuhi syarat atau challenge.
+                    <br><br>
+                    <span style="font-size:13px; color:#64748b;">
+                        * Promo akan diterapkan setelah operator memverifikasi syarat promo.
+                    </span>
+                </p>
+
+                <div style="display:flex; flex-direction:column; gap:12px;">
+                    @foreach ($promoAktif as $promo)
+                        <label style="display:flex; gap:12px; padding:16px; border:2px solid {{ $selectedPromoId === $promo['id_promo'] ? '#3b82f6' : '#e2e8f0' }}; border-radius:8px; cursor:pointer; transition:all 0.2s; background:{{ $selectedPromoId === $promo['id_promo'] ? '#eff6ff' : '#fff' }};">
+                            <input type="radio" wire:model="selectedPromoId" value="{{ $promo['id_promo'] }}" style="margin-top:2px;">
+                            <div style="flex:1;">
+                                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                    <strong style="color:#0f172a; font-size:15px;">{{ $promo['nama_promo'] }}</strong>
+                                    <span style="color:#10b981; font-weight:600; font-size:14px;">
+                                        @if ($promo['tipe_diskon'] === 'Nominal')
+                                            Rp{{ number_format($promo['nilai_diskon'], 0, ',', '.') }}
+                                        @else
+                                            {{ floatval($promo['nilai_diskon']) }}%
+                                        @endif
+                                    </span>
+                                </div>
+                                <div style="font-size:12px; color:#64748b; margin-bottom:8px;">
+                                    Berlaku: {{ \Carbon\Carbon::parse($promo['tanggal_mulai'])->format('d M Y') }} - {{ \Carbon\Carbon::parse($promo['tanggal_selesai'])->format('d M Y') }}
+                                </div>
+                                @if (!empty($promo['deskripsi']))
+                                    <div style="font-size:13px; color:#475569; line-height:1.4; background:#f8fafc; padding:8px; border-radius:6px;">
+                                        {{ $promo['deskripsi'] }}
+                                    </div>
+                                @endif
+                            </div>
+                        </label>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- Footer --}}
+            <div style="padding:16px 20px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:12px; background:#f8fafc; border-bottom-left-radius:12px; border-bottom-right-radius:12px;">
+                <button wire:click="closePromoModal" class="btn" style="padding:8px 16px; border:1px solid #cbd5e1; background:#fff; color:#475569; border-radius:6px; cursor:pointer;">
+                    Batal
+                </button>
+                <button wire:click="applyPromo" wire:loading.attr="disabled" wire:target="applyPromo" class="btn btn-primary" style="padding:8px 16px; cursor:pointer;" @disabled(!$selectedPromoId)>
+                    <span wire:loading.remove wire:target="applyPromo">Terapkan Promo</span>
+                    <span wire:loading wire:target="applyPromo">Memproses...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    @endif
 
     {{-- JavaScript Countdown & Count-Up Timer --}}
     <script>

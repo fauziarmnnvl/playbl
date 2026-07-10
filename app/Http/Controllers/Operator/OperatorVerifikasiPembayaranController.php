@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Operator;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaksi;
+use App\Models\RiwayatPenggunaan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OperatorVerifikasiPembayaranController extends Controller
 {
@@ -79,10 +81,20 @@ class OperatorVerifikasiPembayaranController extends Controller
             403
         );
 
-        $transaksi->update([
-            'status_pembayaran' => Transaksi::STATUS_DISETUJUI,
-            'waktu_verifikasi' => now(),
-        ]);
+        DB::transaction(function () use ($transaksi) {
+            $transaksi->update([
+                'status_pembayaran' => Transaksi::STATUS_DISETUJUI,
+                'waktu_verifikasi' => now(),
+            ]);
+
+            RiwayatPenggunaan::firstOrCreate(
+                ['id_transaksi' => $transaksi->id_transaksi],
+                [
+                    'tanggal_main' => today(),
+                    'pendapatan'   => $transaksi->total_harga,
+                ]
+            );
+        });
 
         return redirect()
             ->route('operator.verifikasi-pembayaran')
