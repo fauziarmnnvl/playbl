@@ -24,6 +24,7 @@ class Transaksi extends Model
         'id_promo',
         'durasi',
         'total_harga',
+        'nilai_potongan',
         'jenis_sesi',
         'bukti_pembayaran',
         'status_pembayaran',
@@ -34,6 +35,7 @@ class Transaksi extends Model
 
     protected $casts = [
         'total_harga' => 'decimal:2',
+        'nilai_potongan' => 'decimal:2',
         'tgl_transaksi' => 'datetime',
         'waktu_pembayaran' => 'datetime',
         'waktu_verifikasi' => 'datetime',

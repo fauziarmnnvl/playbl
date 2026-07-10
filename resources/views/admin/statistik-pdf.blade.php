@@ -65,7 +65,7 @@
         }
 
         .kpi-card{
-            width:25%;
+            width:20%;
             padding:13px 11px;
             vertical-align:top;
             background:#f8fafc;
@@ -220,6 +220,13 @@
             </td>
 
             <td class="kpi-card">
+                <div class="kpi-label">Total Diskon Diberikan</div>
+                <div class="kpi-value">
+                    Rp {{ number_format($totalDiskon,0,',','.') }}
+                </div>
+            </td>
+
+            <td class="kpi-card">
                 <div class="kpi-label">Total Transaksi</div>
                 <div class="kpi-value">
                     {{ number_format($totalTransaksi,0,',','.') }}
@@ -322,14 +329,17 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th style="width:4%">No</th>
-                    <th style="width:15%">Tanggal</th>
-                    <th style="width:16%">Pelanggan</th>
-                    <th style="width:15%">Cabang</th>
-                    <th style="width:11%">Playbox</th>
-                    <th style="width:13%">Jenis Sesi</th>
-                    <th style="width:10%">Durasi</th>
-                    <th class="text-right" style="width:16%">Total</th>
+                    <th style="width:3%">No</th>
+                    <th style="width:11%">Tanggal</th>
+                    <th style="width:12%">Pelanggan</th>
+                    <th style="width:12%">Cabang</th>
+                    <th style="width:10%">Playbox</th>
+                    <th style="width:10%">Jenis Sesi</th>
+                    <th style="width:6%">Durasi</th>
+                    <th class="text-right" style="width:10%">Harga Awal</th>
+                    <th style="width:10%">Promo</th>
+                    <th class="text-right" style="width:8%">Potongan</th>
+                    <th class="text-right" style="width:8%">Total Bayar</th>
                 </tr>
             </thead>
             <tbody>
@@ -351,7 +361,14 @@
                             {{ $item->durasi == 0 ? 'Fleksibel' : $item->durasi.' menit' }}
                         </td>
                         <td class="text-right">
-                            Rp {{ number_format($item->total_harga,0,',','.') }}
+                            Rp {{ number_format($item->total_harga + $item->nilai_potongan, 0, ',', '.') }}
+                        </td>
+                        <td>{{ $item->eventPromo?->nama_promo ?? '-' }}</td>
+                        <td class="text-right">
+                            Rp {{ number_format($item->nilai_potongan, 0, ',', '.') }}
+                        </td>
+                        <td class="text-right">
+                            Rp {{ number_format($item->total_harga, 0, ',', '.') }}
                         </td>
                     </tr>
                 @endforeach
