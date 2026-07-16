@@ -6,13 +6,91 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ## [Belum Dirilis]
 
-
 ### Added
+* Menambahkan dukungan QRIS berbeda untuk setiap cabang melalui kolom `qris` pada data Cabang.
+* Menambahkan penyimpanan path gambar QRIS pada tabel `cabang`.
+* Menambahkan deskripsi dinamis pada data Event & Promo.
+* Menambahkan dukungan upload banner promo melalui Laravel Storage.
+* Menambahkan fitur Data Pelanggan untuk Operator berdasarkan cabang yang dikelola.
+* Menambahkan pencarian otomatis Data Pelanggan berdasarkan nama dan nomor HP tanpa perlu menekan Enter.
+* Menambahkan notifikasi SweetAlert toast saat nomor HP pelanggan berhasil disalin.
+* Menambahkan fitur Verifikasi Pembayaran untuk Operator pada sesi fleksibel.
+* Menambahkan daftar pembayaran sesi fleksibel yang menunggu verifikasi berdasarkan cabang Operator.
+* Menambahkan modal untuk melihat bukti pembayaran pelanggan.
+* Menambahkan proses persetujuan dan penolakan pembayaran.
+* Menambahkan modal konfirmasi sebelum pembayaran disetujui atau ditolak.
+* Menambahkan status pembayaran serta waktu pembayaran dan waktu verifikasi pada transaksi.
+* Menambahkan fitur upload bukti pembayaran untuk penyelesaian sesi fleksibel.
+* Menambahkan halaman Menunggu Verifikasi Pembayaran pada sisi pelanggan.
+* Menambahkan pengecekan status pembayaran secara otomatis setelah bukti dikirim.
+* Menambahkan fitur upload ulang bukti pembayaran apabila bukti ditolak Operator.
+* Menambahkan notifikasi Telegram kepada Operator saat pembayaran baru masuk.
+* Menambahkan pembaruan otomatis daftar Verifikasi Pembayaran tanpa refresh manual.
+* Menambahkan fitur penerapan promo oleh Operator pada Monitoring Playbox.
+* Menambahkan PromoCalculationService sebagai pusat perhitungan diskon promo.
+* Menambahkan penyimpanan nilai potongan promo pada tabel transaksi.
 
 ### Changed
+* Mengarahkan pengguna ke halaman Login setelah proses logout berhasil.
+* Menyempurnakan responsivitas Landing Page dan seluruh alur Booking pada berbagai ukuran layar.
+* Menyempurnakan responsivitas panel Admin, termasuk layout, toolbar, pencarian, filter, tabel, pagination, dan tombol aksi.
+* Menyempurnakan carousel Koleksi Game agar tampilan cover lebih proporsional dan perulangan carousel berjalan dengan baik.
+* Menyempurnakan tampilan grafik dan legend pada halaman Laporan & Statistik.
+* Menyesuaikan proses Booking agar hanya menampilkan cabang yang berstatus Aktif.
+* Menyesuaikan Manajemen Operator agar hanya menyediakan cabang Aktif untuk Operator baru tanpa menghilangkan data Operator pada cabang Nonaktif.
+* Halaman Pembayaran Booking Sesi Tetap kini menampilkan QRIS sesuai cabang yang dipilih pelanggan.
+* Halaman Pembayaran Booking Sesi Fleksibel kini menampilkan QRIS sesuai cabang tempat pelanggan bermain.
+* Memigrasikan pengelolaan media Cabang, Game, dan Event & Promo dari `public/images` ke Laravel Storage.
+* Menyesuaikan proses upload dan penampilan gambar menggunakan `Storage::url()`.
+* Menambahkan pagination pada halaman Manajemen Playbox.
+* Mengurutkan daftar Playbox berdasarkan Cabang dan kode Playbox.
+* Mencegah pemilihan cabang berstatus Nonaktif saat menambahkan Playbox.
+* Menyempurnakan tampilan halaman Manajemen Playbox, Manajemen Game, Manajemen Cabang, Riwayat Aktivitas, dan beberapa section pada Landing Page.
+* Mengganti deskripsi promo yang sebelumnya hardcoded menjadi data dinamis dari database.
+* Menyempurnakan tampilan banner pada halaman Event & Promo pelanggan.
+* Menyesuaikan layout Promo Lainnya agar banner ditampilkan secara lebih proporsional.
+* Menambahkan pagination pada halaman Data Pelanggan dan Riwayat Bermain.
+* Menyesuaikan Data Pelanggan Operator agar hanya menampilkan pelanggan yang pernah melakukan booking di cabang yang dikelola.
+* Menyesuaikan perhitungan Total Booking dan Terakhir Bermain pada halaman Data Pelanggan Operator berdasarkan transaksi di cabang Operator.
+* Menyesuaikan struktur sidebar Operator menjadi Menu Utama, Transaksi, Data, dan Laporan.
+* Mengarahkan pengguna yang sudah login ke halaman sesuai role saat mengakses kembali route `/login`.
+* Mengubah alur Tambah dan Edit Event & Promo dari halaman terpisah menjadi modal popup pada halaman daftar promo.
+* Mengubah alur Tambah dan Edit Manajemen Playbox, Game, Cabang, dan Operator dari halaman terpisah menjadi modal popup.
+* Menyesuaikan alur sesi fleksibel agar sesi dimulai setelah pembayaran awal disetujui Operator.
+* Menyesuaikan Monitoring Playbox agar Playbox langsung menampilkan sesi fleksibel aktif setelah pembayaran disetujui.
+* Menyesuaikan sidebar Operator dengan mengaktifkan akses menu Verifikasi Pembayaran.
+* Menyesuaikan alur penyelesaian sesi fleksibel agar pembayaran selesai setelah disetujui Operator.
+* Menyesuaikan halaman pembayaran fleksibel menjadi alur QRIS dan upload bukti pembayaran.
+* Menyesuaikan alur bukti pembayaran yang ditolak agar pelanggan dapat mengunggah ulang bukti tanpa mengulangi proses pembayaran.
+* Menyesuaikan perhitungan harga sesi fleksibel agar mendukung promo pada saat sesi selesai.
+* Menyesuaikan laporan PDF dan Excel agar menampilkan informasi promo, potongan, dan harga sebelum diskon.
+
+### Fixed
+* Memperbaiki jarak antara topbar dan area konten pada beberapa halaman panel Admin agar lebih konsisten.
+* Memperbaiki halaman Event & Promo yang sebelumnya terlihat kosong saat tidak ada promo dengan menambahkan empty state.
+* Memperbaiki tampilan beberapa komponen yang tidak proporsional pada perangkat mobile.
+* Memperbaiki tampilan pencarian, filter, jenis sesi, dan informasi cabang pada beberapa halaman Admin.
+* Memperbaiki banner promo yang tidak tampil pada halaman Manajemen Event & Promo.
+* Memperbaiki status promo aktif yang sebelumnya dapat ditampilkan sebagai Nonaktif meskipun periode promo belum berakhir.
+* Memperbaiki tampilan banner promo yang terpotong pada halaman Event & Promo pelanggan.
+* Memperbaiki redirect pengguna yang sudah login saat mengakses kembali halaman Login.
+* Memperbaiki penanganan validasi form Event & Promo agar modal Tambah atau Edit yang sesuai terbuka kembali ketika validasi gagal.
+* Memperbaiki pencatatan Riwayat Penggunaan setelah pembayaran sesi fleksibel disetujui sehingga laporan pendapatan menjadi lebih akurat.
 
 ### Documentation
-
+* Memperbarui dokumentasi fitur Login sesuai alur redirect setelah logout.
+* Memperbarui dokumentasi fitur Event & Promo sesuai penanganan kondisi saat promo tidak tersedia.
+* Memperbarui dokumentasi fitur sesuai penanganan cabang Nonaktif pada Booking dan Manajemen Operator.
+* Memperbarui dokumentasi refactoring sesuai penyempurnaan responsivitas antarmuka aplikasi.
+* Memperbarui CHANGELOG sesuai implementasi QRIS dinamis berdasarkan cabang.
+* Memperbarui CHANGELOG sesuai implementasi migrasi media ke Laravel Storage.
+* Memperbarui CHANGELOG sesuai penyempurnaan data, status, dan tampilan banner Event & Promo.
+* Memperbarui dokumentasi fitur Data Pelanggan sesuai implementasi akses Admin dan Operator.
+* Memperbarui README sesuai penambahan akses Data Pelanggan untuk Operator.
+* Memperbarui CHANGELOG sesuai implementasi fitur Verifikasi Pembayaran sesi fleksibel.
+* Memperbarui CHANGELOG sesuai implementasi alur pembayaran dan verifikasi akhir sesi fleksibel.
+* Memperbarui dokumentasi refactoring sesuai penyempurnaan alur pembayaran sesi fleksibel.
+* Memperbarui dokumentasi fitur Verifikasi Pembayaran sesuai implementasi notifikasi dan pembaruan otomatis.
 
 ## [0.3.0] - 3 Juli 2026
 

@@ -1,20 +1,20 @@
-<section class="bg-[#081327] py-28">
+<section class="bg-[#081327] py-16 md:py-28">
 
     <div class="max-w-7xl mx-auto px-8">
 
         <div class="text-center">
 
-            <h2 class="text-5xl font-bold">
+            <h2 class="text-4xl md:text-5xl font-bold">
                 Cara Bermain
             </h2>
 
-            <p class="text-gray-400 mt-4">
+            <p class="text-gray-400 mt-4 text-sm md:text-base">
                 Hanya butuh beberapa langkah mudah untuk mulai seru-seruan bareng teman.
             </p>
 
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8 mt-20">
+        <div class="grid md:grid-cols-3 gap-6 md:gap-8 mt-12 md:mt-20">
 
             <div class="bg-[#172742] border border-white/10 rounded-3xl p-8 relative">
 
@@ -41,11 +41,11 @@
 
                     </div>
                 
-                    <h3 class="text-2xl font-semibold mt-6">
+                    <h3 class="text-xl md:text-2xl font-semibold mt-4 md:mt-6">
                         Booking
                     </h3>
 
-                    <p class="text-gray-400 mt-4">
+                    <p class="text-gray-400 mt-3 md:mt-4 text-sm md:text-base">
                         Buka website kami kemudian lakukan proses booking sesuai dengan tahapannya.
                     </p>
 
@@ -83,11 +83,11 @@
 
                     </div>
 
-                    <h3 class="text-2xl font-semibold mt-6">
+                    <h3 class="text-xl md:text-2xl font-semibold mt-4 md:mt-6">
                         Bayar
                     </h3>
 
-                    <p class="text-gray-400 mt-4">
+                    <p class="text-gray-400 mt-3 md:mt-4 text-sm md:text-base">
                         Pilih durasi bermain dan selesaikan pembayaran.
                     </p>
 
@@ -131,11 +131,11 @@
 
                     </div>
 
-                    <h3 class="text-2xl font-semibold mt-6">
+                    <h3 class="text-xl md:text-2xl font-semibold mt-4 md:mt-6">
                         Ambil & Main
                     </h3>
 
-                    <p class="text-gray-400 mt-4">
+                    <p class="text-gray-400 mt-3 md:mt-4 text-sm md:text-base">
                         Ambil Playbox, bawa ke meja, dan mulai bermain.
                     </p>
 

@@ -1,13 +1,14 @@
-<section class="relative bg-black py-28 overflow-hidden">
+<section class="relative bg-black py-16 md:py-28 overflow-hidden">
     <div class="max-w-7xl mx-auto px-8">
-        <h2 class="text-5xl md:text-6xl font-bold text-center">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-center">
             Koleksi
-            <span class="bg-gradient-to-r from-[#A855F7] via-[#8B5CF6] to-[#60A5FA] bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+            <span
+                class="bg-gradient-to-r from-[#A855F7] via-[#8B5CF6] to-[#60A5FA] bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
                 Game
             </span>
         </h2>
 
-        <p class="text-gray-400 text-center mt-4">
+        <p class="text-gray-400 text-center mt-4 text-sm md:text-base">
             Pilih game favoritmu
         </p>
 
@@ -21,8 +22,7 @@
         <div class="swiper-wrapper">
             @forelse($featuredGames as $game)
                 <div class="swiper-slide">
-                    <img
-                        src="{{ $game->cover_image ? asset($game->cover_image) : asset('images/no-image.png') }}"
+                    <img src="{{ $game->cover_image ? Storage::url($game->cover_image) : asset('images/no-image.png') }}"
                         alt="{{ $game->judul_game }}">
                 </div>
             @empty
@@ -36,16 +36,51 @@
 </section>
 
 <script>
-window.addEventListener("load", () => {
-    new Swiper(".gameSwiper", {
-        effect: "coverflow",
-        centeredSlides: true,
-        slidesPerView: 3,
-        spaceBetween: 30,
-        loop: true,
-        grabCursor: true,
-        autoplay: { delay: 2500, disableOnInteraction: false, },
-        coverflowEffect: { rotate: 0, stretch: 0, depth: 250, modifier: 1, scale: 0.85, slideShadows: false, },
+    window.addEventListener("load", () => {
+        new Swiper(".gameSwiper", {
+            effect: "coverflow",
+            centeredSlides: true,
+            loop: true,
+            grabCursor: true,
+            autoplay: { delay: 2500, disableOnInteraction: false },
+
+            // Mobile-first config
+            slidesPerView: "auto",
+            spaceBetween: 12,
+            coverflowEffect: {
+                rotate: 0,
+                stretch: 0,
+                depth: 80,
+                modifier: 1,
+                scale: 0.9,
+                slideShadows: false
+            },
+
+            breakpoints: {
+                640: {
+                    spaceBetween: 20,
+                    coverflowEffect: {
+                        rotate: 0,
+                        stretch: 0,
+                        depth: 150,
+                        modifier: 1,
+                        scale: 0.9,
+                        slideShadows: false
+                    }
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                    coverflowEffect: {
+                        rotate: 0,
+                        stretch: 0,
+                        depth: 250,
+                        modifier: 1,
+                        scale: 0.85,
+                        slideShadows: false
+                    }
+                }
+            }
+        });
     });
-});
 </script>

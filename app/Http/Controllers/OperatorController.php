@@ -18,26 +18,14 @@ class OperatorController extends Controller
             ->where('role', 'operator')
             ->get();
 
-        return view('admin.operator.index', compact('operators'));
-    }
-
-    /**
-     * Tampilkan form tambah operator baru.
-     */
-    public function create()
-    {
         $cabangs = Cabang::all();
 
-        return view('admin.operator.create', compact('cabangs'));
+        return view('admin.operator.index', compact('operators', 'cabangs'));
     }
 
-    /**
-     * Simpan data operator baru.
-     * BR-02: Username unik. BR-03: Force role operator. BR-04: Wajib cabang.
-     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validated = $request->validateWithBag('createOperator', [
             'nama'        => 'required|string|max:100',
             'username'    => 'required|string|max:50|unique:users,username',
             'email'       => 'required|email|max:100|unique:users,email',
@@ -45,6 +33,13 @@ class OperatorController extends Controller
             'id_cabang'   => 'required|exists:cabang,id_cabang',
             'telegram_id' => 'nullable|string|max:50',
         ]);
+
+        $cabang = Cabang::find($validated['id_cabang']);
+        if (!$cabang || !$cabang->status_buka) {
+            return back()
+                ->withErrors(['id_cabang' => 'Cabang yang dipilih sedang nonaktif dan tidak dapat digunakan untuk penempatan operator.'], 'createOperator')
+                ->withInput();
+        }
 
         User::create([
             'nama'      => $validated['nama'],
@@ -62,17 +57,6 @@ class OperatorController extends Controller
     }
 
     /**
-     * Tampilkan form edit operator.
-     */
-    public function edit($id)
-    {
-        $operator = User::findOrFail($id);
-        $cabangs = Cabang::all();
-
-        return view('admin.operator.edit', compact('operator', 'cabangs'));
-    }
-
-    /**
      * Update data operator.
      * Password hanya diupdate jika field diisi.
      */
@@ -80,7 +64,10 @@ class OperatorController extends Controller
     {
         $operator = User::findOrFail($id);
 
-        $validated = $request->validate([
+        // Simpan ID untuk membuka kembali modal yang benar jika validasi gagal
+        $request->session()->flash('edit_operator_id', $id);
+
+        $validated = $request->validateWithBag('editOperator', [
             'nama'        => 'required|string|max:100',
             'username'    => 'required|string|max:50|unique:users,username,' . $operator->id,
             'email'       => 'required|email|max:100|unique:users,email,' . $operator->id,
@@ -88,6 +75,16 @@ class OperatorController extends Controller
             'id_cabang'   => 'required|exists:cabang,id_cabang',
             'telegram_id' => 'nullable|string|max:50',
         ]);
+
+        // Cek cabang pindahan
+        if ($validated['id_cabang'] != $operator->id_cabang) {
+            $cabangBaru = Cabang::find($validated['id_cabang']);
+            if (!$cabangBaru || !$cabangBaru->status_buka) {
+                return back()
+                    ->withErrors(['id_cabang' => 'Cabang tujuan saat ini sedang tidak aktif.'], 'editOperator')
+                    ->withInput();
+            }
+        }
 
         $data = [
             'nama'      => $validated['nama'],
@@ -121,13 +118,5 @@ class OperatorController extends Controller
         return redirect()
             ->route('admin.operator.index')
             ->with('success', 'Operator berhasil dihapus.');
-    }
-
-    /**
-     * Show — redirect ke index.
-     */
-    public function show($id)
-    {
-        return redirect()->route('admin.operator.index');
     }
 }

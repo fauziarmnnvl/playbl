@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EventPromo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EventPromoController extends Controller
 {
@@ -17,11 +18,11 @@ class EventPromoController extends Controller
         // Filter tabs
         if ($request->status === 'aktif') {
             $query->where('tanggal_mulai', '<=', today())
-                  ->where('tanggal_selesai', '>=', today());
+                ->where('tanggal_selesai', '>=', today());
         } elseif ($request->status === 'nonaktif') {
             $query->where(function ($q) {
                 $q->where('tanggal_mulai', '>', today())
-                  ->orWhere('tanggal_selesai', '<', today());
+                ->orWhere('tanggal_selesai', '<', today());
             });
         }
 
@@ -31,37 +32,31 @@ class EventPromoController extends Controller
     }
 
     /**
-     * Tampilkan form tambah promo baru.
-     */
-    public function create()
-    {
-        return view('admin.promo.create');
-    }
-
-    /**
      * Simpan data promo baru ke database.
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nama_promo'       => 'required|string|max:100',
-            'tipe_diskon'      => 'required|in:Nominal,Persentase',
-            'nilai_diskon'     => 'required|numeric|min:0',
-            'tanggal_mulai'    => 'required|date',
-            'tanggal_selesai'  => 'required|date|after_or_equal:tanggal_mulai',
-            'banner_promo'     => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        $validated = $request->validateWithBag('createPromo', [
+            'nama_promo' => 'required|string|max:100',
+            'deskripsi' => 'required|string|max:1000',
+            'tipe_diskon' => 'required|in:Nominal,Persentase',
+            'nilai_diskon' => 'required|numeric|min:0',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'banner_promo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         // Validasi tambahan: persentase max 100
         if ($request->tipe_diskon === 'Persentase' && $request->nilai_diskon > 100) {
-            return back()->withErrors(['nilai_diskon' => 'Nilai diskon persentase maksimal 100%.'])->withInput();
+            return back()
+                ->withErrors(['nilai_diskon' => 'Nilai diskon persentase maksimal 100%.'], 'createPromo')
+                ->withInput();
         }
 
         if ($request->hasFile('banner_promo')) {
-            $file = $request->file('banner_promo');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('images/event-promo'), $filename);
-            $validated['banner_promo'] = 'images/event-promo/'.$filename;
+            $validated['banner_promo'] = $request
+                ->file('banner_promo')
+                ->store('promo', 'public');
         }
 
         EventPromo::create($validated);
@@ -71,16 +66,7 @@ class EventPromoController extends Controller
             ->with('success', 'Promo berhasil ditambahkan.');
     }
 
-    /**
-     * Tampilkan form edit promo.
-     */
-    public function edit($id)
-    {
-        $promo = EventPromo::findOrFail($id);
-
-        return view('admin.promo.edit', compact('promo'));
-    }
-
+    
     /**
      * Update data promo di database.
      */
@@ -88,29 +74,35 @@ class EventPromoController extends Controller
     {
         $promo = EventPromo::findOrFail($id);
 
-        $validated = $request->validate([
-            'nama_promo'       => 'required|string|max:100',
-            'tipe_diskon'      => 'required|in:Nominal,Persentase',
-            'nilai_diskon'     => 'required|numeric|min:0',
-            'tanggal_mulai'    => 'required|date',
-            'tanggal_selesai'  => 'required|date|after_or_equal:tanggal_mulai',
-            'banner_promo'     => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        $request->session()->flash('edit_promo_id', $id);
+
+        $validated = $request->validateWithBag('editPromo', [
+            'nama_promo' => 'required|string|max:100',
+            'deskripsi' => 'required|string|max:1000',
+            'tipe_diskon' => 'required|in:Nominal,Persentase',
+            'nilai_diskon' => 'required|numeric|min:0',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'banner_promo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         // Validasi tambahan: persentase max 100
         if ($request->tipe_diskon === 'Persentase' && $request->nilai_diskon > 100) {
-            return back()->withErrors(['nilai_diskon' => 'Nilai diskon persentase maksimal 100%.'])->withInput();
+            return back()
+                ->withErrors(['nilai_diskon' => 'Nilai diskon persentase maksimal 100%.'], 'editPromo')
+                ->withInput();
         }
 
         if ($request->hasFile('banner_promo')) {
-            if ($promo->banner_promo && file_exists(public_path($promo->banner_promo))) {
-                unlink(public_path($promo->banner_promo));
+            // Hapus banner lama dari storage
+            if ($promo->banner_promo &&
+                Storage::disk('public')->exists($promo->banner_promo)) {
+                Storage::disk('public')->delete($promo->banner_promo);
             }
 
-            $file = $request->file('banner_promo');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('images/event-promo'), $filename);
-            $validated['banner_promo'] = 'images/event-promo/'.$filename;
+            $validated['banner_promo'] = $request
+                ->file('banner_promo')
+                ->store('promo', 'public');
         }
 
         $promo->update($validated);
@@ -127,9 +119,10 @@ class EventPromoController extends Controller
     {
         $promo = EventPromo::findOrFail($id);
 
-        // Hapus banner
-        if ($promo->banner_promo && file_exists(public_path($promo->banner_promo))) {
-            unlink(public_path($promo->banner_promo));
+        // Hapus banner dari storage
+        if ($promo->banner_promo &&
+            Storage::disk('public')->exists($promo->banner_promo)) {
+            Storage::disk('public')->delete($promo->banner_promo);
         }
 
         $promo->delete();
@@ -139,18 +132,10 @@ class EventPromoController extends Controller
             ->with('success', 'Promo berhasil dihapus.');
     }
 
-    /**
-     * Show — redirect ke index.
-     */
-    public function show($id)
-    {
-        return redirect()->route('admin.promo.index');
-    }
-
     public function publicPromo()
     {
-        $promoList = EventPromo::where('tanggal_mulai', '<=', now())
-            ->where('tanggal_selesai', '>=', now())
+        $promoList = EventPromo::whereDate('tanggal_mulai', '<=', today())
+            ->whereDate('tanggal_selesai', '>=', today())
             ->orderBy('tanggal_selesai')
             ->get();
 

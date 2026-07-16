@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'BoxPlay.id Admin')</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +19,7 @@
 <body>
     <div class="admin-wrapper">
         {{-- ========== SIDEBAR ========== --}}
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
         <aside class="admin-sidebar" id="adminSidebar">
             <div class="sidebar-brand">
                 <img
@@ -51,6 +55,37 @@
                     </a>
                     @endif
                 </div>
+
+                {{-- TRANSAKSI — Operator Only --}}
+                @if (auth()->user()->role === 'operator')
+                <div class="sidebar-group">
+                    <span class="sidebar-group-label">Transaksi</span>
+
+                    <a href="{{ route('operator.verifikasi-pembayaran') }}"
+                        class="sidebar-link {{ request()->routeIs('operator.verifikasi-pembayaran') ? 'active' : '' }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4"/>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                        </svg>
+                        <span>Verifikasi Pembayaran</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-group">
+                    <span class="sidebar-group-label">Data</span>
+
+                    <a href="{{ route('operator.pelanggan') }}"
+                    class="sidebar-link {{ request()->routeIs('operator.pelanggan') ? 'active' : '' }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        <span>Data Pelanggan</span>
+                    </a>
+                </div>
+                @endif
 
                 {{-- DATA (MASTER) — Admin Only --}}
                 @if (auth()->user()->role === 'admin')
@@ -212,8 +247,20 @@
     {{-- Sidebar toggle script --}}
     <script>
         document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.getElementById('adminSidebar').classList.toggle('collapsed');
-            document.querySelector('.admin-main').classList.toggle('expanded');
+            if (window.innerWidth < 1024) {
+                document.getElementById('adminSidebar').classList.add('show');
+                document.getElementById('sidebarOverlay').classList.add('show');
+                document.body.classList.add('sidebar-open');
+            } else {
+                document.getElementById('adminSidebar').classList.toggle('collapsed');
+                document.querySelector('.admin-main').classList.toggle('expanded');
+            }
+        });
+
+        document.getElementById('sidebarOverlay')?.addEventListener('click', function() {
+            document.getElementById('adminSidebar').classList.remove('show');
+            document.getElementById('sidebarOverlay').classList.remove('show');
+            document.body.classList.remove('sidebar-open');
         });
 
         // Auto-dismiss flash messages after 5 seconds

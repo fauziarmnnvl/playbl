@@ -7,7 +7,11 @@ use App\Models\Playbox;
 use App\Models\Pelanggan;
 use App\Models\Transaksi;
 use App\Models\SesiBermain;
+use App\Models\EventPromo;
+use App\Services\PaymentNotificationService;
+use App\Services\PromoCalculationService;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -44,7 +48,7 @@ class BookingController extends Controller
     // cabang
     public function cabang()
     {
-        $cabangs = Cabang::all();
+        $cabangs = Cabang::where('status_buka', true)->get();
         return view('bookings.cabang', compact('cabangs'));
     }
     public function storeCabang(Request $request)
@@ -86,6 +90,20 @@ class BookingController extends Controller
             return redirect()->route('booking.cabang');
         }
 
+        // Validasi ulang: Cabang masih aktif di database
+        $cabang = Cabang::where('id_cabang', $booking['id_cabang'])->first();
+        if (!$cabang || !$cabang->status_buka) {
+            unset($booking['id_cabang']);
+            unset($booking['id_playbox']);
+            unset($booking['jenis_sesi']);
+            unset($booking['durasi']);
+            unset($booking['total_harga']);
+            session(['booking' => $booking]);
+            
+            return redirect()->route('booking.cabang')
+                ->withErrors(['branch' => 'Cabang yang sebelumnya dipilih sudah tidak tersedia. Silakan pilih cabang lain.']);
+        }
+
         $playboxes = Playbox::where('id_cabang', $booking['id_cabang'])
             ->orderBy('nama_playbox')
             ->get();
@@ -98,13 +116,21 @@ class BookingController extends Controller
         $request->validate(['playbox' => 'required',]);
 
         $booking = session('booking', []);
+        
+        $cabang = Cabang::where('id_cabang', $booking['id_cabang'])->first();
+        if (!$cabang || !$cabang->status_buka) {
+            return back()->withErrors([
+                'playbox' => 'Cabang saat ini tidak tersedia untuk pemesanan.'
+            ]);
+        }
+
         $playbox = Playbox::where('id_playbox', $request->playbox)
             ->where('id_cabang', $booking['id_cabang'])
             ->where('status_unit', 'Tersedia')
             ->first();
         if (!$playbox) {
             return back()->withErrors([
-                'playbox' => 'Playbox tidak tersedia.'
+                'playbox' => 'Playbox tidak tersedia atau bukan milik cabang ini.'
             ]);
         }
 
@@ -196,6 +222,11 @@ class BookingController extends Controller
             return redirect()->route('booking.info');
         }
 
+        $guardError = $this->validateBookingFinalGuard($booking);
+        if ($guardError) {
+            return redirect()->route('booking.cabang')->withErrors(['branch' => $guardError]);
+        }
+
         DB::transaction(function () use (&$booking) {
             $pelanggan = Pelanggan::firstOrCreate(
                 ['no_hp' => $booking['no_hp']],
@@ -267,7 +298,7 @@ class BookingController extends Controller
         return redirect()->route('booking.session.flexible');
     }
 
-    public function selesaiSesi()
+    public function selesaiSesi(PromoCalculationService $promoCalculationService)
     {
         $booking = session('booking');
 
@@ -297,12 +328,27 @@ class BookingController extends Controller
                 'status_sesi' => 'Selesai'
             ]);
 
+            $transaksi = Transaksi::find($booking['id_transaksi']);
+            
+            $nilaiPotongan = 0;
+            $totalHargaAkhir = $totalHarga;
+
+            if ($transaksi && $transaksi->id_promo !== null) {
+                $promo = EventPromo::find($transaksi->id_promo);
+                if ($promo) {
+                    $hasil = $promoCalculationService->calculate((float) $totalHarga, $promo);
+                    $nilaiPotongan = $hasil['nilai_potongan'];
+                    $totalHargaAkhir = $hasil['total_harga'];
+                }
+            }
+
             Transaksi::where(
                 'id_transaksi',
                 $booking['id_transaksi']
             )->update([
                 'durasi' => $durasiMenit,
-                'total_harga' => $totalHarga
+                'nilai_potongan' => $nilaiPotongan,
+                'total_harga' => $totalHargaAkhir
             ]);
 
             Playbox::where(
@@ -313,7 +359,7 @@ class BookingController extends Controller
             ]);
 
             $booking['durasi'] = $durasiMenit;
-            $booking['total_harga'] = $totalHarga;
+            $booking['total_harga'] = $totalHargaAkhir;
 
             session([
                 'booking' => $booking
@@ -323,7 +369,7 @@ class BookingController extends Controller
         return redirect()->route('booking.pembayaran.flexible');
     }
 
-    public function pembayaranFlexible()
+    public function pembayaranFlexible(Request $request)
     {
         $booking = session('booking');
 
@@ -331,13 +377,31 @@ class BookingController extends Controller
             return redirect()->route('booking.info');
         }
 
+        $isRetry = false;
+
+        // Jika ada id_transaksi, periksa status untuk retry mode
+        if (isset($booking['id_transaksi'])) {
+            $transaksi = Transaksi::findOrFail($booking['id_transaksi']);
+
+            if ($request->boolean('retry')) {
+                // Retry hanya valid jika status Ditolak
+                if ($transaksi->status_pembayaran === Transaksi::STATUS_DITOLAK) {
+                    $isRetry = true;
+                } elseif ($transaksi->status_pembayaran === Transaksi::STATUS_MENUNGGU_VERIFIKASI) {
+                    return redirect()->route('booking.waiting-verification.flexible');
+                } elseif ($transaksi->status_pembayaran === Transaksi::STATUS_DISETUJUI) {
+                    return redirect()->route('booking.success.flexible');
+                }
+            }
+        }
+
         $booking['cabang'] = Cabang::find($booking['id_cabang']);
         $booking['playbox'] = Playbox::find($booking['id_playbox']);
 
-        return view('bookings.pembayaran-flexible', compact('booking'));
+        return view('bookings.pembayaran-flexible', compact('booking', 'isRetry'));
     }
 
-    public function storePembayaranFlexible()
+    public function storePembayaranFlexible(Request $request, PaymentNotificationService $paymentNotification)
     {
         $booking = session('booking');
 
@@ -345,7 +409,91 @@ class BookingController extends Controller
             return redirect()->route('booking.info');
         }
 
-        return redirect()->route('booking.success.flexible');
+        $transaksi = Transaksi::findOrFail($booking['id_transaksi']);
+
+        // Cegah upload jika status tidak valid
+        if ($transaksi->status_pembayaran === Transaksi::STATUS_DISETUJUI) {
+            return redirect()->route('booking.success.flexible');
+        }
+
+        if ($transaksi->status_pembayaran === Transaksi::STATUS_MENUNGGU_VERIFIKASI) {
+            return redirect()->route('booking.waiting-verification.flexible');
+        }
+
+        $request->validate([
+            'bukti_pembayaran' => 'required|image|mimes:jpeg,jpg,png,webp|max:5120',
+        ], [
+            'bukti_pembayaran.required' => 'Bukti pembayaran wajib diunggah.',
+            'bukti_pembayaran.image' => 'File harus berupa gambar.',
+            'bukti_pembayaran.mimes' => 'Format file tidak didukung. Gunakan PNG, JPG, JPEG, atau WEBP.',
+            'bukti_pembayaran.max' => 'Ukuran file maksimal 5 MB.',
+        ]);
+
+        // Simpan file baru terlebih dahulu
+        $newPath = $request->file('bukti_pembayaran')->store('bukti-pembayaran', 'public');
+
+        // Simpan path file lama sebelum update
+        $oldPath = $transaksi->bukti_pembayaran;
+
+        // Update database
+        $transaksi->update([
+            'bukti_pembayaran' => $newPath,
+            'status_pembayaran' => Transaksi::STATUS_MENUNGGU_VERIFIKASI,
+            'waktu_pembayaran' => now(),
+            'waktu_verifikasi' => null,
+        ]);
+
+        // Kirim notifikasi Telegram ke operator
+        $paymentNotification->notifyNewPayment($transaksi);
+
+        // Hapus file lama setelah update berhasil
+        if ($oldPath && $oldPath !== $newPath && Storage::disk('public')->exists($oldPath)) {
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        return redirect()->route('booking.waiting-verification.flexible');
+    }
+
+    public function waitingVerificationFlexible()
+    {
+        $booking = session('booking');
+
+        if (!$booking || !isset($booking['id_transaksi']) || $booking['jenis_sesi'] != 'fleksibel') {
+            return redirect()->route('booking.info');
+        }
+
+        $transaksi = Transaksi::findOrFail($booking['id_transaksi']);
+
+        // Jika sudah disetujui, langsung ke halaman success
+        if ($transaksi->status_pembayaran === Transaksi::STATUS_DISETUJUI) {
+            return redirect()->route('booking.success.flexible');
+        }
+
+        $booking['cabang'] = Cabang::find($booking['id_cabang']);
+        $booking['playbox'] = Playbox::find($booking['id_playbox']);
+
+        return view('bookings.waiting-verification-flexible', compact('booking', 'transaksi'));
+    }
+
+    public function checkPaymentStatusFlexible()
+    {
+        $booking = session('booking');
+
+        if (!$booking || !isset($booking['id_transaksi']) || $booking['jenis_sesi'] != 'fleksibel') {
+            return response()->json(['status' => 'invalid'], 403);
+        }
+
+        $transaksi = Transaksi::findOrFail($booking['id_transaksi']);
+
+        $data = [
+            'status' => $transaksi->status_pembayaran,
+        ];
+
+        if ($transaksi->status_pembayaran === Transaksi::STATUS_DISETUJUI) {
+            $data['redirect_url'] = route('booking.success.flexible');
+        }
+
+        return response()->json($data);
     }
 
     public function successFlexible()
@@ -354,6 +502,13 @@ class BookingController extends Controller
 
         if (!$booking || !isset($booking['id_transaksi']) || $booking['jenis_sesi'] != 'fleksibel') {
             return redirect()->route('booking.info');
+        }
+
+        // Lindungi: hanya bisa diakses jika pembayaran sudah disetujui
+        $transaksi = Transaksi::findOrFail($booking['id_transaksi']);
+
+        if ($transaksi->status_pembayaran !== Transaksi::STATUS_DISETUJUI) {
+            return redirect()->route('booking.waiting-verification.flexible');
         }
 
         $booking['cabang'] = Cabang::find($booking['id_cabang']);
@@ -403,6 +558,11 @@ class BookingController extends Controller
 
         if(!$booking)
             return redirect()->route('booking.info');
+            
+        $guardError = $this->validateBookingFinalGuard($booking);
+        if ($guardError) {
+            return redirect()->route('booking.cabang')->withErrors(['branch' => $guardError]);
+        }
 
         DB::transaction(function() use(&$booking){
 
@@ -469,5 +629,34 @@ class BookingController extends Controller
         session()->forget('booking');
 
         return redirect()->route('home');
+    }
+    
+    /**
+     * Final Guard: Validasi cabang dan playbox tepat sebelum transaksi dibuat
+     */
+    private function validateBookingFinalGuard($booking)
+    {
+        if (!isset($booking['id_cabang']) || !isset($booking['id_playbox'])) {
+            return 'Data booking tidak lengkap.';
+        }
+
+        $cabang = Cabang::where('id_cabang', $booking['id_cabang'])->first();
+        if (!$cabang || !$cabang->status_buka) {
+            return 'Cabang yang Anda pilih sudah tidak tersedia atau dinonaktifkan.';
+        }
+
+        $playbox = Playbox::where('id_playbox', $booking['id_playbox'])
+            ->where('id_cabang', $booking['id_cabang'])
+            ->first();
+
+        if (!$playbox) {
+            return 'Playbox tidak ditemukan pada cabang ini.';
+        }
+
+        if ($playbox->status_unit !== 'Tersedia') {
+            return 'Playbox saat ini sedang tidak tersedia untuk dipesan.';
+        }
+
+        return null;
     }
 }

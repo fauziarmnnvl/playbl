@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOXPLAY.ID</title>
+    <title>Boxplay.id</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -12,18 +15,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 </head>
-    <body class="bg-[#081326] text-white font-[Poppins]">
+    <body class="bg-[#081326] text-white font-[Poppins] overflow-x-clip">
 
     <x-navbar />
 
-    <!-- Scroll Indicator -->
+    <!-- Scroll Indicator — hidden on mobile/tablet -->
     @if(request()->routeIs('home'))
     <div id="scroll-indicator"
-        class="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-4">
+        class="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-4">
 
         <span class="dot active" data-target="0"></span>
         <span class="dot" data-target="1"></span>

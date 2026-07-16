@@ -1,36 +1,36 @@
-<section class="bg-[#16233B] min-h-screen py-24">
+<section class="bg-[#16233B] min-h-screen py-16 md:py-24">
 
 <div class="max-w-7xl mx-auto px-8">
 
     <!-- Title -->
-    <div class="text-center mt-24">
+    <div class="text-center mt-12 md:mt-24">
 
-        <h2 class="text-5xl md:text-6xl font-bold text-white">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
             Cafe
             <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
                 Partner
             </span>
         </h2>
 
-        <p class="text-gray-400 mt-5 max-w-2xl mx-auto">
+        <p class="text-gray-400 mt-4 md:mt-5 text-sm md:text-base max-w-2xl mx-auto">
             Nikmati pengalaman bermain PlayStation di cafe partner terbaik BoxPlay.id
         </p>
 
     </div>
 
     <!-- Cards -->
-   <div class="grid md:grid-cols-2 gap-8 mt-16">
+   <div class="grid md:grid-cols-2 gap-6 md:gap-8 mt-12 md:mt-16">
         @foreach($cabangs as $cabang)
         <div class="bg-[#223251] rounded-3xl overflow-hidden shadow-xl">
             <img
                 src="{{ $cabang->foto_cabang
-                    ? asset($cabang->foto_cabang)
+                    ? Storage::url($cabang->foto_cabang)
                     : asset('images/branch/default.jpg') }}"
-                class="w-full h-64 object-cover">
-            <div class="p-6">
+                class="w-full h-48 md:h-64 object-cover">
+            <div class="p-5 md:p-6">
                 <div class="flex items-center justify-between">
 
-                    <h3 class="text-2xl font-bold text-white">
+                    <h3 class="text-xl md:text-2xl font-bold text-white">
                         {{ $cabang->nama_cabang }}
                     </h3>
 
@@ -44,7 +44,7 @@
                         </span>
                     @endif
                 </div>
-                <p class="text-gray-400 mt-4">
+                <p class="text-gray-400 mt-3 md:mt-4 text-sm md:text-base">
                     {{ $cabang->alamat_cabang }}
                 </p>
 

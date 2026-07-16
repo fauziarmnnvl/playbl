@@ -2,20 +2,18 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\EventPromo;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class EventPromoSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $promos = [
             [
                 'nama_promo' => 'Diskon Akhir Pekan',
+                'deskripsi' => 'Diskon spesial untuk penyewaan minimal 3 jam di akhir pekan. Ajak teman-temanmu mabar sekarang!',
                 'tipe_diskon' => 'Persentase',
                 'nilai_diskon' => 20.00,
                 'tanggal_mulai' => Carbon::now()->startOfMonth()->toDateString(),
@@ -24,6 +22,7 @@ class EventPromoSeeder extends Seeder
             ],
             [
                 'nama_promo' => 'Happy Hour Siang',
+                'deskripsi' => 'Siang hari bukan berarti sepi. Nikmati promo Happy Hour dan mabar dengan harga lebih hemat!',
                 'tipe_diskon' => 'Nominal',
                 'nilai_diskon' => 5000.00,
                 'tanggal_mulai' => Carbon::now()->startOfMonth()->toDateString(),
@@ -32,6 +31,7 @@ class EventPromoSeeder extends Seeder
             ],
             [
                 'nama_promo' => 'Promo Grand Opening',
+                'deskripsi' => 'Rayakan pembukaan cabang bersama kami dan nikmati diskon spesial untuk pengalaman bermain yang lebih seru!',
                 'tipe_diskon' => 'Persentase',
                 'nilai_diskon' => 50.00,
                 'tanggal_mulai' => Carbon::now()->subMonth()->startOfMonth()->toDateString(),

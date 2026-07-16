@@ -14,6 +14,8 @@ use App\Http\Controllers\AktivitasController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\Operator\OperatorMonitoringController;
 use App\Http\Controllers\Operator\OperatorRiwayatController;
+use App\Http\Controllers\Operator\OperatorPelangganController;
+use App\Http\Controllers\Operator\OperatorVerifikasiPembayaranController;
 use App\Http\Controllers\BookingController; 
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -69,6 +71,9 @@ Route::get('/booking/pembayaran-flexible', [BookingController::class, 'pembayara
 Route::get('/booking/success-flexible',[BookingController::class, 'successFlexible'])->name('booking.success.flexible');
 Route::post('/booking/pembayaran-flexible', [BookingController::class, 'storePembayaranFlexible'])->name('booking.storePembayaranFlexible');
 
+Route::get('/booking/waiting-verification-flexible', [BookingController::class, 'waitingVerificationFlexible'])->name('booking.waiting-verification.flexible');
+Route::get('/booking/check-payment-status-flexible', [BookingController::class, 'checkPaymentStatusFlexible'])->name('booking.check-payment-status.flexible');
+
 Route::get('/booking/success',[BookingController::class,'success'])->name('booking.success');
 Route::post('/booking/selesai',[BookingController::class,'selesai'])->name('booking.selesai');
 
@@ -93,22 +98,27 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     // Playbox
     Route::resource('/playbox', PlayboxController::class)
+        ->only(['index', 'store', 'update', 'destroy'])
         ->names('admin.playbox');
 
     // Game
     Route::resource('/game', GameController::class)
+        ->only(['index', 'store', 'update', 'destroy'])
         ->names('admin.game');
 
     // Cabang
     Route::resource('/cabang', CabangController::class)
+        ->only(['index', 'store', 'update', 'destroy'])
         ->names('admin.cabang');
 
     // Promo
     Route::resource('/promo', EventPromoController::class)
+        ->only(['index', 'store', 'update', 'destroy'])
         ->names('admin.promo');
 
     // Operator
     Route::resource('/operator', OperatorController::class)
+        ->only(['index', 'store', 'update', 'destroy'])
         ->names('admin.operator');
 
     // Pelanggan
@@ -142,17 +152,36 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 */
 
 Route::middleware(['auth', 'role:operator'])->prefix('operator')->group(function () {
-
     // Monitoring Playbox (filtered by cabang_id)
     Route::get('/monitoring', [OperatorMonitoringController::class, 'index'])
         ->name('operator.monitoring');
+    
+    // Verifikasi Pembayaran Sesi Fleksibel
+    Route::get('/verifikasi-pembayaran', [OperatorVerifikasiPembayaranController::class, 'index'])
+        ->name('operator.verifikasi-pembayaran');
+
+    Route::get('/verifikasi-pembayaran/check', [OperatorVerifikasiPembayaranController::class, 'check'])
+        ->name('operator.verifikasi-pembayaran.check');
+
+    Route::get('/verifikasi-pembayaran/table', [OperatorVerifikasiPembayaranController::class, 'table'])
+        ->name('operator.verifikasi-pembayaran.table');
+
+    Route::patch('/verifikasi-pembayaran/{transaksi}/setujui', [OperatorVerifikasiPembayaranController::class, 'approve'])
+        ->name('operator.verifikasi-pembayaran.approve');
+
+    Route::patch('/verifikasi-pembayaran/{transaksi}/tolak', [OperatorVerifikasiPembayaranController::class, 'reject'])
+        ->name('operator.verifikasi-pembayaran.reject');
+
+    // Data Pelanggan (filtered by cabang_id)
+    Route::get('/pelanggan', [OperatorPelangganController::class, 'index'])
+        ->name('operator.pelanggan');
 
     // Riwayat Bermain (filtered by cabang_id)
     Route::get('/riwayat', [OperatorRiwayatController::class, 'index'])
         ->name('operator.riwayat');
 });
 
-
+    
 /*
 |--------------------------------------------------------------------------
 | User Profile

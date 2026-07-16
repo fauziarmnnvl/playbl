@@ -23,15 +23,15 @@
     ">
     </div>
 
-    <div class="absolute left-[-250px] top-20 w-[800px] h-[800px] bg-vyan-500/10 blur-[200px] rounded-full"></div>
+    <div class="absolute left-[-150px] md:left-[-250px] top-20 w-[400px] h-[400px] md:w-[800px] md:h-[800px] bg-vyan-500/10 blur-[120px] md:blur-[200px] rounded-full"></div>
 
-    <div class="absolute right-[-250px] top-10 w-[700px] h-[700px] bg-blue-500/8 blur-[200px] rounded-full"></div>
+    <div class="absolute right-[-150px] md:right-[-250px] top-10 w-[350px] h-[350px] md:w-[700px] md:h-[700px] bg-blue-500/8 blur-[120px] md:blur-[200px] rounded-full"></div>
 
     <div class="relative z-10 flex items-center justify-center h-full">
 
         <div class="text-center max-w-3xl">
 
-            <h1 class="text-7xl md:text-8xl font-extrabold leading-none">
+            <h1 class="text-[44px] min-[400px]:text-5xl sm:text-6xl md:text-8xl font-extrabold leading-none">
 
                 Play While
 
@@ -46,7 +46,7 @@
 
             </h1>
 
-            <p class="mt-8 text-gray-300 text-lg max-w-xl mx-auto">
+            <p class="mt-8 text-gray-300 text-[15px] sm:text-lg leading-relaxed max-w-[320px] sm:max-w-xl mx-auto">
                 Nongkrong lebih seru dengan PlayStation yang siap dimainkan kapan saja.
             </p>
 

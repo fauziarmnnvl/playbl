@@ -1,8 +1,8 @@
 <section class="min-h-screen flex flex-col items-center py-20 px-4">
 
     {{-- Title --}}
-    <div class="text-center py-10">
-        <h1 class="text-5xl font-bold text-white">
+    <div class="text-center py-10 md:py-10">
+        <h1 class="text-3xl md:text-5xl font-bold text-white">
             Book
             <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
                 Playbox
@@ -11,71 +11,71 @@
     </div>
 
     {{-- Progress --}}
-    <div class="w-full max-w-5xl mb-12">
+    <div class="w-full max-w-5xl mb-10 md:mb-12">
         <div class="relative flex justify-between items-center">
 
             {{-- Base Line --}}
-            <div class="absolute top-5 left-0 w-full h-[3px] bg-[#08152D]"></div>
+            <div class="absolute top-4 md:top-5 left-0 w-full h-[3px] bg-[#08152D]"></div>
 
             {{-- Active Line --}}
-            <div class="absolute top-5 left-0 w-[40%] h-[3px] bg-gradient-to-r from-purple-500 to-blue-500"></div>
+            <div class="absolute top-4 md:top-5 left-0 w-[40%] h-[3px] bg-gradient-to-r from-purple-500 to-blue-500"></div>
 
             {{-- Step 1 --}}
             <div class="relative z-10 flex flex-col items-center">
-                <div class="w-11 h-11 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white flex items-center justify-center font-semibold">
+                <div class="w-8 h-8 md:w-11 md:h-11 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white flex items-center justify-center font-semibold text-sm md:text-base">
                     1
                 </div>
-                <span class="mt-3 text-sm text-slate-400">Info</span>
+                <span class="mt-2 md:mt-3 text-xs md:text-sm text-slate-400 hidden sm:block">Info</span>
             </div>
 
             {{-- Step 2 --}}
             <div class="relative z-10 flex flex-col items-center">
-                <div class="w-11 h-11 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white flex items-center justify-center font-semibold">
+                <div class="w-8 h-8 md:w-11 md:h-11 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white flex items-center justify-center font-semibold text-sm md:text-base">
                     2
                 </div>
-                <span class="mt-3 text-sm text-slate-400">Cabang</span>
+                <span class="mt-2 md:mt-3 text-xs md:text-sm text-slate-400 hidden sm:block">Cabang</span>
             </div>
 
             {{-- Step 3 Active --}}
             <div class="relative z-10 flex flex-col items-center">
-                <div class="w-11 h-11 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white flex items-center justify-center font-semibold shadow-lg">
+                <div class="w-8 h-8 md:w-11 md:h-11 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white flex items-center justify-center font-semibold shadow-lg text-sm md:text-base">
                     3
                 </div>
-                <span class="mt-3 text-sm text-slate-400">Playbox</span>
+                <span class="mt-2 md:mt-3 text-xs md:text-sm text-slate-400 hidden sm:block">Playbox</span>
             </div>
 
             {{-- Step 4 --}}
             <div class="relative z-10 flex flex-col items-center">
-                <div class="w-11 h-11 rounded-full bg-[#08152D] text-white flex items-center justify-center font-semibold">
+                <div class="w-8 h-8 md:w-11 md:h-11 rounded-full bg-[#08152D] text-white flex items-center justify-center font-semibold text-sm md:text-base">
                     4
                 </div>
-                <span class="mt-3 text-sm text-slate-400">Durasi</span>
+                <span class="mt-2 md:mt-3 text-xs md:text-sm text-slate-400 hidden sm:block">Durasi</span>
             </div>
 
             {{-- Step 5 --}}
             <div class="relative z-10 flex flex-col items-center">
-                <div class="w-11 h-11 rounded-full bg-[#08152D] text-white flex items-center justify-center font-semibold">
+                <div class="w-8 h-8 md:w-11 md:h-11 rounded-full bg-[#08152D] text-white flex items-center justify-center font-semibold text-sm md:text-base">
                     5
                 </div>
-                <span class="mt-3 text-sm text-slate-400">Review</span>
+                <span class="mt-2 md:mt-3 text-xs md:text-sm text-slate-400 hidden sm:block">Review</span>
             </div>
 
             {{-- Step 6 --}}
             <div class="relative z-10 flex flex-col items-center">
-                <div class="w-11 h-11 rounded-full bg-[#08152D] text-white flex items-center justify-center font-semibold">
+                <div class="w-8 h-8 md:w-11 md:h-11 rounded-full bg-[#08152D] text-white flex items-center justify-center font-semibold text-sm md:text-base">
                     6
                 </div>
-                <span class="mt-3 text-sm text-slate-400">Bayar</span>
+                <span class="mt-2 md:mt-3 text-xs md:text-sm text-slate-400 hidden sm:block">Bayar</span>
             </div>
 
         </div>
     </div>
 
     {{-- Card --}}
-    <div class="w-full max-w-3xl bg-[#041233] rounded-3xl p-8 shadow-xl border border-slate-800">
+    <div class="w-full max-w-3xl bg-[#041233] rounded-3xl p-6 md:p-8 shadow-xl border border-slate-800">
 
         {{-- Header --}}
-        <h2 class="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8 flex items-center gap-3">
 
             <svg xmlns="http://www.w3.org/2000/svg"
                 class="w-7 h-7 text-blue-500"
@@ -95,7 +95,7 @@
         <form method="POST" action="{{ route('booking.storePlaybox') }}" x-data="{ playbox:'{{ old('playbox', session('booking.id_playbox')) }}'}">
             @csrf
 
-            <div class="grid grid-cols-4 gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
                 @foreach($playboxes as $playbox)
                     @if($playbox->status_unit != 'Tersedia')
 
@@ -164,10 +164,10 @@
     
 
     {{-- Footer --}}
-    <div class="border-t border-slate-800 mt-8 pt-8 flex justify-between">
+    <div class="border-t border-slate-800 mt-8 pt-8 flex flex-col-reverse sm:flex-row justify-between gap-4">
 
         <a href="{{ route('booking.cabang') }}"
-            class="px-6 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
+            class="w-full sm:w-auto text-center px-6 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
             ← Kembali
         </a>
 
@@ -177,7 +177,7 @@
             :class="!playbox
                 ? 'opacity-50 cursor-not-allowed'
                 : 'hover:scale-105'"
-            class="px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg transition-all duration-300">
+            class="w-full sm:w-auto text-center px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg transition-all duration-300">
 
             Lanjut →
         </button>

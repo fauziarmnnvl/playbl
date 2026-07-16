@@ -1,8 +1,8 @@
 <section class="min-h-screen flex flex-col items-center py-20 px-4">
 
     {{-- Title --}}
-    <div class="text-center py-12">
-        <h1 class="text-5xl font-bold text-white">
+    <div class="text-center py-10 md:py-12">
+        <h1 class="text-3xl md:text-5xl font-bold text-white">
             Book
             <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
                 Playbox
@@ -11,19 +11,19 @@
     </div>
 
     {{-- Progress --}}
-    <div class="w-full max-w-5xl mb-12">
+    <div class="w-full max-w-5xl mb-10 md:mb-12">
         <div class="relative flex justify-between items-center">
 
-            <div class="absolute top-5 left-0 w-full h-[3px] bg-[#08152D]"></div>
-            <div class="absolute top-5 left-0 w-[60%] h-[3px] bg-gradient-to-r from-purple-500 to-blue-500"></div>
+            <div class="absolute top-4 md:top-5 left-0 w-full h-[3px] bg-[#08152D]"></div>
+            <div class="absolute top-4 md:top-5 left-0 w-[60%] h-[3px] bg-gradient-to-r from-purple-500 to-blue-500"></div>
 
             @for($i = 1; $i <= 6; $i++)
                 <div class="relative z-10 flex flex-col items-center">
-                    <div class="w-11 h-11 rounded-full {{ $i <= 4 ? 'bg-gradient-to-r from-purple-500 to-blue-500' : 'bg-[#08152D]' }} text-white flex items-center justify-center font-semibold">
+                    <div class="w-8 h-8 md:w-11 md:h-11 rounded-full {{ $i <= 4 ? 'bg-gradient-to-r from-purple-500 to-blue-500' : 'bg-[#08152D]' }} text-white flex items-center justify-center font-semibold text-sm md:text-base">
                         {{ $i }}
                     </div>
 
-                    <span class="mt-3 text-sm text-slate-400">
+                    <span class="mt-2 md:mt-3 text-xs md:text-sm text-slate-400 hidden sm:block">
                         @switch($i)
                             @case(1) Info @break
                             @case(2) Cabang @break
@@ -40,10 +40,10 @@
     </div>
 
     {{-- Card --}}
-    <div class="w-full max-w-3xl bg-[#041233] rounded-3xl border border-slate-800 p-8 shadow-xl">
+    <div class="w-full max-w-3xl bg-[#041233] rounded-3xl border border-slate-800 p-6 md:p-8 shadow-xl">
 
         {{-- Header --}}
-        <h2 class="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8 flex items-center gap-3">
 
             <svg xmlns="http://www.w3.org/2000/svg"
                 class="w-7 h-7 text-blue-500"
@@ -71,7 +71,7 @@
                 :class="session === 'tetap'
                     ? 'border-blue-500 bg-blue-900/20 shadow-[0_0_25px_rgba(59,130,246,0.35)]'
                     : 'border-slate-700 bg-slate-800/30'"
-                class="rounded-3xl border p-6 mb-5 cursor-pointer
+                class="rounded-3xl border p-4 sm:p-6 mb-5 cursor-pointer
                 transition-all duration-300
 
                 hover:border-blue-500
@@ -79,27 +79,27 @@
                 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)]
                 hover:-translate-y-1">
 
-                <div class="flex items-start gap-4">
+                <div class="flex flex-col sm:flex-row items-start gap-4">
 
-                    <div class="w-12 h-12 rounded-xl bg-blue-500 flex items-center justify-center text-white">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500 flex items-center justify-center text-white shrink-0">
 
                         <i class="bi bi-clock-history text-2xl"></i>
 
                     </div>
 
-                    <div class="flex-1">
+                    <div class="flex-1 w-full">
 
-                        <div class="flex items-center gap-3 mb-2">
-                            <h3 class="text-2xl font-bold text-white">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-2">
+                            <h3 class="text-xl sm:text-2xl font-bold text-white">
                                 Sesi Waktu Tetap
                             </h3>
 
-                            <span class="px-3 py-1 text-xs rounded-full bg-blue-600 text-white">
+                            <span class="px-3 py-1 text-xs rounded-full bg-blue-600 text-white w-fit">
                                 Bayar di Awal
                             </span>
                         </div>
 
-                        <p class="text-slate-400">
+                        <p class="text-sm sm:text-base text-slate-400">
                             Pilih durasi pasti. Cocok untuk yang sudah punya rencana waktu.
                         </p>
 
@@ -228,7 +228,7 @@
                 :class="session === 'fleksibel'
                     ? 'border-purple-500 bg-purple-900/20 shadow-[0_0_25px_rgba(168,85,247,0.35)]'
                     : 'border-slate-700 bg-slate-800/30'"
-                class="rounded-3xl border p-6 cursor-pointer
+                class="rounded-3xl border p-4 sm:p-6 cursor-pointer
 
                 transition-all duration-300 ease-out
 
@@ -237,23 +237,23 @@
                 hover:shadow-[0_0_25px_rgba(168,85,247,0.25)]
                 hover:-translate-y-1">
 
-                <div class="flex items-start gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-purple-600 flex items-center justify-center text-white">
+                <div class="flex flex-col sm:flex-row items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-600 flex items-center justify-center text-white shrink-0">
                         <i class="bi bi-lightning-charge-fill text-2xl"></i>
                     </div>
 
-                    <div class="flex-1">
+                    <div class="flex-1 w-full">
 
-                        <div class="flex items-center gap-3 mb-2">
-                            <h3 class="text-2xl font-bold text-white">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-2">
+                            <h3 class="text-xl sm:text-2xl font-bold text-white">
                                 Sesi Fleksibel
                             </h3>
-                            <span class="px-3 py-1 text-xs rounded-full bg-blue-600 text-white">
+                            <span class="px-3 py-1 text-xs rounded-full bg-blue-600 text-white w-fit">
                                 Bayar di Akhir
                             </span>
                         </div>
 
-                        <p class="text-slate-400 mb-4">
+                        <p class="text-sm sm:text-base text-slate-400 mb-4">
                             Main tanpa batas waktu. Biaya dihitung otomatis berdasarkan lama bermain.
                         </p>
 
@@ -293,16 +293,16 @@
             @enderror
 
             {{-- Footer --}}
-            <div class="border-t border-slate-800 mt-8 pt-8 flex justify-between">
+            <div class="border-t border-slate-800 mt-8 pt-8 flex flex-col-reverse sm:flex-row justify-between gap-4">
 
                 <a href="{{ route('booking.playbox') }}"
-                    class="px-6 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
+                    class="w-full sm:w-auto text-center px-6 py-3 border border-slate-700 rounded-xl text-white hover:border-blue-500 transition">
                     ← Kembali
                 </a>
 
                 <button type="submit" :disabled="!session || (session=='tetap' && !duration)"
                     :class="!session || (session=='tetap' && !duration)? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'"
-                    class="px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg transition-all duration-300">
+                    class="w-full sm:w-auto text-center px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-lg transition-all duration-300">
                     Lanjut →
                 </button>
             </div>

@@ -19,6 +19,20 @@ class StatistikController extends Controller
      */
     private function getFilterDates(Request $request)
     {
+        $periodMode = $request->input('period_mode', 'harian');
+
+        if ($periodMode === 'bulanan') {
+            $startDate = $request->start_month
+                ? Carbon::createFromFormat('Y-m', $request->start_month)->startOfMonth()->startOfDay()
+                : now()->startOfMonth()->startOfDay();
+
+            $endDate = $request->end_month
+                ? Carbon::createFromFormat('Y-m', $request->end_month)->endOfMonth()->endOfDay()
+                : now()->endOfMonth()->endOfDay();
+
+            return [$startDate, $endDate];
+        }
+
         $startDate = $request->start_date
             ? Carbon::parse($request->start_date)->startOfDay()
             : now()->subDays(30)->startOfDay();
@@ -36,6 +50,7 @@ class StatistikController extends Controller
     public function index(Request $request)
     {
         list($startDate, $endDate) = $this->getFilterDates($request);
+        $periodMode = $request->input('period_mode', 'harian');
 
         // KPI 1: Total Pendapatan
         $totalPendapatan = Transaksi::whereBetween('tgl_transaksi', [$startDate, $endDate])
@@ -57,35 +72,72 @@ class StatistikController extends Controller
             ->with('playbox')
             ->first();
 
-        // CHART 1: Pendapatan Berdasarkan Periode (Bar Chart)
-        $pendapatanData = Transaksi::select(
-                DB::raw('DATE(tgl_transaksi) as date'),
-                DB::raw('SUM(total_harga) as total')
-            )
-            ->whereBetween('tgl_transaksi', [$startDate, $endDate])
-            ->groupBy(DB::raw('DATE(tgl_transaksi)'))
-            ->orderBy('date', 'asc')
-            ->get();
-            
-        $pendapatanChart = [
-            'labels' => $pendapatanData->pluck('date')->map(fn($d) => Carbon::parse($d)->format('d M'))->toArray(),
-            'values' => $pendapatanData->pluck('total')->toArray(),
-        ];
+        // CHART 1 & 2: Data berdasarkan mode periode
+        if ($periodMode === 'bulanan') {
+            $pendapatanData = Transaksi::select(
+                    DB::raw("DATE_FORMAT(tgl_transaksi, '%Y-%m') as periode"),
+                    DB::raw('SUM(total_harga) as total')
+                )
+                ->whereBetween('tgl_transaksi', [$startDate, $endDate])
+                ->groupBy(DB::raw("DATE_FORMAT(tgl_transaksi, '%Y-%m')"))
+                ->orderBy('periode', 'asc')
+                ->get();
 
-        // CHART 2: Tren Penggunaan Sesi (Line Chart)
-        $sesiData = SesiBermain::select(
-                DB::raw('DATE(waktu_mulai) as date'),
-                DB::raw('COUNT(*) as total')
-            )
-            ->whereBetween('waktu_mulai', [$startDate, $endDate])
-            ->groupBy(DB::raw('DATE(waktu_mulai)'))
-            ->orderBy('date', 'asc')
-            ->get();
+            $pendapatanChart = [
+                'labels' => $pendapatanData->pluck('periode')
+                    ->map(fn($periode) => Carbon::createFromFormat('Y-m', $periode)->translatedFormat('M Y'))
+                    ->toArray(),
+                'values' => $pendapatanData->pluck('total')->toArray(),
+            ];
 
-        $sesiChart = [
-            'labels' => $sesiData->pluck('date')->map(fn($d) => Carbon::parse($d)->format('d M'))->toArray(),
-            'values' => $sesiData->pluck('total')->toArray(),
-        ];
+            $sesiData = SesiBermain::select(
+                    DB::raw("DATE_FORMAT(waktu_mulai, '%Y-%m') as periode"),
+                    DB::raw('COUNT(*) as total')
+                )
+                ->whereBetween('waktu_mulai', [$startDate, $endDate])
+                ->groupBy(DB::raw("DATE_FORMAT(waktu_mulai, '%Y-%m')"))
+                ->orderBy('periode', 'asc')
+                ->get();
+
+            $sesiChart = [
+                'labels' => $sesiData->pluck('periode')
+                    ->map(fn($periode) => Carbon::createFromFormat('Y-m', $periode)->translatedFormat('M Y'))
+                    ->toArray(),
+                'values' => $sesiData->pluck('total')->toArray(),
+            ];
+        } else {
+            $pendapatanData = Transaksi::select(
+                    DB::raw('DATE(tgl_transaksi) as periode'),
+                    DB::raw('SUM(total_harga) as total')
+                )
+                ->whereBetween('tgl_transaksi', [$startDate, $endDate])
+                ->groupBy(DB::raw('DATE(tgl_transaksi)'))
+                ->orderBy('periode', 'asc')
+                ->get();
+
+            $pendapatanChart = [
+                'labels' => $pendapatanData->pluck('periode')
+                    ->map(fn($periode) => Carbon::parse($periode)->format('d M'))
+                    ->toArray(),
+                'values' => $pendapatanData->pluck('total')->toArray(),
+            ];
+
+            $sesiData = SesiBermain::select(
+                    DB::raw('DATE(waktu_mulai) as periode'),
+                    DB::raw('COUNT(*) as total')
+                )
+                ->whereBetween('waktu_mulai', [$startDate, $endDate])
+                ->groupBy(DB::raw('DATE(waktu_mulai)'))
+                ->orderBy('periode', 'asc')
+                ->get();
+
+            $sesiChart = [
+                'labels' => $sesiData->pluck('periode')
+                    ->map(fn($periode) => Carbon::parse($periode)->format('d M'))
+                    ->toArray(),
+                'values' => $sesiData->pluck('total')->toArray(),
+            ];
+        }
 
         // CHART 3: Distribusi Penggunaan Playbox (Doughnut Chart)
         $distribusiData = Transaksi::select('id_playbox', DB::raw('COUNT(*) as total'))
@@ -102,6 +154,7 @@ class StatistikController extends Controller
         return view('admin.statistik', compact(
             'startDate',
             'endDate',
+            'periodMode',
             'totalPendapatan',
             'totalTransaksi',
             'totalSesi',
@@ -119,15 +172,62 @@ class StatistikController extends Controller
     {
         list($startDate, $endDate) = $this->getFilterDates($request);
 
-        $totalPendapatan = Transaksi::whereBetween('tgl_transaksi', [$startDate, $endDate])->sum('total_harga');
-        $totalTransaksi = Transaksi::whereBetween('tgl_transaksi', [$startDate, $endDate])->count();
-        $totalSesi = SesiBermain::whereBetween('waktu_mulai', [$startDate, $endDate])->count();
-        $playboxPalingAktif = Transaksi::select('id_playbox', DB::raw('COUNT(*) as total'))
+        $transaksi = Transaksi::with([
+            'pelanggan', 
+            'playbox.cabang', 
+            'cabang',
+            'eventPromo'
+        ])
             ->whereBetween('tgl_transaksi', [$startDate, $endDate])
+            ->orderBy('tgl_transaksi', 'desc')
+            ->get();
+
+        $totalPendapatan = $transaksi->sum('total_harga');
+        $totalTransaksi = $transaksi->count();
+        $totalDiskon = $transaksi->sum('nilai_potongan');
+
+        $totalSesi = SesiBermain::whereBetween('waktu_mulai', [$startDate, $endDate])
+            ->count();
+
+        $rataRataTransaksi = $totalTransaksi > 0
+            ? $totalPendapatan / $totalTransaksi
+            : 0;
+
+        $playboxPalingAktif = $transaksi
             ->groupBy('id_playbox')
-            ->orderByDesc('total')
-            ->with('playbox')
+            ->map(function ($items) {
+                return [
+                    'nama' => $items->first()->playbox->nama_playbox ?? 'Unknown',
+                    'total' => $items->count(),
+                ];
+            })
+            ->sortByDesc('total')
             ->first();
+
+        $jenisSesiTerpopuler = $transaksi
+            ->groupBy('jenis_sesi')
+            ->map(fn($items) => $items->count())
+            ->sortDesc()
+            ->keys()
+            ->first();
+
+        $ringkasanCabang = $transaksi
+            ->groupBy(function ($item) {
+                return $item->cabang->nama_cabang
+                    ?? $item->playbox->cabang->nama_cabang
+                    ?? 'Tidak Diketahui';
+            })
+            ->map(function ($items, $namaCabang) {
+                return [
+                    'nama_cabang' => $namaCabang,
+                    'total_transaksi' => $items->count(),
+                    'total_pendapatan' => $items->sum('total_harga'),
+                ];
+            })
+            ->sortByDesc('total_pendapatan')
+            ->values();
+
+        $cabangTerlaris = $ringkasanCabang->first();
 
         $pdf = Pdf::loadView('admin.statistik-pdf', compact(
             'startDate',
@@ -135,11 +235,20 @@ class StatistikController extends Controller
             'totalPendapatan',
             'totalTransaksi',
             'totalSesi',
-            'playboxPalingAktif'
+            'rataRataTransaksi',
+            'playboxPalingAktif',
+            'jenisSesiTerpopuler',
+            'ringkasanCabang',
+            'cabangTerlaris',
+            'totalDiskon',
+            'transaksi'
         ));
 
-        // Format nama file seperti Laporan_Statistik_BoxPlay_01_Jun_2026.pdf
-        $filename = 'Laporan_Statistik_BoxPlay_' . $startDate->format('Y-m-d') . '_sd_' . $endDate->format('Y-m-d') . '.pdf';
+        $pdf->setPaper('a4', 'portrait');
+
+        $filename = 'Laporan_Statistik_BoxPlay_' .
+            $startDate->format('Y-m-d') . '_sd_' .
+            $endDate->format('Y-m-d') . '.pdf';
 
         return $pdf->download($filename);
     }

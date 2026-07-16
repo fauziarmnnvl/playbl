@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GameController extends Controller
 {
@@ -37,29 +38,20 @@ class GameController extends Controller
     }
 
     /**
-     * Tampilkan form tambah game baru.
-     */
-    public function create()
-    {
-        return view('admin.game.create');
-    }
-
-    /**
      * Simpan data game baru ke database.
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validated = $request->validateWithBag('createGame', [
             'judul_game'  => 'required|string|max:100',
             'kategori'    => 'nullable|string|max:50',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         if ($request->hasFile('cover_image')) {
-            $file = $request->file('cover_image');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('images/games'), $filename);
-            $validated['cover_image'] = 'images/games/'.$filename;
+            $validated['cover_image'] = $request
+                ->file('cover_image')
+                ->store('games', 'public');
         }
 
         Game::create($validated);
@@ -70,37 +62,31 @@ class GameController extends Controller
     }
 
     /**
-     * Tampilkan form edit game.
-     */
-    public function edit($id)
-    {
-        $game = Game::findOrFail($id);
-
-        return view('admin.game.edit', compact('game'));
-    }
-
-    /**
      * Update data game di database.
      */
     public function update(Request $request, $id)
     {
         $game = Game::findOrFail($id);
 
-        $validated = $request->validate([
+        // Simpan ID untuk membuka kembali modal yang benar jika validasi gagal
+        $request->session()->flash('edit_game_id', $id);
+
+        $validated = $request->validateWithBag('editGame', [
             'judul_game'  => 'required|string|max:100',
             'kategori'    => 'nullable|string|max:50',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         if ($request->hasFile('cover_image')) {
-            if ($game->cover_image && file_exists(public_path($game->cover_image))) {
-                unlink(public_path($game->cover_image));
+            // Hapus gambar lama dari storage
+            if ($game->cover_image &&
+                Storage::disk('public')->exists($game->cover_image)) {
+                Storage::disk('public')->delete($game->cover_image);
             }
 
-            $file = $request->file('cover_image');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('images/games'), $filename);
-            $validated['cover_image'] = 'images/games/'.$filename;
+            $validated['cover_image'] = $request
+                ->file('cover_image')
+                ->store('games', 'public');
         }
 
         $game->update($validated);
@@ -110,17 +96,14 @@ class GameController extends Controller
             ->with('success', 'Data game berhasil diperbarui.');
     }
 
-    /**
-     * Hapus game dari database.
-     * BR-GM-02: Data game murni katalog, tidak ada pengecekan relasi transaksi.
-     */
     public function destroy($id)
     {
         $game = Game::findOrFail($id);
 
         // Hapus cover image dari storage
-        if ($game->cover_image && file_exists(public_path($game->cover_image))) {
-            unlink(public_path($game->cover_image));
+        if ($game->cover_image &&
+            Storage::disk('public')->exists($game->cover_image)) {
+            Storage::disk('public')->delete($game->cover_image);
         }
 
         $game->delete();
@@ -128,14 +111,6 @@ class GameController extends Controller
         return redirect()
             ->route('admin.game.index')
             ->with('success', 'Game berhasil dihapus.');
-    }
-
-    /**
-     * Show — redirect ke index.
-     */
-    public function show($id)
-    {
-        return redirect()->route('admin.game.index');
     }
 
     public function publicGames(Request $request)

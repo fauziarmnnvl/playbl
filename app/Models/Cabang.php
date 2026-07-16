@@ -22,6 +22,7 @@ class Cabang extends Model
         'jam_operasional',
         'foto_cabang',
         'link_maps',
+        'qris',
         'status_buka',
     ];
 

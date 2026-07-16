@@ -27,7 +27,7 @@ class LaporanExport implements FromQuery, WithHeadings, WithMapping, WithStyles,
     public function query()
     {
         return Transaksi::query()
-            ->with(['pelanggan', 'playbox', 'cabang'])
+            ->with(['pelanggan', 'playbox', 'cabang', 'eventPromo'])
             ->whereBetween('tgl_transaksi', [$this->startDate, $this->endDate])
             ->orderBy('tgl_transaksi', 'desc');
     }
@@ -41,7 +41,10 @@ class LaporanExport implements FromQuery, WithHeadings, WithMapping, WithStyles,
             'Playbox',
             'Jenis Sesi',
             'Durasi (Menit)',
-            'Total Harga'
+            'Harga Awal',
+            'Promo',
+            'Potongan',
+            'Total Bayar'
         ];
     }
 
@@ -57,6 +60,9 @@ class LaporanExport implements FromQuery, WithHeadings, WithMapping, WithStyles,
             $transaksi->playbox->nama_playbox ?? '-',
             $transaksi->jenis_sesi,
             $transaksi->durasi == 0 ? 'Fleksibel' : $transaksi->durasi,
+            $transaksi->total_harga + $transaksi->nilai_potongan,
+            $transaksi->eventPromo?->nama_promo ?? '-',
+            $transaksi->nilai_potongan,
             $transaksi->total_harga
         ];
     }

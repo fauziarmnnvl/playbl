@@ -26,19 +26,11 @@ class CabangController extends Controller
     }
 
     /**
-     * Tampilkan form tambah cabang baru.
-     */
-    public function create()
-    {
-        return view('admin.cabang.create');
-    }
-
-    /**
      * Simpan data cabang baru ke database.
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validated = $request->validateWithBag('createCabang', [
             'nama_cabang'     => 'required|string|max:100',
             'alamat_cabang'   => 'nullable|string',
             'kontak_cabang'   => 'nullable|string|max:20',
@@ -46,12 +38,19 @@ class CabangController extends Controller
             'link_maps'       => 'nullable|url|max:255',
             'status_buka'     => 'required|boolean',
             'foto_cabang'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'qris' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         if ($request->hasFile('foto_cabang')) {
             $validated['foto_cabang'] = $request
                 ->file('foto_cabang')
                 ->store('cabang', 'public');
+        }
+
+        if ($request->hasFile('qris')) {
+            $validated['qris'] = $request
+                ->file('qris')
+                ->store('qris', 'public');
         }
 
         Cabang::create($validated);
@@ -62,23 +61,16 @@ class CabangController extends Controller
     }
 
     /**
-     * Tampilkan form edit cabang.
-     */
-    public function edit($id)
-    {
-        $cabang = Cabang::findOrFail($id);
-
-        return view('admin.cabang.edit', compact('cabang'));
-    }
-
-    /**
      * Update data cabang di database.
      */
     public function update(Request $request, $id)
     {
         $cabang = Cabang::findOrFail($id);
 
-        $validated = $request->validate([
+        // Simpan ID untuk membuka kembali modal yang benar jika validasi gagal
+        $request->session()->flash('edit_cabang_id', $id);
+
+        $validated = $request->validateWithBag('editCabang', [
             'nama_cabang'     => 'required|string|max:100',
             'alamat_cabang'   => 'nullable|string',
             'kontak_cabang'   => 'nullable|string|max:20',
@@ -86,10 +78,10 @@ class CabangController extends Controller
             'link_maps'       => 'nullable|url|max:255',
             'status_buka'     => 'required|boolean',
             'foto_cabang'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'qris' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         if ($request->hasFile('foto_cabang')) {
-
             if ($cabang->foto_cabang &&
                 Storage::disk('public')->exists($cabang->foto_cabang)) {
 
@@ -101,6 +93,16 @@ class CabangController extends Controller
                 ->store('cabang', 'public');
         }
 
+        if ($request->hasFile('qris')) {
+            if ($cabang->qris && Storage::disk('public')->exists($cabang->qris)) {
+                Storage::disk('public')->delete($cabang->qris);
+            }
+
+            $validated['qris'] = $request
+                ->file('qris')
+                ->store('qris', 'public');
+        }
+
         $cabang->update($validated);
 
         return redirect()
@@ -108,10 +110,6 @@ class CabangController extends Controller
             ->with('success', 'Data cabang berhasil diperbarui.');
     }
 
-    /**
-     * Hapus cabang dari database.
-     * BR-CBG-01: Cabang tidak bisa dihapus jika masih ada playbox yang berelasi.
-     */
     public function destroy($id)
     {
         $cabang = Cabang::findOrFail($id);
@@ -126,17 +124,13 @@ class CabangController extends Controller
             Storage::disk('public')->delete($cabang->foto_cabang);
         }
 
+        if ($cabang->qris && Storage::disk('public')->exists($cabang->qris)) {
+            Storage::disk('public')->delete($cabang->qris);
+        }
+
         $cabang->delete();
 
         return redirect()->route('admin.cabang.index')
             ->with('success', 'Cabang berhasil dihapus.');
-    }
-
-    /**
-     * Tampilkan detail cabang (tidak digunakan, redirect ke index).
-     */
-    public function show($id)
-    {
-        return redirect()->route('admin.cabang.index');
     }
 }

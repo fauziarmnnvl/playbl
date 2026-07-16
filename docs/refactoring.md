@@ -271,11 +271,12 @@ Controller Admin dan Operator berada pada struktur yang sama sehingga kurang ter
 
 ## Perubahan
 
-Controller Operator dipindahkan ke namespace tersendiri.
+Controller Operator dipindahkan ke namespace tersendiri dan dikembangkan berdasarkan tanggung jawab masing-masing fitur.
 
 ```
 app/Http/Controllers/Operator
 ├── OperatorMonitoringController.php
+├── OperatorPelangganController.php
 └── OperatorRiwayatController.php
 ```
 
@@ -416,6 +417,261 @@ Selain itu dilakukan penyesuaian pada:
 - Business logic lebih mudah dipelihara.
 - Pengembangan fitur monitoring dan notifikasi menjadi lebih mudah.
 - Kode menjadi lebih terstruktur dan mudah dipahami.
+
+---
+
+# Refactoring 11
+
+## Sebelum
+
+### Masalah
+
+File media seperti gambar Cabang, Game, dan Event & Promo masih disimpan langsung pada folder `public/images`. Pendekatan ini menyebabkan pengelolaan file menjadi kurang fleksibel, sulit dipindahkan ke media penyimpanan lain, serta tidak mengikuti mekanisme penyimpanan file yang direkomendasikan oleh Laravel.
+
+---
+
+## Perubahan
+
+Pengelolaan media diubah menggunakan Laravel Storage dengan memanfaatkan disk `public`.
+
+Perubahan yang dilakukan meliputi:
+
+- Memindahkan penyimpanan file media dari folder `public/images` ke `storage/app/public`.
+- Mengubah proses upload pada Controller agar menggunakan Laravel Storage.
+- Menyesuaikan path gambar pada Seeder agar menggunakan direktori Storage.
+- Mengubah seluruh tampilan (Blade) agar menggunakan `Storage::url()` saat menampilkan gambar.
+- Menghapus aset gambar lama yang sudah tidak digunakan pada folder `public/images`.
+
+Contoh struktur penyimpanan:
+
+```text
+storage/app/public
+├── cabang
+├── games
+└── promo
+```
+
+---
+
+## Alasan
+
+- Mengikuti standar pengelolaan file yang direkomendasikan oleh Laravel.
+- Mempermudah proses upload, update, dan penghapusan file.
+- Meningkatkan fleksibilitas apabila di masa mendatang menggunakan media penyimpanan lain seperti Amazon S3.
+- Mengurangi ketergantungan terhadap folder `public`.
+
+---
+
+## Dampak
+
+- Struktur penyimpanan media menjadi lebih terorganisir.
+- Pengelolaan file lebih mudah dipelihara.
+- Tampilan aplikasi tetap berjalan tanpa mengubah proses bisnis.
+- Sistem menjadi lebih mudah dikembangkan apabila menggunakan media penyimpanan yang berbeda di masa mendatang.
+
+---
+
+# Refactoring 12
+
+## Sebelum
+
+### Masalah
+
+Proses Tambah dan Edit Event & Promo masih menggunakan halaman terpisah sehingga pengguna harus berpindah halaman setiap kali melakukan pengelolaan data. Selain itu, route, method Controller, dan file Blade terpisah masih digunakan untuk menampilkan form Tambah dan Edit.
+
+---
+
+## Perubahan
+
+Form Tambah dan Edit Event & Promo dipindahkan ke dalam modal popup pada halaman daftar promo.
+
+Perubahan yang dilakukan meliputi:
+
+- Memindahkan form Tambah Promo ke modal pada `index.blade.php`.
+- Memindahkan form Edit Promo ke modal yang dapat digunakan secara dinamis berdasarkan data promo yang dipilih.
+- Menambahkan preview banner pada form Tambah dan Edit.
+- Memisahkan validation error bag untuk form Tambah dan Edit agar modal yang sesuai terbuka kembali ketika validasi gagal.
+- Mempertahankan input pengguna ketika validasi form gagal.
+- Menghapus file `create.blade.php` dan `edit.blade.php` yang sudah tidak digunakan.
+- Menghapus method `create()`, `edit()`, dan `show()` dari `EventPromoController`.
+- Membatasi resource route Event & Promo hanya untuk `index`, `store`, `update`, dan `destroy`.
+
+---
+
+## Alasan
+
+- Mengurangi perpindahan halaman saat mengelola data Event & Promo.
+- Meningkatkan efisiensi interaksi pengguna.
+- Menghapus route, method Controller, dan file Blade yang sudah tidak digunakan.
+- Mengurangi kode yang tidak diperlukan.
+- Menyederhanakan struktur fitur Event & Promo.
+
+---
+
+## Dampak
+
+- Proses Tambah dan Edit Promo dapat dilakukan langsung dari halaman daftar promo.
+- Pengalaman pengguna menjadi lebih cepat dan praktis.
+- Validasi form tetap berjalan tanpa kehilangan data yang telah diinput.
+- Struktur route dan Controller menjadi lebih sederhana.
+- Kode yang sudah tidak digunakan berhasil dihapus.
+- Maintenance fitur Event & Promo menjadi lebih mudah.
+
+---
+
+# Refactoring 13
+
+## Sebelum
+
+### Masalah
+
+Proses Tambah dan Edit pada beberapa halaman Manajemen Data masih menggunakan halaman terpisah sehingga pengguna harus berpindah halaman saat mengelola data.
+
+---
+
+## Perubahan
+
+Form Tambah dan Edit dipindahkan menjadi modal popup pada halaman utama.
+
+Perubahan diterapkan pada:
+
+- Manajemen Event & Promo
+- Manajemen Game
+- Manajemen Playbox
+- Manajemen Cabang
+- Manajemen Operator
+
+Halaman dan route Tambah serta Edit yang sudah tidak digunakan juga dihapus.
+
+---
+
+## Alasan
+
+- Mengurangi perpindahan halaman.
+- Menyederhanakan proses pengelolaan data.
+- Menyeragamkan interaksi pada halaman Manajemen Data.
+
+---
+
+## Dampak
+
+- Proses Tambah dan Edit dapat dilakukan langsung dari halaman utama.
+- Interaksi pengguna menjadi lebih cepat dan konsisten.
+- Struktur route dan file menjadi lebih sederhana.
+
+---
+
+# Refactoring 14
+
+## Sebelum
+
+### Masalah
+
+Setelah mengakhiri sesi fleksibel, proses pembayaran belum memiliki alur verifikasi yang lengkap pada sisi pelanggan sehingga pembayaran dapat dianggap selesai sebelum bukti pembayaran diperiksa oleh Operator.
+
+---
+
+## Perubahan
+
+Alur pembayaran akhir sesi fleksibel disesuaikan menjadi beberapa tahap berdasarkan status pembayaran.
+
+Perubahan yang dilakukan meliputi:
+
+- Menambahkan proses upload bukti pembayaran.
+- Menambahkan halaman Menunggu Verifikasi Pembayaran.
+- Menambahkan pengecekan status pembayaran secara otomatis.
+- Mengarahkan pelanggan ke halaman Pembayaran Selesai setelah pembayaran disetujui.
+- Menampilkan status penolakan apabila bukti pembayaran tidak dapat diverifikasi.
+- Menambahkan proses upload ulang bukti pembayaran yang ditolak.
+
+---
+
+## Alasan
+
+- Menyesuaikan alur pembayaran dengan proses verifikasi Operator.
+- Mencegah pembayaran dianggap selesai sebelum disetujui.
+- Mempermudah pelanggan mengetahui status pembayaran.
+- Mempermudah proses pengiriman ulang bukti pembayaran yang ditolak.
+
+---
+
+## Dampak
+
+- Alur pembayaran sesi fleksibel menjadi lebih jelas.
+- Status pembayaran pelanggan sesuai dengan hasil verifikasi Operator.
+- Pelanggan dapat memantau proses verifikasi secara otomatis.
+- Bukti pembayaran yang ditolak dapat dikirim ulang tanpa mengulangi proses booking.
+
+---
+
+# Refactoring 15
+
+## Sebelum
+
+### Masalah
+
+Tampilan aplikasi belum sepenuhnya konsisten dan responsif pada berbagai ukuran layar. Beberapa komponen pada sisi pelanggan, alur booking, dan panel Admin masih memerlukan penyesuaian agar tetap nyaman digunakan pada perangkat mobile maupun desktop.
+
+---
+
+## Perubahan
+
+Dilakukan penyempurnaan antarmuka secara menyeluruh tanpa mengubah proses bisnis aplikasi.
+
+Perubahan yang dilakukan meliputi:
+
+- Menyesuaikan responsivitas Landing Page dan seluruh alur Booking.
+- Menyempurnakan carousel Koleksi Game agar tetap proporsional dan berjalan secara berulang.
+- Menyesuaikan layout, toolbar, pencarian, filter, tabel, pagination, dan tombol pada panel Admin.
+- Menyempurnakan tampilan grafik dan legend pada halaman Laporan & Statistik.
+- Menyesuaikan pengelolaan Cabang Nonaktif pada proses Booking dan Manajemen Operator.
+
+---
+
+## Alasan
+
+- Meningkatkan konsistensi antarmuka pada berbagai ukuran layar.
+- Mempermudah penggunaan aplikasi pada perangkat mobile dan desktop.
+- Menjaga data lama tetap dapat dikelola tanpa menyediakan Cabang Nonaktif untuk data baru.
+
+---
+
+## Dampak
+
+- Antarmuka menjadi lebih responsif dan konsisten.
+- Alur Booking lebih nyaman digunakan pada perangkat mobile.
+- Panel Admin menjadi lebih rapi dan mudah digunakan.
+- Cabang Nonaktif tidak tersedia untuk pemesanan atau penempatan Operator baru, sementara data lama tetap terjaga.
+
+---
+
+# Refactoring 16
+
+## Sebelum
+
+### Masalah
+
+Logika perhitungan promo berpotensi digunakan pada lebih dari satu proses sehingga dapat menyebabkan duplikasi kode.
+
+---
+
+## Perubahan
+
+Perhitungan promo dipusatkan ke dalam `PromoCalculationService` dan digunakan kembali pada Monitoring Playbox serta proses penyelesaian sesi fleksibel.
+
+---
+
+## Alasan
+
+- Menghindari duplikasi logika perhitungan.
+- Meningkatkan konsistensi hasil perhitungan promo.
+
+---
+
+## Dampak
+
+- Business logic lebih terstruktur.
+- Perawatan dan pengembangan fitur promo menjadi lebih mudah.
 
 ---
 

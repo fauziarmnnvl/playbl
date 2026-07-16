@@ -1,9 +1,9 @@
 <section class="min-h-screen flex items-start justify-center px-4 pt-40 pb-20">
 
-    <div class="w-full max-w-3xl bg-[#041233] rounded-3xl border border-slate-800 shadow-xl p-10">
+    <div class="w-full max-w-3xl bg-[#041233] rounded-3xl border border-slate-800 shadow-xl p-6 md:p-10">
 
         {{-- Success Icon --}}
-        <div class="flex justify-center mb-8">
+        <div class="flex justify-center mb-6 md:mb-8">
 
             <div class="relative">
 
@@ -31,8 +31,8 @@
         </div>
 
         {{-- Title --}}
-        <div class="text-center mb-8">
-            <h1 class="text-5xl font-bold text-white mb-4">
+        <div class="text-center mb-6 md:mb-8">
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">
                 Booking Berhasil!
             </h1>
         </div>
