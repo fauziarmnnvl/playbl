@@ -152,10 +152,16 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 */
 
 Route::middleware(['auth', 'role:operator'])->prefix('operator')->group(function () {
+
+    // Redirect /operator -> /operator/monitoring
+    Route::get('/', function () {
+        return redirect()->route('operator.monitoring');
+    });
+
     // Monitoring Playbox (filtered by cabang_id)
     Route::get('/monitoring', [OperatorMonitoringController::class, 'index'])
         ->name('operator.monitoring');
-    
+
     // Verifikasi Pembayaran Sesi Fleksibel
     Route::get('/verifikasi-pembayaran', [OperatorVerifikasiPembayaranController::class, 'index'])
         ->name('operator.verifikasi-pembayaran');
