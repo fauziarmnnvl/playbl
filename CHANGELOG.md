@@ -4,7 +4,7 @@ Seluruh perubahan penting pada proyek ini akan dicatat dalam dokumen ini.
 
 ---
 
-## [Belum Dirilis]
+## [0.4.0] - 16 Juli 2026
 
 ### Added
 * Menambahkan dukungan QRIS berbeda untuk setiap cabang melalui kolom `qris` pada data Cabang.
